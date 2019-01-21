@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#223d60</color>
+    <color name="colorPrimaryDark">#223d60</color>
+    <color name="colorAccent">#0a0d10</color>
+    <color name="colorBack">#050404</color>
+    <color name="colorFront">#0a0707</color>
+    <color name="colorBar">#1f2635</color>
+    <color name="appColor">#e41b06</color>
+    <color name="blue">#131d89</color>
+    <color name="background">#71878bac</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="blackS">#19293e</color>
+    <color name="white_greyish">#EEEEEE</color>
+    <color name="selector_color_button">#9E9E9E</color>
+    <color name="txtToolBar">#ffc40c</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_bg_loading">#dc858585</color>
+    <color name="color_bg_success">#dc82ce32</color>
+    <color name="color_bg_error">#dcd84315</color>
+    <color name="color_et_error">#FF615F</color>
+    <color name="color_transparent">#ffffff</color>
+    <color name="colorHorizontalFrontLine">#39434f</color>
+    <color name="colorVerticalDividerLine">#e74c3c</color>
+    <color name="colorHorizontalBackLine">#232f40</color>
+    <color name="colorBgSignUp">#363A43</color>
+    <color name="colorHint">#6E7689</color>
+    <color name="colorCheckBox">#6E7689</color>
+    <color name="colorETBG">#CCEDF3FF</color>
+    <color name="colorBG">#323742</color>
+    <color name="colorLineBG">#1AFFFFFF</color>
+</resources>

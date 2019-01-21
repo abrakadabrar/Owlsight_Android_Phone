@@ -1,0 +1,102 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "com.cryptocenter.andrey.owlsight"
+        minSdkVersion 21
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.2"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    //Android
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'com.google.android.material:material:1.1.0-alpha02'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+
+    //IosPbar some UI
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'com.kaopiz:kprogresshud:1.2.0'
+    implementation 'com.github.pinball83:masked-edittext:1.0.4'
+    implementation 'com.roomorama:caldroid:3.0.1'
+
+    //OkHttp
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.6.0'
+    implementation('com.github.ihsanbal:LoggingInterceptor:2.0.6') {
+        exclude group: 'org.json', module: 'json'
+    }
+
+    //Retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+
+    //Json
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    // Moxy for MVP
+    implementation 'com.arello-mobile:moxy:1.5.5'
+    implementation 'com.arello-mobile:moxy-app-compat:1.5.5'
+    annotationProcessor 'com.arello-mobile:moxy-compiler:1.5.5'
+
+    // Toothpick for DI
+    implementation 'com.github.stephanenicolas.toothpick:toothpick-runtime:1.1.3'
+    annotationProcessor 'com.github.stephanenicolas.toothpick:toothpick-compiler:1.1.3'
+
+    // Rx
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
+    implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+
+    //ExoPlayer
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.9.1'
+    implementation 'com.google.android.exoplayer:exoplayer-hls:2.9.0'
+    implementation 'com.google.android.exoplayer:exoplayer-ui:2.8.3'
+    implementation 'com.google.android.exoplayer:exoplayer-dash:2.9.0'
+    implementation 'com.google.android.exoplayer:exoplayer-smoothstreaming:2.9.0'
+
+    // View
+    implementation 'com.alimuzaffar.lib:pinentryedittext:2.0.6'
+    implementation 'com.github.GrenderG:Toasty:1.3.1'
+    implementation 'cn.aigestudio.datepicker:DatePicker:2.2.0'
+    implementation 'com.jakewharton:butterknife:9.0.0-rc2'
+    implementation 'com.romandanylyk:pageindicatorview:1.0.2'
+    implementation 'com.jjoe64:graphview:4.2.2'
+    implementation 'com.github.stfalcon:smsverifycatcher:0.3.2'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc2'
+
+    //Image
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+
+    //Media
+    implementation 'com.devbrackets.android:exomedia:4.2.3'
+    implementation 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:rtplibrary:1.4.1'
+}
+
+repositories {
+    mavenCentral()
+}

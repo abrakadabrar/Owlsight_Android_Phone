@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.cryptocenter.andrey.owlsight">
+
+    <supports-screens
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="true" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera2.full" />
+    <uses-feature android:name="android.hardware.camera2.autofocus" />
+    <uses-feature
+        android:name="android.hardware.fingerprint"
+        android:required="false" />
+
+    <application
+        android:name="com.cryptocenter.andrey.owlsight.App"
+        android:allowBackup="true"
+        android:hardwareAccelerated="false"
+        android:icon="@mipmap/ic_launcher"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name="com.cryptocenter.andrey.owlsight.ui.screens.launcher.LauncherActivity"
+            android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name="com.cryptocenter.andrey.owlsight.ui.screens.player.SinglePlayerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="userLandscape" />
+
+        <activity
+            android:name="com.cryptocenter.andrey.owlsight.ui.screens.menu.MenuActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
+
+        <activity
+            android:name="com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name="com.cryptocenter.andrey.owlsight.ui.screens.stream.StreamActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="userLandscape" />
+
+        <activity
+            android:name="com.cryptocenter.andrey.owlsight.ui.screens.monitor.MonitorActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="userLandscape" />
+
+        <activity
+            android:name="com.cryptocenter.andrey.owlsight.ui.screens.signin.SignInActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.cryptocenter.andrey.owlsight.ui.screens.register.RegisterActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.cryptocenter.andrey.owlsight.ui.screens.register_sms.RegisterSmsActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.cryptocenter.andrey.owlsight.ui.screens.video.FromDateActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="userLandscape" />
+
+    </application>
+
+</manifest>
