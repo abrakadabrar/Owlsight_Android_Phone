@@ -23,7 +23,6 @@ public class MenuActivity extends BaseActivity implements MenuView {
 
     @InjectPresenter
     MenuPresenter presenter;
-
     public static Intent intent(Context context) {
         return new Intent(context, MenuActivity.class);
     }

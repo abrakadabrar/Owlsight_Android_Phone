@@ -61,6 +61,7 @@ public abstract class BaseFragment extends MvpAndroidXFragment implements BaseVi
 
     @Override
     public void showFailed() {
+
         Toasty.error(getActivity(), "Что - то пошло не так...", Toast.LENGTH_SHORT, true).show();
     }
 

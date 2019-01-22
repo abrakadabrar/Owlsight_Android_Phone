@@ -41,7 +41,6 @@ public class SignInActivity extends BaseActivity implements SignInView {
         return new Intent(context, SignInActivity.class);
     }
 
-
     // =============================================================================================
     // Android
     // =============================================================================================

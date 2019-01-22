@@ -39,7 +39,6 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
 
     @BindView(R.id.refreshLayout)
     SwipeRefreshLayout refreshLayout;
-
     private GroupAdapter adapter;
 
     public static GroupFragment instance(List<Camera> group) {
@@ -131,7 +130,6 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), isLandscape ? 3 : 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
-
 
     // =============================================================================================
     // Moxy
