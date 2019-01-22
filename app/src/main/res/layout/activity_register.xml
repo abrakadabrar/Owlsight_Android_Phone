@@ -243,14 +243,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:text="@string/iAgree"
-                    android:textSize="13sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:text="@string/agreement"
-                    android:textSize="13sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -264,14 +264,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/and"
-                    android:textSize="13sp" />
+                    android:textSize="12sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:text="@string/privacyPolicy"
-                    android:textSize="13sp" />
+                    android:textSize="12sp" />
 
             </LinearLayout>
 
@@ -295,15 +295,16 @@
                 android:background="@drawable/sign_in_button"
                 android:foreground="?android:selectableItemBackground"
                 android:text="@string/signUpBtn"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textAppearance="@style/Base.TextAppearance.MaterialComponents.Button"
+                android:textColor="#FFFF" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/wasRegister"
+                android:textColor="#B0B5C3"
                 android:textSize="16sp" />
 
             <TextView
@@ -312,8 +313,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:text="@string/goToLogin"
+                android:textColor="#FFFF"
                 android:textSize="16sp" />
 
         </LinearLayout>

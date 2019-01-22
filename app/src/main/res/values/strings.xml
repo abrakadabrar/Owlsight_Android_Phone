@@ -13,7 +13,7 @@
     <string name="email">Электронная почта</string>
     <string name="password">Пароль</string>
     <string name="login">LOGIN</string>
-    <string name="sign_in">Sign in</string>
+    <string name="sign_in">Войти</string>
     <string name="bg">bg</string>
     <string name="del_group">Удалить группу</string>
     <string name="monitor_m">Режим просмотра</string>
@@ -165,7 +165,7 @@
     <string name="hide_pwd">Hide Password</string>
     <string name="forgot">Forgot password?</string>
     <string name="closebutton">Close Button for Activity</string>
-    <string name="newUser">Don\'t have account yet? Register.</string>
+    <string name="newUser">Еще не зарегистрированы? Регистрация.</string>
     <string name="fullName">Full Name</string>
     <string name="mobileNumber">Телефон</string>
     <string name="location">Location</string>
@@ -325,5 +325,6 @@ OwelSight, для отправки писем рассылок, новостей
 в Службу поддержки пользователей сайта по электронной почте support@owelsight.com
 </string>
     <string name="received_code">Введите полученный код</string>
+    <string name="sign_in_header">Вход</string>
 
 </resources>
