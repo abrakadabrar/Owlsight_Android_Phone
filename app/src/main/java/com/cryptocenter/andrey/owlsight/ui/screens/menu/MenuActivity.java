@@ -3,6 +3,7 @@ package com.cryptocenter.andrey.owlsight.ui.screens.menu;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -11,15 +12,17 @@ import com.cryptocenter.andrey.owlsight.base.BaseActivity;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.di.Scopes;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
 
+import androidx.annotation.NonNull;
 import toothpick.Toothpick;
 
 import static android.view.Window.FEATURE_NO_TITLE;
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 
-public class MenuActivity extends BaseActivity implements MenuView {
+public class MenuActivity extends BaseActivity implements MenuView, NavigationView.OnNavigationItemSelectedListener {
 
     @InjectPresenter
     MenuPresenter presenter;
@@ -70,5 +73,10 @@ public class MenuActivity extends BaseActivity implements MenuView {
     @ProvidePresenter
     MenuPresenter providePresenter() {
         return Toothpick.openScope(Scopes.APP).getInstance(MenuPresenter.class);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }
