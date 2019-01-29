@@ -12,6 +12,8 @@ import com.cryptocenter.andrey.owlsight.data.model.videofromdatewithmotion.Datum
 
 import java.util.List;
 
+import io.reactivex.disposables.Disposable;
+
 public interface OwlsightRepository {
 
     void login(String email, String password,
@@ -131,7 +133,7 @@ public interface OwlsightRepository {
             Response.Error errorListener,
             Response.Complete completeListener);
 
-    void motions(
+    Disposable motions(
             String id,
             String from,
             String to,

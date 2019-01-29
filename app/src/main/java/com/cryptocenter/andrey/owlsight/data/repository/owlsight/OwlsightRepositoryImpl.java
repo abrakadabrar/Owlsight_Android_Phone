@@ -2,12 +2,12 @@ package com.cryptocenter.andrey.owlsight.data.repository.owlsight;
 
 import com.cryptocenter.andrey.owlsight.data.api.OwlsightAPI;
 import com.cryptocenter.andrey.owlsight.data.model.Group;
-import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
-import com.cryptocenter.andrey.owlsight.data.model.monitor.MonitorCamera;
-import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
-import com.cryptocenter.andrey.owlsight.data.model.api.response.StreamResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.RecordsResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.Response;
+import com.cryptocenter.andrey.owlsight.data.model.api.response.StreamResponse;
+import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
+import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
+import com.cryptocenter.andrey.owlsight.data.model.monitor.MonitorCamera;
 import com.cryptocenter.andrey.owlsight.data.model.motion.DatumFramesMotions;
 import com.cryptocenter.andrey.owlsight.data.model.videofromdatewithmotion.Datum;
 import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class OwlsightRepositoryImpl implements OwlsightRepository {
@@ -447,7 +448,7 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
     }
 
     @Override
-    public void motions(
+    public Disposable motions(
             String id,
             String from,
             String to,
@@ -457,11 +458,11 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
             Response.Error errorListener,
             Response.Complete completeListener
     ) {
-        api.getMotions(id, from, to, preferences.getCookie())
+        return api.getMotions(id, from, to, preferences.getCookie())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(d -> startListener.onStart())
-                .doFinally(() -> completeListener.onComplete())
+                .doFinally(completeListener::onComplete)
                 .subscribe(
                         response -> {
                             if (response.isSuccessful()) {

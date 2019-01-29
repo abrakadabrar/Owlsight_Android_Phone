@@ -1,6 +1,6 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.video;
 
-import android.graphics.Rect;
+import android.graphics.RectF;
 import android.net.Uri;
 
 import com.arellomobile.mvp.InjectViewState;
@@ -11,7 +11,8 @@ import com.cryptocenter.andrey.owlsight.data.model.motion.Frame;
 import com.cryptocenter.andrey.owlsight.data.model.videofromdatewithmotion.Datum;
 import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
-import com.cryptocenter.andrey.owlsight.utils.TimeUtils;
+
+import org.joda.time.LocalTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,23 +21,22 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import io.reactivex.disposables.Disposable;
+
 @InjectViewState
 public class FromDatePresenter extends BasePresenter<FromDateView> {
 
     private final String FILE_PATH = "https://owlsight.com/cabinet/record/get-file/?path=%s&id=%s";
 
     private OwlsightRepository repository;
-    private Preferences preferences;
 
     private HashMap<Integer, DatumFramesMotions> motions = new HashMap<>();
     private Map<String, String> header = new HashMap<>();
-    private Map<Integer, String> map = new HashMap<>();
-    private List<Rect> rectList = new ArrayList<>();
-    private List<Integer> paths = new ArrayList<>();
+    private List<Datum> records;
+    private List<RectF> rectList = new ArrayList<>();
 
     private String cameraId;
-    private int currPath = 0;
-    private int tailTime = 0;
+    private int currentRecordInd;
     private int seek = 0;
 
     private boolean requestComplete = false;
@@ -75,13 +75,16 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
 
     void handleTimeLineSecondClick(int progress) {
         String path = "";
-        if (progress > 600) {
-            seek = progress % 600;
-            for (int index = 0; index < paths.size(); index++) {
-                if (paths.get(index).equals(progress / 600)) {
-                    path = map.get(index);
-                    currPath = progress / 600;
-                }
+        for (int i = 0; i < records.size(); i++) {
+            Datum datum = records.get(i);
+            int startSecond = datum.getStartDate().getSecondOfDay();
+            int endSecond = datum.getEndDate().getSecondOfDay();
+            if (progress >= startSecond &&
+                    progress <= endSecond) {
+                currentRecordInd = i;
+                path = datum.getPath();
+                seek = progress - startSecond;
+                break;
             }
         }
 
@@ -89,18 +92,24 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
     }
 
     void handleVideoCompleted() {
-        if (map.size() > currPath) currPath++;
-        getViewState().setVideoChanged(Uri.parse(String.format(FILE_PATH, map.get(currPath), cameraId)), header, 0);
+        if (currentRecordInd < records.size() - 1) {
+            currentRecordInd++;
+            getViewState().setVideoChanged(Uri.parse(String.format(FILE_PATH, records.get(currentRecordInd).getPath(), cameraId)), header, 0);
+        }
     }
 
+    private String convertTime(int seconds) {
+        return LocalTime.fromMillisOfDay(seconds * 1_000).toString("HH : mm : ss");
+    }
 
     void handleTimerUpdate(boolean isPlaying, int current) {
         if (!requestComplete) return;
 
         if (isPlaying) {
-            int seconds = currPath * 600 + current / 1000 + tailTime + 2;
-            getViewState().setTimeProgress(TimeUtils.timeConv(seconds));
-            getViewState().setCurrentProgress(currPath * 600 + current / 1000);
+            Datum currentRecord = records.get(currentRecordInd);
+            int seconds = currentRecord.getStartDate().getSecondOfDay() + current / 1000;
+            getViewState().setTimeProgress(convertTime(seconds));
+            getViewState().setCurrentProgress(seconds);
             rectList.clear();
 
             for (Integer second : motions.keySet()) {
@@ -133,8 +142,8 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
                 getViewState()::hideLoading);
     }
 
-    private void getFrameMotions(String from, String to) {
-        repository.motions(
+    private Disposable getFrameMotions(String from, String to) {
+        return repository.motions(
                 cameraId,
                 from,
                 to,
@@ -151,22 +160,24 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
     //==============================================================================================
 
     private void proceedRecordsSuccess(List<Datum> records) {
-        for (int index = 0; index < records.size(); index++) {
-            paths.add(index);
-            map.put(index, records.get(index).getPath());
-        }
+        this.records = records;
+        final Datum firstRecord = records.get(0);
+        final Datum lastRecord = records.get(records.size() - 1);
 
-        tailTime = TimeUtils.secondsFromHours(records.get(0).getStart());
-        getFrameMotions(records.get(0).getStart(), records.get(records.size() - 1).getEnd());
-        getViewState().setVideoChanged(Uri.parse(String.format(FILE_PATH, records.get(0).getPath(), cameraId)), header, 0);
+        int minTimeSeconds = firstRecord.getStartDate().getSecondOfDay();
+        int maxTimeSeconds = lastRecord.getStartDate().getSecondOfDay();
+        getViewState().setMinMaxTime(minTimeSeconds, maxTimeSeconds);
+        getFrameMotions(firstRecord.getStart(), lastRecord.getEnd());
+        getViewState().setVideoChanged(Uri.parse(String.format(FILE_PATH, firstRecord.getPath(), cameraId)), header, 0);
     }
 
     private void proceedMotionsSuccess(List<DatumFramesMotions> frames) {
         final List<Integer> lines = new ArrayList<>();
 
         for (DatumFramesMotions framesMotions : frames) {
-            lines.add(TimeUtils.secondsFromHours((framesMotions.getDate())));
-            motions.put(TimeUtils.secondsFromHours(framesMotions.getDate()), framesMotions);
+            int seconds = framesMotions.getDate().getSecondOfDay();
+            lines.add(seconds);
+            motions.put(seconds, framesMotions);
         }
 
         getViewState().setRedLines(lines);

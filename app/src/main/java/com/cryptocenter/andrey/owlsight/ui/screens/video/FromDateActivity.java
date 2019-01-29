@@ -1,11 +1,14 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.video;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Rect;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -34,7 +37,7 @@ import static android.view.Window.FEATURE_NO_TITLE;
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
 
-public class FromDateActivity extends BaseActivity implements FromDateView, TimeLineView.IZoomCallback {
+public class FromDateActivity extends BaseActivity implements FromDateView, TimeLineView.TimeLineCallback {
 
     @InjectPresenter
     FromDatePresenter presenter;
@@ -44,6 +47,9 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
 
     @BindView(R.id.viewTimeLine)
     TimeLineView viewTimeLine;
+
+    @BindView(R.id.bottomSpace)
+    View bottomSpace;
 
     @BindView(R.id.tvProgress)
     TextView tvProgress;
@@ -62,6 +68,7 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
 
     private Handler handler = new Handler();
     private Runnable runner;
+    private Uri currentVideoUrl;
 
     private List<Integer> redLines = new ArrayList<>();
 
@@ -90,7 +97,7 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
     @Override
     protected void onResume() {
         super.onResume();
-        viewTimeLine.setProgress(TimeLineView.SECS_IN_TIME / 2);
+        viewTimeLine.setProgress(TimeLineView.SECS_IN_DAY / 2);
         if (redLines.size() > 0) viewTimeLine.setRedLines(redLines);
     }
 
@@ -130,13 +137,24 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
 
     @Override
     public void setFullscreenMode(boolean isEnable) {
-        viewTimeLine.setVisibility(isEnable ? GONE : VISIBLE);
+        ViewGroup.MarginLayoutParams mlp = (ViewGroup.MarginLayoutParams) bottomSpace.getLayoutParams();
+        ValueAnimator valueAnimator = ValueAnimator.ofInt(mlp.bottomMargin,
+                isEnable ? 0 : viewTimeLine.getHeight());
+        valueAnimator.addUpdateListener(animation -> {
+            mlp.bottomMargin = (int) animation.getAnimatedValue();
+            bottomSpace.requestLayout();
+        });
+        valueAnimator.start();
         btnFullscreen.setVisibility(isEnable ? GONE : VISIBLE);
     }
 
     @Override
     public void setVideoChanged(Uri url, Map<String, String> headers, int seekTo) {
-        viewVideo.setVideoURI(url, headers);
+        if (!url.equals(currentVideoUrl)) {
+            viewVideo.setVideoURI(url, headers);
+            showLoading();
+        }
+        currentVideoUrl = url;
         viewVideo.start();
         if (seekTo != 0) viewVideo.seekTo(seekTo);
     }
@@ -153,10 +171,14 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
     }
 
     @Override
-    public void setMotionRect(List<Rect> rectList) {
+    public void setMotionRect(List<RectF> rectList) {
         viewMotion.setRect(rectList, viewVideo.isPlaying());
     }
 
+    @Override
+    public void setMinMaxTime(int minTimeSeconds, int maxTimeSeconds) {
+        viewTimeLine.setMinMaxTimeSeconds(minTimeSeconds, maxTimeSeconds);
+    }
 
     // =============================================================================================
     // Private
@@ -174,6 +196,7 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
 
         presenter.setCameraData((FromDateData) getIntent().getSerializableExtra("data"));
 
+        viewVideo.setOnPreparedListener(mediaPlayer -> hideLoading());
         viewVideo.setOnCompletionListener(mediaPlayer -> presenter.handleVideoCompleted());
     }
 

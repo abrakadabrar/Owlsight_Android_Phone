@@ -1,11 +1,14 @@
 package com.cryptocenter.andrey.owlsight.data.model.motion;
 
-import android.graphics.Rect;
+import android.graphics.RectF;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class Frame {
+
+    public static final int WIDTH = 1920;
+    public static final int HEIGHT = 1080;
 
     @SerializedName("x")
     @Expose
@@ -74,8 +77,8 @@ public class Frame {
         this.y1 = y1;
     }
 
-    public Rect toRect() {
-        Rect rect = new Rect();
+    public RectF toRect() {
+        RectF rect = new RectF();
         rect.set(x, y, x1, y1);
         return rect;
     }
