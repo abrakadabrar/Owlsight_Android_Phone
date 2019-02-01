@@ -23,6 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginStart="45dp"
+                android:layout_marginTop="@dimen/materialize_statusbar"
                 android:background="@color/colorLineBG" />
 
             <Button
