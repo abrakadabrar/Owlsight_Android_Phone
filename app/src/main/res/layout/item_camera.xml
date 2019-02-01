@@ -3,7 +3,7 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#1E1E20"
+    android:background="#000e7b"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
@@ -56,6 +56,7 @@
                             card_view:layout_constraintStart_toStartOf="parent"
                             card_view:layout_constraintTop_toTopOf="parent" />
 
+
                         <ImageView
                             android:id="@+id/viewRecording"
                             android:layout_width="wrap_content"
@@ -66,11 +67,12 @@
                             card_view:layout_constraintBottom_toBottomOf="parent"
                             card_view:layout_constraintEnd_toEndOf="parent" />
 
+
                         <ImageView
                             android:id="@+id/btnCalendar"
                             android:layout_width="36dp"
                             android:layout_height="36dp"
-                            android:layout_margin="20dp"
+                            android:layout_margin="4dp"
                             android:background="@drawable/circle_button"
                             android:padding="4dp"
                             android:src="@drawable/ic_calendar"
@@ -100,6 +102,20 @@
                             card_view:layout_constraintEnd_toEndOf="parent"
                             card_view:layout_constraintStart_toStartOf="parent"
                             card_view:layout_constraintTop_toBottomOf="@+id/viewWarning" />
+                        <RelativeLayout
+                            android:id="@+id/rl_item_camera_refresh"
+                            android:background="@color/color_transparent_progress"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintEnd_toEndOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent">
+                            <ProgressBar
+                                android:layout_centerInParent="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </RelativeLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -113,12 +129,11 @@
 
                     <TextView
                         android:id="@+id/tvName"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginStart="@dimen/fab_margin"
                         android:maxLines="2"
                         android:text="@string/some_text"
-                        android:textAlignment="center"
                         android:textColor="#FFFF"
                         android:textSize="12sp" />
 

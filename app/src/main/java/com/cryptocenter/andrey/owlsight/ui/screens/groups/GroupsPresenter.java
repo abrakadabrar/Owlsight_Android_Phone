@@ -4,6 +4,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
 import com.cryptocenter.andrey.owlsight.data.model.Group;
+import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
 
@@ -19,6 +20,7 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
     OwlsightRepository repository;
 
     private List<Group> groups;
+    private boolean isMonitorMode = false;
 
     @Override
     protected void onFirstViewAttach() {
@@ -41,6 +43,28 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
     void handleOkEditGroupClick(int position, String title) {
         if (position == 0) return;
         editGroup(groups.get(position).getId(), title);
+    }
+
+    void handleMonitorsModeClick() {
+        if(!isMonitorMode) {
+            fetchMonitors();
+            isMonitorMode = true;
+        } else {
+            getViewState().hideScreens();
+            isMonitorMode = false;
+        }
+    }
+
+    void handleStreamModeClick() {
+        getViewState().addScreen(Screen.STREAM, null);
+    }
+
+    void drawerclosed(){
+        isMonitorMode = false;
+    }
+
+    void handleMonitorSelected(Monitor monitor) {
+        getViewState().addScreen(Screen.MONITOR, monitor);
     }
 
     //==============================================================================================
@@ -66,10 +90,27 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
                 getViewState()::hideLoading);
     }
 
+    private void fetchMonitors() {
+        repository.getMonitors(
+                getViewState()::showLoading,
+                this::proceedMonitorsSuccess,
+                this::showFailed,
+                this::showError,
+                getViewState()::hideLoading);
+    }
+
 
     //==============================================================================================
     // Private
     //==============================================================================================
+
+    private void proceedMonitorsSuccess(List<Monitor> monitors) {
+        if (monitors.isEmpty()) {
+            getViewState().showMessage("Пока тут пусто");
+        } else {
+            getViewState().showAlertMonitors(monitors);
+        }
+    }
 
     private void proceedGroupsSuccess(List<Group> groups) {
         final List<Group> groupsSorted = new ArrayList<>();

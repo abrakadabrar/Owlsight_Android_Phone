@@ -5,6 +5,7 @@ import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
@@ -37,12 +38,19 @@ public class CameraVH extends RecyclerView.ViewHolder {
     @BindView(R.id.btnDelGroup)
     Button btnDelGroup;
 
+    @BindView(R.id.rl_item_camera_refresh)
+    RelativeLayout rlProgress;
+
     private GroupAdapter.OnCameraListener cameraListener;
 
     CameraVH(View itemView, GroupAdapter.OnCameraListener cameraListener) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.cameraListener = cameraListener;
+    }
+
+    public void refreshCamera(Camera camera){
+        cameraListener.onThumbnailLoad(camera);
     }
 
     public void setCamera(Camera camera) {

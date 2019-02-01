@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.cryptocenter.andrey.owlsight.R;
+import com.cryptocenter.andrey.owlsight.base.BaseDialogFragment;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.utils.listeners.OnAlertAddGroupListener;

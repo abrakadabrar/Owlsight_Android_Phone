@@ -37,6 +37,7 @@ public class Camera implements Serializable, Parcelable {
     private int groupCount;
     private String thumbnailUrl = "";
     private List<String> folders;
+    private boolean isRefreshing;
 
     public Camera(String groupName,
                   String groupId,
@@ -55,6 +56,7 @@ public class Camera implements Serializable, Parcelable {
         this.isReachable = isReachable;
         this.hasRecordings = hasRecordings;
         this.groupCount = groupCount;
+        this.isRefreshing = false;
     }
 
     public static Camera getInstanceDelete(Group group) {
@@ -148,6 +150,15 @@ public class Camera implements Serializable, Parcelable {
         this.folders = folders;
     }
 
+    public boolean isRefreshing() {
+        return isRefreshing;
+    }
+
+    public void setRefreshing(boolean refreshing) {
+        isRefreshing = refreshing;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -165,6 +176,7 @@ public class Camera implements Serializable, Parcelable {
         dest.writeInt(this.groupCount);
         dest.writeString(this.thumbnailUrl);
         dest.writeStringList(this.folders);
+        dest.writeByte(this.isRefreshing ? (byte) 1 : (byte) 0);
     }
 
     protected Camera(Parcel in) {
@@ -178,9 +190,10 @@ public class Camera implements Serializable, Parcelable {
         this.groupCount = in.readInt();
         this.thumbnailUrl = in.readString();
         this.folders = in.createStringArrayList();
+        this.isRefreshing = in.readByte() != 0;
     }
 
-    public static final Parcelable.Creator<Camera> CREATOR = new Parcelable.Creator<Camera>() {
+    public static final Creator<Camera> CREATOR = new Creator<Camera>() {
         @Override
         public Camera createFromParcel(Parcel source) {
             return new Camera(source);

@@ -30,4 +30,6 @@
     <color name="colorETBG">#CCEDF3FF</color>
     <color name="colorBG">#323742</color>
     <color name="colorLineBG">#1AFFFFFF</color>
+    <color name="color_transparent_new">#0FFF</color>
+    <color name="color_transparent_progress">#776E7689</color>
 </resources>

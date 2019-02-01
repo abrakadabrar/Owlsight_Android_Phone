@@ -1,5 +1,7 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.group;
 
+import android.os.Handler;
+
 import com.arellomobile.mvp.InjectViewState;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
@@ -48,6 +50,16 @@ public class GroupPresenter extends BasePresenter<GroupView> {
 
     void handleDateSelect(Camera camera, String date) {
         getViewState().addScreen(Screen.VIDEO_FROM_DATE, new FromDateData(camera.getCameraId(), date));
+    }
+
+    void refresh(){
+        getViewState().startRefreshing();
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                getViewState().completeRefreshing();
+//            }
+//        }, 4000);
     }
 
 

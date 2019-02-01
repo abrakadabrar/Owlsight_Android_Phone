@@ -14,4 +14,8 @@ public interface GroupView extends BaseView {
 
     void setCameraThumbnail(Camera camera);
 
+    void startRefreshing();
+
+    void completeRefreshing();
+
 }

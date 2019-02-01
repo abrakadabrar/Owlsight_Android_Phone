@@ -55,6 +55,7 @@ public class SignInPresenter extends BasePresenter<SignInView> {
     //==============================================================================================
 
     private void proceedLoginSuccess(Void v) {
+        getViewState().saveLoginData();
         getViewState().showScreen(GROUPS);
     }
 }

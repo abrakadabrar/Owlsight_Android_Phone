@@ -1,21 +1,28 @@
 package com.cryptocenter.andrey.owlsight.managers;
 
 import android.app.Activity;
+import android.hardware.Camera;
 import android.os.Handler;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.Toast;
 
 import com.cryptocenter.andrey.owlsight.utils.CameraHelper;
+import com.pedro.encoder.input.video.Camera1ApiManager;
 import com.pedro.rtplibrary.rtmp.RtmpCamera1;
 
 import net.ossrs.rtmp.ConnectCheckerRtmp;
+
+import java.util.List;
 
 public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback {
 
     private Activity context;
     private RtmpCamera1 streamCamera;
     private Handler handler;
+    private Camera1ApiManager cameraManager;
+
+
 
     public StreamManager(Activity context) {
         this.context = context;
@@ -72,7 +79,8 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
         streamCamera = new RtmpCamera1(surfaceView, this);
         surfaceView.getHolder().addCallback(this);
         if (!streamCamera.isStreaming()) {
-            if (streamCamera.isRecording() || streamCamera.prepareAudio() && streamCamera.prepareVideo() || prepareEncoders()) {
+            if (streamCamera.isRecording() || prepareEncoders()) {
+
                 streamCamera.startStream(url);
             } else {
                 Toast.makeText(context, "Error preparing stream, This device cant do it", Toast.LENGTH_SHORT).show();
@@ -101,9 +109,16 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
     }
 
     private boolean prepareEncoders() {
-        return streamCamera.prepareVideo(720, 1024, 10,
-                720 * 1024,
-                false, CameraHelper.getCameraOrientation(context))
-                && streamCamera.prepareAudio(128 * 1024, 720 * 1024, false, false, false);
+        return streamCamera.prepareVideo(1280, 720, 30, 1228800,false, CameraHelper.getCameraOrientation(context))
+                && streamCamera.prepareAudio(128 * 1024, 32000, false, false, false);
+    }
+
+
+    public List<Camera.Size> getResolutionsBack() {
+        return cameraManager.getPreviewSizeBack();
+    }
+
+    public List<Camera.Size> getResolutionsFront() {
+        return cameraManager.getPreviewSizeFront();
     }
 }

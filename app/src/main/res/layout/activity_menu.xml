@@ -79,7 +79,76 @@
                 android:layout_marginStart="45dp"
                 android:layout_marginBottom="8dp"
                 android:background="@color/colorLineBG" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/line_top"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/linear_layout_payment_border"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="19dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/ic_img_wallet" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/balance"
+                    android:textSize="14sp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <Button
+                        android:id="@+id/btn_payment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/tool_bar_menu_btn_payment"
+                        android:padding="5dp"
+                        android:singleLine="true"
+                        android:text="@string/payment"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Menu"
+                        android:textSize="16sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_marginStart="35dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:textColor="@color/white"
+                    android:layout_weight="5"
+                    android:text="@string/menu_finger_enable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <Switch
+                    android:id="@+id/sw_activity_menu_finger"
+                    android:layout_weight="1"
+                    android:layout_gravity="end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
         </LinearLayout>
+
 
     </ScrollView>
 

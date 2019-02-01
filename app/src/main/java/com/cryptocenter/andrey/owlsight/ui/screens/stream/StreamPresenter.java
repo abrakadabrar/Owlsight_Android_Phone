@@ -44,13 +44,12 @@ public class StreamPresenter extends BasePresenter<StreamView> {
 
     void handleCheckStatus() {
         checkStatus();
-        handler.postDelayed(checkerStatus, 500);
+        handler.postDelayed(checkerStatus, 5000);
     }
 
     void startingHello() {
         checkerStatus.run();
     }
-
     void stoppingHello() {
         if (handler != null) handler.removeCallbacks(checkerStatus);
     }
