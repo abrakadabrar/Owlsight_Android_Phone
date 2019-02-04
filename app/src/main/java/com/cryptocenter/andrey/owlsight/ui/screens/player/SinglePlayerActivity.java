@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cryptocenter.andrey.owlsight.R;
-import com.cryptocenter.andrey.owlsight.base.BaseActivity;
 import com.cryptocenter.andrey.owlsight.managers.SinglePlayerManager;
 import com.google.android.exoplayer2.ui.PlayerView;
 
@@ -14,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SinglePlayerActivity extends BaseActivity {
+public class SinglePlayerActivity extends AppCompatActivity {
 
     private SinglePlayerManager playerManager;
 
