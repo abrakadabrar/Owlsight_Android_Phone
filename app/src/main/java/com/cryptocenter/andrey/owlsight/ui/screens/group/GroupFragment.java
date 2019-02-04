@@ -54,7 +54,6 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         return groupFragment;
     }
 
-
     // =============================================================================================
     // Android
     // =============================================================================================
@@ -138,7 +137,7 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
 
     @Override
     public void completeRefreshing() {
-//        adapter.completeRefreshing();
+    // adapter.completeRefreshing();
     }
 
     // =============================================================================================

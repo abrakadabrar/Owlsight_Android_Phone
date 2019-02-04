@@ -26,17 +26,14 @@ public class SinglePlayerManager implements Player.EventListener {
     private int currentWindow = 0;
     private long playbackPosition = 0;
     private boolean playWhenReady = true;
-
     private ProgressDialog progress;
 
     public SinglePlayerManager(Context context, String id) {
         this.context = context;
         this.id = id;
-
         progress = new ProgressDialog(context);
         progress.setCancelable(false);
         progress.setTitle("Загузка стрима");
-
         initPlayer();
     }
 
