@@ -3,10 +3,8 @@ package com.cryptocenter.andrey.owlsight.ui.screens.group;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
-
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.cryptocenter.andrey.owlsight.R;
@@ -18,11 +16,9 @@ import com.cryptocenter.andrey.owlsight.ui.custom.CameraLoadingDialog;
 import com.cryptocenter.andrey.owlsight.ui.screens.group.adapter.GroupAdapter;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;

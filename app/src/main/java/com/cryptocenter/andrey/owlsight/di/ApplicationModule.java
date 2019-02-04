@@ -30,13 +30,13 @@ class ApplicationModule extends Module {
 
     private ApplicationModule(Context context, String preferencesName) {
         final HttpLoggingInterceptor okHttpInterceptorLogging = new HttpLoggingInterceptor();
-        okHttpInterceptorLogging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        okHttpInterceptorLogging.setLevel(HttpLoggingInterceptor.Level.NONE);
 
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(
                         new LoggingInterceptor.Builder()
                                 .loggable(BuildConfig.DEBUG)
-                                .setLevel(Level.BODY)
+                                .setLevel(Level.NONE)
                                 .log(Platform.INFO)
                                 .tag("OkHttp")
                                 .build()

@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SinglePlayerActivity extends AppCompatActivity {
+public class    SinglePlayerActivity extends AppCompatActivity {
 
     private SinglePlayerManager playerManager;
 
@@ -26,6 +26,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("DA======================================================================================================>");
         setContentView(R.layout.activity_single_player);
         ButterKnife.bind(this);
     }
