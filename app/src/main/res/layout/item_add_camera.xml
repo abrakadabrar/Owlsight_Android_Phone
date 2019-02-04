@@ -16,14 +16,20 @@
             android:layout_height="match_parent"
             android:background="@drawable/border">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/add_camera_btn"
-                android:textColor="@color/caldroid_sky_blue" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@drawable/ic_add_cam" />
+
         </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="bottom"
+            android:text="@string/add_camera_btn"
+            android:textColor="@color/caldroid_sky_blue" />
     </androidx.cardview.widget.CardView>
 
 </LinearLayout>

@@ -6,6 +6,7 @@ import com.arellomobile.mvp.InjectViewState;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.RecordsResponse;
+import com.cryptocenter.andrey.owlsight.data.model.api.response.Response;
 import com.cryptocenter.andrey.owlsight.data.model.data.FromDateData;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
@@ -22,6 +23,8 @@ public class GroupPresenter extends BasePresenter<GroupView> {
 
     private OwlsightRepository repository;
     private List<Camera> cameras;
+    private boolean handleCameraResponce = true;
+    private boolean isLoading = false;
 
 
     @Inject
@@ -62,6 +65,14 @@ public class GroupPresenter extends BasePresenter<GroupView> {
 //        }, 4000);
     }
 
+    void handleCameraResponce(boolean handle){
+        this.handleCameraResponce = handle;
+    }
+
+    void setLoading(boolean isLoading){
+        this.isLoading = isLoading;
+    }
+
 
     //==============================================================================================
     // API
@@ -78,11 +89,38 @@ public class GroupPresenter extends BasePresenter<GroupView> {
     void handleCameraClick(Camera camera) {
         repository.getCamera(
                 camera.getCameraId(),
-                getViewState()::showLoading,
+                new Response.Start() {
+                    @Override
+                    public void onStart() {
+                        if(!isLoading) {
+                            isLoading = true;
+                            getViewState().showLoading();
+                        }
+                    }
+                },
                 this::proceedGetCameraSuccess,
-                this::showFailed,
-                this::showError,
-                getViewState()::hideLoading);
+                new Response.Failed() {
+                    @Override
+                    public void onFailed() {
+                        if (handleCameraResponce) {
+                            handleCameraClick(camera);
+                        }
+                    }
+                },
+                new Response.Error() {
+                    @Override
+                    public void onError(Throwable error) {
+                        if (handleCameraResponce) {
+                            handleCameraClick(camera);
+                        }
+                    }
+                },
+                new Response.Complete() {
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     private void deleteGroup(Camera camera) {
@@ -111,7 +149,9 @@ public class GroupPresenter extends BasePresenter<GroupView> {
     //==============================================================================================
 
     private void proceedGetCameraSuccess(String id) {
-        getViewState().addScreen(SINGLE_PLAYER, id);
+        if(handleCameraResponce) {
+            getViewState().addScreen(SINGLE_PLAYER, id);
+        }
     }
 
     private void proceedGetCameraThumbnailSuccess(Camera camera, String data) {

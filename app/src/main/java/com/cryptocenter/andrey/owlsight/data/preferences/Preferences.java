@@ -2,7 +2,6 @@ package com.cryptocenter.andrey.owlsight.data.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 public class Preferences {
 
     private static final String PREFERENCES_NAME = "autohelp-preferences";
@@ -45,6 +44,6 @@ public class Preferences {
     }
 
     public boolean isFingerAuth() {
-        return preferences.getBoolean(PREFERENCE_FINGER, false);
+        return preferences.getBoolean(PREFERENCE_FINGER, true);
     }
 }

@@ -17,6 +17,7 @@ import com.cryptocenter.andrey.owlsight.di.Scopes;
 import com.cryptocenter.andrey.owlsight.ui.custom.CameraLoadingDialog;
 import com.cryptocenter.andrey.owlsight.ui.screens.group.adapter.GroupAdapter;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
+import com.cryptocenter.andrey.owlsight.utils.Screen;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -80,6 +81,11 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
 
     }
 
+    @Override
+    public void addScreen(Screen screen, Object data) {
+        hideLoading();
+        super.addScreen(screen, data);
+    }
 
     // =============================================================================================
     // View
@@ -93,6 +99,8 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
 
     @Override
     public void onCameraClick(Camera camera) {
+        presenter.handleCameraResponce(true);
+        presenter.setLoading(false);
         presenter.handleCameraClick(camera);
     }
 
@@ -187,6 +195,7 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 alertDialog.dismiss();
+                presenter.handleCameraResponce(false);
             }
         });
         alertDialog = builder.show();
