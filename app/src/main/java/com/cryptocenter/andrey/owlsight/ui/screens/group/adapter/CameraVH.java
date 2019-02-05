@@ -41,8 +41,6 @@ public class CameraVH extends RecyclerView.ViewHolder {
     @BindView(R.id.rl_item_camera_refresh)
     RelativeLayout rlProgress;
 
-    @BindView (R.id. rl_item_camera_unaviable)
-    RelativeLayout rlShadow;
 
     private GroupAdapter.OnCameraListener cameraListener;
 
@@ -66,7 +64,6 @@ public class CameraVH extends RecyclerView.ViewHolder {
         if (camera.getIsReachable() != null && camera.getIsReachable().equals("1")) {
             tvWarningMessage.setVisibility(View.GONE);
             viewWarning.setVisibility(View.GONE);
-            rlShadow.setVisibility(View.GONE);
         }
 
         if (camera.getHasRecordings() != null && camera.getHasRecordings().equals("0")) {
