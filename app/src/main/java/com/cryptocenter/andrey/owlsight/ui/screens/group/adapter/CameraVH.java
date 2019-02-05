@@ -1,6 +1,7 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.group.adapter;
 
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -81,8 +82,10 @@ public class CameraVH extends RecyclerView.ViewHolder {
         }
 
 
-        if(camera.getHasRecordings() != null && !camera.getHasRecordings().equals("0"))
-        itemView.setOnClickListener(v -> cameraListener.onCameraClick(camera));
+        if(camera.getHasRecordings() != null && camera.getIsReachable().equals("1")) {
+            itemView.setOnClickListener(v -> cameraListener.onCameraClick(camera));
+            rlProgress.setBackgroundColor(Color.parseColor("#9C050505"));
+        }
         btnCalendar.setOnClickListener(v -> cameraListener.onCalendarClick(camera));
         btnDelGroup.setOnClickListener(v -> cameraListener.onDeleteClick(camera));
     }

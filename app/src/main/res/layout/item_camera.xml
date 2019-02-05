@@ -119,8 +119,18 @@
                                 android:layout_height="wrap_content" />
                         </RelativeLayout>
 
+                        <RelativeLayout
+                            android:id="@+id/rl_item_camera_shadow"
+                            android:background="@color/color_transparent_shadow"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintEnd_toEndOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
                 </LinearLayout>
 
