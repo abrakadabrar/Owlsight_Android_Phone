@@ -76,7 +76,7 @@ public abstract class BaseActivity extends MvpAndroidXActivity implements BaseVi
                 startActivity(MonitorActivity.intent(this, (Monitor) data));
                 break;
             case SINGLE_PLAYER:
-               // startActivity(SinglePlayerActivity.intent(this, (String) data));
+                startActivity(SinglePlayerActivity.intent(this, (String) data));
                 break;
         }
     }

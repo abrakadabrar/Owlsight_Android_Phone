@@ -1,8 +1,10 @@
 package com.cryptocenter.andrey.owlsight.base;
 
 import com.arellomobile.mvp.MvpView;
+import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
-
+@StateStrategyType(SkipStrategy.class)
 public interface BaseView extends MvpView {
 
     void bind();
