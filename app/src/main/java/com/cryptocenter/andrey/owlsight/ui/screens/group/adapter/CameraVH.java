@@ -80,6 +80,8 @@ public class CameraVH extends RecyclerView.ViewHolder {
             }
         }
 
+
+        if(camera.getHasRecordings() != null && !camera.getHasRecordings().equals("0"))
         itemView.setOnClickListener(v -> cameraListener.onCameraClick(camera));
         btnCalendar.setOnClickListener(v -> cameraListener.onCalendarClick(camera));
         btnDelGroup.setOnClickListener(v -> cameraListener.onDeleteClick(camera));
