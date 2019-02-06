@@ -42,6 +42,9 @@ public class CameraVH extends RecyclerView.ViewHolder {
     @BindView(R.id.rl_item_camera_refresh)
     RelativeLayout rlProgress;
 
+    @BindView(R.id.rl_item_camera_shadow)
+    RelativeLayout rlShadow;
+
 
     private GroupAdapter.OnCameraListener cameraListener;
 
@@ -64,6 +67,7 @@ public class CameraVH extends RecyclerView.ViewHolder {
 
         if (camera.getIsReachable() != null && camera.getIsReachable().equals("1")) {
             tvWarningMessage.setVisibility(View.GONE);
+            rlShadow.setVisibility(View.GONE);
             viewWarning.setVisibility(View.GONE);
         }
 
@@ -84,7 +88,7 @@ public class CameraVH extends RecyclerView.ViewHolder {
 
         if(camera.getHasRecordings() != null && camera.getIsReachable().equals("1")) {
             itemView.setOnClickListener(v -> cameraListener.onCameraClick(camera));
-            rlProgress.setBackgroundColor(Color.parseColor("#9C050505"));
+
         }
         btnCalendar.setOnClickListener(v -> cameraListener.onCalendarClick(camera));
         btnDelGroup.setOnClickListener(v -> cameraListener.onDeleteClick(camera));

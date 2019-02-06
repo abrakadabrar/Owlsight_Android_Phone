@@ -55,6 +55,8 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((CameraVH) holder).setCamera(list.get(position));
             if(list.get(position).isRefreshing()){
                 ((CameraVH) holder).rlProgress.setVisibility(View.VISIBLE);
+                //if(camera)
+                ((CameraVH) holder).rlShadow.setVisibility(View.VISIBLE);
                 ((CameraVH) holder).refreshCamera(list.get(position));
             } else {
                 ((CameraVH) holder).rlProgress.setVisibility(View.GONE);
