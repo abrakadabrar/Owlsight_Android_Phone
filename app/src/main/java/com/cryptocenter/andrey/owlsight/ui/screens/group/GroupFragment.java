@@ -159,7 +159,7 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         });
         final boolean isLandscape = getResources().getConfiguration().orientation == ORIENTATION_LANDSCAPE;
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), isLandscape ? 3 : 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), isLandscape ? 2 : 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 

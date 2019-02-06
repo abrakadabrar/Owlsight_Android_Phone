@@ -12,9 +12,11 @@ import android.widget.TextView;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
 import com.cryptocenter.andrey.owlsight.R;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Optional;
 
 public class CameraVH extends RecyclerView.ViewHolder {
 
@@ -42,6 +44,7 @@ public class CameraVH extends RecyclerView.ViewHolder {
     @BindView(R.id.rl_item_camera_refresh)
     RelativeLayout rlProgress;
 
+    @Nullable
     @BindView(R.id.rl_item_camera_shadow)
     RelativeLayout rlShadow;
 
@@ -67,7 +70,10 @@ public class CameraVH extends RecyclerView.ViewHolder {
 
         if (camera.getIsReachable() != null && camera.getIsReachable().equals("1")) {
             tvWarningMessage.setVisibility(View.GONE);
-            rlShadow.setVisibility(View.GONE);
+
+            if (rlShadow != null) {
+                rlShadow.setVisibility(View.GONE);
+            }
             viewWarning.setVisibility(View.GONE);
         }
 

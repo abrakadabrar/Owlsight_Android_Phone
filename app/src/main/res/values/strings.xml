@@ -19,7 +19,7 @@
     <string name="del_group">Удалить группу</string>
     <string name="monitor_m">Режим просмотра</string>
     <string name="payment">Пополнить</string>
-    <string name="balance">Баланс: 1200 ₽</string>
+    <string name="balance">Баланс: 0 ₽</string>
     <string name="camera_mode">Режим камеры</string>
     <string name="close">close</string>
     <string name="start_broadcasting">Start Broadcasting</string>
