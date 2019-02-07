@@ -15,6 +15,7 @@ import com.cryptocenter.andrey.owlsight.base.BaseActivity;
 import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
 import com.cryptocenter.andrey.owlsight.di.Scopes;
 import com.cryptocenter.andrey.owlsight.R;
+//import com.stfalcon.smsverifycatcher.SmsVerifyCatcher;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,6 +40,7 @@ public class RegisterSmsActivity extends BaseActivity implements RegisterSmsView
     @BindView(R.id.tvTime)
     TextView tvTime;
 
+    //private SmsVerifyCatcher smsVerifyCatcher;
 
     public static Intent intent(Context context, RegisterData registerData) {
         final Intent intent = new Intent(context, RegisterSmsActivity.class);
@@ -60,10 +62,11 @@ public class RegisterSmsActivity extends BaseActivity implements RegisterSmsView
         setupUI();
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-    }
+    //@Override
+    //public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        //smsVerifyCatcher.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    //}
 
     @Override
     public void onBackPressed() {
@@ -73,11 +76,13 @@ public class RegisterSmsActivity extends BaseActivity implements RegisterSmsView
     @Override
     protected void onStart() {
         super.onStart();
+        //smsVerifyCatcher.onStart();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        //smsVerifyCatcher.onStop();
     }
 
 
@@ -102,7 +107,7 @@ public class RegisterSmsActivity extends BaseActivity implements RegisterSmsView
     // =============================================================================================
 
     private void setupUI() {
-
+        //smsVerifyCatcher = new SmsVerifyCatcher(this, message -> presenter.handleCodeInput(message.replaceAll("\\D+","")));
         btnClose.setOnClickListener(v -> finish());
         etCode.addTextChangedListener(new TextWatcher() {
             @Override
