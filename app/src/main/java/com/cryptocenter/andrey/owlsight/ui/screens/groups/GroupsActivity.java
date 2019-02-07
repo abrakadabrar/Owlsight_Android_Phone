@@ -164,7 +164,7 @@ public class GroupsActivity extends BaseActivity implements GroupsView {
 
     private void setupMenu() {
         menuView = LayoutInflater.from(this).inflate(R.layout.drawer_latoyut, null, false);
-//        menuView.findViewById(R.id.btnClose).setOnClickListener(v -> drawer.closeDrawer());
+//      menuView.findViewById(R.id.btnClose).setOnClickListener(v -> drawer.closeDrawer());
         menuView.findViewById(R.id.btn_monitor_mode).setOnClickListener(v -> presenter.handleMonitorsModeClick());
         menuView.findViewById(R.id.btn_camera_mode).setOnClickListener(v -> presenter.handleStreamModeClick());
         menuView.findViewById(R.id.btn_camera_mode).setOnClickListener(v -> presenter.handleStreamModeClick());
