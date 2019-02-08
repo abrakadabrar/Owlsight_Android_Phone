@@ -28,7 +28,6 @@
             android:text="@string/signUp"
             android:textColor="@color/txtToolBar"
             android:textSize="19sp" />
-
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.core.widget.NestedScrollView
@@ -243,12 +242,15 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:text="@string/iAgree"
+                    android:textColor="#FFF"
                     android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
+
+                    android:textColor="#FFF"
                     android:text="@string/agreement"
                     android:textSize="13sp" />
 
@@ -264,12 +266,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/and"
+                    android:textColor="#FFF"
                     android:textSize="13sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
+                    android:textColor="#FFF"
                     android:text="@string/privacyPolicy"
                     android:textSize="13sp" />
 
@@ -295,6 +299,7 @@
                 android:background="@drawable/sign_in_button"
                 android:foreground="?android:selectableItemBackground"
                 android:text="@string/signUpBtn"
+                android:textColor="#FFF"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -303,6 +308,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="32dp"
+                android:textColor="#FFF"
                 android:text="@string/wasRegister"
                 android:textSize="16sp" />
 
@@ -313,6 +319,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="16dp"
                 android:padding="8dp"
+                android:textColor="#FFF"
                 android:text="@string/goToLogin"
                 android:textSize="16sp" />
 

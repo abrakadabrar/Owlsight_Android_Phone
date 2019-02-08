@@ -32,5 +32,5 @@
     <color name="colorLineBG">#1AFFFFFF</color>
     <color name="color_transparent_new">#0FFF</color>
     <color name="color_transparent_progress">#776E7689</color>
-    <color name="color_transparent_shadow">#9C050505</color>
+    <color name="color_transparent_shadow">#BE050505</color>
 </resources>

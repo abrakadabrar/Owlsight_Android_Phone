@@ -44,7 +44,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center">
-    
+
                         <ImageView
                             android:id="@+id/ivPreview"
                             android:layout_width="200dp"
@@ -67,6 +67,15 @@
                             card_view:layout_constraintBottom_toBottomOf="parent"
                             card_view:layout_constraintEnd_toEndOf="parent" />
 
+                        <RelativeLayout
+                            android:id="@+id/rl_item_camera_shadow"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:background="@color/color_transparent_shadow"
+                            card_view:layout_constraintBottom_toBottomOf="parent"
+                            card_view:layout_constraintEnd_toEndOf="parent"
+                            card_view:layout_constraintStart_toStartOf="parent"
+                            card_view:layout_constraintTop_toTopOf="parent" />
 
                         <ImageView
                             android:id="@+id/btnCalendar"
@@ -105,29 +114,20 @@
 
                         <RelativeLayout
                             android:id="@+id/rl_item_camera_refresh"
-                            android:background="@color/color_transparent_progress"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
+                            android:background="@color/color_transparent_progress"
                             card_view:layout_constraintBottom_toBottomOf="parent"
                             card_view:layout_constraintEnd_toEndOf="parent"
                             card_view:layout_constraintStart_toStartOf="parent"
                             card_view:layout_constraintTop_toTopOf="parent">
 
                             <ProgressBar
-                                android:layout_centerInParent="true"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true" />
                         </RelativeLayout>
 
-                        <RelativeLayout
-                            android:id="@+id/rl_item_camera_shadow"
-                            android:background="@color/color_transparent_shadow"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            card_view:layout_constraintBottom_toBottomOf="parent"
-                            card_view:layout_constraintEnd_toEndOf="parent"
-                            card_view:layout_constraintStart_toStartOf="parent"
-                            card_view:layout_constraintTop_toTopOf="parent"/>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

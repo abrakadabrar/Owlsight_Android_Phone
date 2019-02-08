@@ -50,12 +50,10 @@
                             android:layout_width="350dp"
                             android:layout_height="300dp"
                             android:gravity="center"
-                            android:src="@drawable/ic_photo"
                             card_view:layout_constraintBottom_toBottomOf="parent"
                             card_view:layout_constraintEnd_toEndOf="parent"
                             card_view:layout_constraintStart_toStartOf="parent"
                             card_view:layout_constraintTop_toTopOf="parent" />
-
 
                         <ImageView
                             android:id="@+id/viewRecording"
@@ -66,7 +64,6 @@
                             android:padding="4dp"
                             card_view:layout_constraintBottom_toBottomOf="parent"
                             card_view:layout_constraintEnd_toEndOf="parent" />
-
 
                         <ImageView
                             android:id="@+id/btnCalendar"
