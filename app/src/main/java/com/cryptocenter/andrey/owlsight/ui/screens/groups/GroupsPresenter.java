@@ -121,7 +121,7 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
                     if (camera.getHasRecordings() == null) {
                         camera.setGroupName(group.getGroupName());
                         camera.setGroupId(group.getId());
-                        camera.setIsReachable("0");
+                        camera.setIsReachable(camera.getIsReachable());
                     } else {
                         camera.setGroupName(group.getGroupName());
                         camera.setGroupId(group.getId());
