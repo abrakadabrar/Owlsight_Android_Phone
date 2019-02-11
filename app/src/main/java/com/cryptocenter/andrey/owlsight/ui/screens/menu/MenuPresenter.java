@@ -16,7 +16,6 @@ public class MenuPresenter extends BasePresenter<MenuView> {
     @Inject
     OwlsightRepository repository;
 
-
     void handleCloseClick() {
         getViewState().onBackClicked();
     }
@@ -33,7 +32,6 @@ public class MenuPresenter extends BasePresenter<MenuView> {
         getViewState().addScreen(Screen.MONITOR, monitor);
     }
 
-
     //==============================================================================================
     // API
     //==============================================================================================
@@ -46,7 +44,6 @@ public class MenuPresenter extends BasePresenter<MenuView> {
                 this::showError,
                 getViewState()::hideLoading);
     }
-
 
     //==============================================================================================
     // Private

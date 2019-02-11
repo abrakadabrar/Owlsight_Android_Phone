@@ -62,7 +62,6 @@ public class GroupsActivity extends BaseActivity implements GroupsView {
         return new Intent(context, GroupsActivity.class);
     }
 
-
     // =============================================================================================
     // Android
     // =============================================================================================
