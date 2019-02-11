@@ -89,6 +89,12 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     @Override
     public void setGroup(List<Camera> cameras) {
         adapter = new GroupAdapter(cameras, this);
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setItemViewCacheSize(20);
+        recyclerView.setDrawingCacheEnabled(true);
+        recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
         recyclerView.setAdapter(adapter);
     }
 
