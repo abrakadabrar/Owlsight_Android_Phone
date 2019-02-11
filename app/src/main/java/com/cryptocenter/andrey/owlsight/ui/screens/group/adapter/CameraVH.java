@@ -48,7 +48,6 @@ public class CameraVH extends RecyclerView.ViewHolder {
     @BindView(R.id.rl_item_camera_shadow)
     RelativeLayout rlShadow;
 
-
     private GroupAdapter.OnCameraListener cameraListener;
 
     CameraVH(View itemView, GroupAdapter.OnCameraListener cameraListener) {
@@ -91,10 +90,10 @@ public class CameraVH extends RecyclerView.ViewHolder {
             }
         }
 
-
         if(camera.getHasRecordings() != null && camera.getIsReachable().equals("1")) {
             itemView.setOnClickListener(v -> cameraListener.onCameraClick(camera));
         }
+
         btnCalendar.setOnClickListener(v -> cameraListener.onCalendarClick(camera));
         btnDelGroup.setOnClickListener(v -> cameraListener.onDeleteClick(camera));
     }

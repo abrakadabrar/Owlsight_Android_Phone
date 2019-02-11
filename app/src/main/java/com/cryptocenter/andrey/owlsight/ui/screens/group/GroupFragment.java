@@ -163,7 +163,6 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-
     // =============================================================================================
     // Moxy
     // =============================================================================================

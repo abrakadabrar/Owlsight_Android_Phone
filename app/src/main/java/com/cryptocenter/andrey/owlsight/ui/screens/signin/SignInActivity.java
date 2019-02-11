@@ -82,15 +82,15 @@ public class SignInActivity extends BaseActivity implements SignInView,Fingerpri
             etEmail.setText(loginData[0]);
             etPassword.setText(loginData[1]);
         }else {
-            //etEmail.setText("kvazar@gmail.com");
-            //etPassword.setText("fado5518");
+            etEmail.setText("kvazar@gmail.com");
+            etPassword.setText("fado5518");
         }
         etEmail.setSelection(etEmail.getText().toString().length());
         etPassword.setSelection(etPassword.getText().toString().length());
 
         btnLogin.setOnClickListener(v -> presenter.handleLoginClick(etEmail.getText().toString(), etPassword.getText().toString()));
         tvSignUp.setOnClickListener(v -> presenter.handleRegistrationClick());
-        //btnLogin.callOnClick();
+        btnLogin.callOnClick();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
