@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_columnSpan="3"
     android:layout_gravity="center"
-    android:background="@drawable/alert_dialog_bg"
-    tools:context="com.cryptocenter.andrey.ui.screens.video.MonitorModeActivity">
+    android:background="@drawable/alert_dialog_bg">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMonitors"

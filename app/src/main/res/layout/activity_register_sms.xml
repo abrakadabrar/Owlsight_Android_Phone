@@ -51,7 +51,7 @@
                 android:layout_marginTop="24dp"
                 android:gravity="center"
                 android:textColor="#9E9E9E"
-                android:text="Введите код, отправленный на номе или в виде push:" />
+                android:text="Введите код, отправленный на номер или в виде push:" />
 
             <Space
                 android:layout_width="match_parent"

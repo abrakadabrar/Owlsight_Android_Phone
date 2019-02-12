@@ -96,7 +96,7 @@ public class DarkCalDialog extends androidx.fragment.app.DialogFragment {
         }
 
         for (int i = 0; i < markedDays.size(); i++) {
-            colors.put(markedDays.get(i), (R.color.colorAccent));
+            colors.put(markedDays.get(i), (R.color.color_bg_error));
         }
         caldroidFragment.setBackgroundDrawableForDates(dates);
         caldroidFragment.setTextColorForDates(colors);
