@@ -101,7 +101,9 @@ public class CameraVH extends RecyclerView.ViewHolder {
             cameraListener.onThumbnailUploadLoad(camera);
         }
 
-        itemView.setOnClickListener(v -> cameraListener.onCameraClick(camera));
+        if(camera.getIsReachable().equals("1")) {
+            itemView.setOnClickListener(v -> cameraListener.onCameraClick(camera));
+        }
         btnCalendar.setOnClickListener(v -> cameraListener.onCalendarClick(camera));
         btnDelGroup.setOnClickListener(v -> cameraListener.onDeleteClick(camera));
     }
