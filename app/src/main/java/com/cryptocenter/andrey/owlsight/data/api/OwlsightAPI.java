@@ -36,6 +36,14 @@ public interface OwlsightAPI {
             @Query("password") String password,
             @Query("rePassword") String rePassword);
 
+
+    @Headers({"Accept: */*", "Content-Type: application/json; charset=UTF-8"})
+    @GET("/api/papi/get-updated-thumbnail?&w=500&h=500")
+    Observable<ThumbnailResponse> getCameraThumbnailUpdated(
+            @Query("id") String id,
+            @Header("Cookie") String cookie);
+
+
     @GET("/user/register/app-second-step")
     Observable<Response<JsonObject>> registerSecondStep(
             @Query("firstName") String firstName,

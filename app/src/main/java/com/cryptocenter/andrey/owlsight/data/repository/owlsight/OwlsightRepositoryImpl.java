@@ -65,6 +65,25 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
     }
 
     @Override
+    public void getCameraThumbnailUpdated(
+            String id,
+            Response.Success<String> successListener
+    ) {
+        api.getCameraThumbnailUpdated(id, preferences.getCookie())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        response -> {
+                            if (response.getSuccess()) {
+                                successListener.onSuccess(response.getData());
+                            }
+                        }, throwable -> {
+                        }
+                );
+    }
+
+
+    @Override
     public void registerFirstStep(
             RegisterData data,
             Response.Start startListener,

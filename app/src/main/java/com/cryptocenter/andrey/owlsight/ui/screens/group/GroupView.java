@@ -18,4 +18,5 @@ public interface GroupView extends BaseView {
 
     void completeRefreshing();
 
+    void refreshGroups();
 }

@@ -39,6 +39,13 @@ public class GroupPresenter extends BasePresenter<GroupView> {
         getViewState().setGroup(cameras);
     }
 
+    void setCameras(List<Camera> cameras){
+        this.cameras = cameras;
+//        getViewState().startRefreshing();
+//        getViewState().setGroup(cameras);
+
+    }
+
     void handleDeleteGroupClick(Camera camera) {
         getViewState().showWarningDeleteGroup(camera);
     }
@@ -56,7 +63,8 @@ public class GroupPresenter extends BasePresenter<GroupView> {
     }
 
     void refresh(){
-        getViewState().startRefreshing();
+        getViewState().refreshGroups();
+//        getViewState().startRefreshing();
 //        new Handler().postDelayed(new Runnable() {
 //            @Override
 //            public void run() {
@@ -84,6 +92,10 @@ public class GroupPresenter extends BasePresenter<GroupView> {
 
     void handleGetThumbnail(Camera camera) {
         repository.getCameraThumbnail(camera.getCameraId(), data -> proceedGetCameraThumbnailSuccess(camera, data));
+    }
+
+    void handleGetThumbnailUpload(Camera camera) {
+        repository.getCameraThumbnailUpdated(camera.getCameraId(), data -> proceedGetCameraThumbnailUploadSuccess(camera, data));
     }
 
     void handleCameraClick(Camera camera) {
@@ -143,6 +155,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
                 getViewState()::hideLoading);
     }
 
+
     //==============================================================================================
     // Private
     //==============================================================================================
@@ -154,6 +167,12 @@ public class GroupPresenter extends BasePresenter<GroupView> {
     }
 
     private void proceedGetCameraThumbnailSuccess(Camera camera, String data) {
+        camera.setThumbnailUrl(data);
+        getViewState().setCameraThumbnail(camera);
+    }
+
+    private void proceedGetCameraThumbnailUploadSuccess(Camera camera, String data) {
+        camera.setRefreshing(false);
         camera.setThumbnailUrl(data);
         getViewState().setCameraThumbnail(camera);
     }

@@ -9,7 +9,6 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
-
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.cryptocenter.andrey.owlsight.R;
@@ -18,17 +17,17 @@ import com.cryptocenter.andrey.owlsight.data.model.Group;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
 import com.cryptocenter.andrey.owlsight.di.Scopes;
+import com.cryptocenter.andrey.owlsight.ui.screens.group.GroupFragment;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.adapter.GroupsPagerAdapter;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.adapter.MenuScreenAdapter;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.DrawerUtil;
 import com.mikepenz.materialdrawer.Drawer;
-
 import java.util.List;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -36,7 +35,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import toothpick.Toothpick;
 
-public class GroupsActivity extends BaseActivity implements GroupsView {
+public class GroupsActivity extends BaseActivity implements GroupsView, GroupFragment.IGroupsRefresh {
 
     @InjectPresenter
     GroupsPresenter presenter;
@@ -57,10 +56,12 @@ public class GroupsActivity extends BaseActivity implements GroupsView {
     private LinearLayout llMainContent;
     private LinearLayout llScreensContent;
     private RecyclerView rvMenuScreens;
+    private GroupsPagerAdapter adapter;
 
     public static Intent intent(Context context) {
         return new Intent(context, GroupsActivity.class);
     }
+
 
     // =============================================================================================
     // Android
@@ -99,6 +100,11 @@ public class GroupsActivity extends BaseActivity implements GroupsView {
         });
     }
 
+    @Override
+    public void refreshGroups(String name) {
+        presenter.fetchGroupsRefreshP(name);
+    }
+
 
     // =============================================================================================
     // View
@@ -107,7 +113,8 @@ public class GroupsActivity extends BaseActivity implements GroupsView {
     @Override
     public void setGroups(List<Group> groups) {
         presenter.handlePageSelected(1);
-        pager.setAdapter(new GroupsPagerAdapter(getSupportFragmentManager(), groups));
+        adapter = new GroupsPagerAdapter(getSupportFragmentManager(), this::refreshGroups, groups);
+        pager.setAdapter(adapter);
         pager.setCurrentItem(groups.size() > 0 ? 1 : 0);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -125,6 +132,28 @@ public class GroupsActivity extends BaseActivity implements GroupsView {
 
             }
         });
+    }
+
+    @Override
+    public void setGroupsRefreshed(List<Group> groups,String refreshingName) {
+        for(Fragment fragment: getSupportFragmentManager().getFragments()){
+            if(fragment instanceof GroupFragment){
+                if(((GroupFragment)fragment).getGroupName().equalsIgnoreCase(refreshingName)) {
+                    if(getGroupByName(groups,((GroupFragment)fragment).getGroupName())!=null) {
+                        ((GroupFragment) fragment).setGroups(getGroupByName(groups,((GroupFragment)fragment).getGroupName()).getCams());
+                    }
+                }
+            }
+        }
+    }
+
+    private Group getGroupByName(List<Group> groups,String name){
+        for(Group group : groups){
+            if(group.getGroupName().equalsIgnoreCase(name)){
+                return group;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -163,7 +192,7 @@ public class GroupsActivity extends BaseActivity implements GroupsView {
 
     private void setupMenu() {
         menuView = LayoutInflater.from(this).inflate(R.layout.drawer_latoyut, null, false);
-//      menuView.findViewById(R.id.btnClose).setOnClickListener(v -> drawer.closeDrawer());
+//        menuView.findViewById(R.id.btnClose).setOnClickListener(v -> drawer.closeDrawer());
         menuView.findViewById(R.id.btn_monitor_mode).setOnClickListener(v -> presenter.handleMonitorsModeClick());
         menuView.findViewById(R.id.btn_camera_mode).setOnClickListener(v -> presenter.handleStreamModeClick());
         menuView.findViewById(R.id.btn_camera_mode).setOnClickListener(v -> presenter.handleStreamModeClick());
@@ -198,4 +227,5 @@ public class GroupsActivity extends BaseActivity implements GroupsView {
     GroupsPresenter providePresenter() {
         return Toothpick.openScope(Scopes.APP).getInstance(GroupsPresenter.class);
     }
+
 }

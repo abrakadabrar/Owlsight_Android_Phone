@@ -45,14 +45,31 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     MaterialSmoothRefreshLayout refreshLayout;
 
     private GroupAdapter adapter;
+    private IGroupsRefresh iGroupsRefresh;
+    private String groupName;
 
-    public static GroupFragment instance(List<Camera> group) {
+    public static GroupFragment instance(List<Camera> group, IGroupsRefresh iGroupsRefresh,String groupName) {
         final Bundle arguments = new Bundle();
         arguments.putSerializable("group", (Serializable) group);
         final GroupFragment groupFragment = new GroupFragment();
         groupFragment.setArguments(arguments);
+        groupFragment.iGroupsRefresh = iGroupsRefresh;
+        groupFragment.groupName = groupName;
         return groupFragment;
     }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroups(List<Camera> group){
+        adapter.setReachable(group);
+        refreshLayout.refreshComplete();
+        presenter.setCameras(group);
+
+
+    }
+
 
     // =============================================================================================
     // Android
@@ -68,7 +85,6 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
         setupUI();
-
     }
 
     @Override
@@ -94,7 +110,6 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         recyclerView.setItemViewCacheSize(20);
         recyclerView.setDrawingCacheEnabled(true);
         recyclerView.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
-
         recyclerView.setAdapter(adapter);
     }
 
@@ -121,6 +136,11 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     }
 
     @Override
+    public void onThumbnailUploadLoad(Camera camera) {
+        presenter.handleGetThumbnailUpload(camera);
+    }
+
+    @Override
     public void showWarningDeleteGroup(Camera camera) {
         Alerts.showAlertWarningDeleteDialog(getContext(), () -> presenter.handleWarningDeleteOkClick(camera));
     }
@@ -143,7 +163,12 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
 
     @Override
     public void completeRefreshing() {
-    // adapter.completeRefreshing();
+//        adapter.completeRefreshing();
+    }
+
+    @Override
+    public void refreshGroups() {
+        iGroupsRefresh.refreshGroups(groupName);
     }
 
     // =============================================================================================
@@ -165,9 +190,10 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         });
         final boolean isLandscape = getResources().getConfiguration().orientation == ORIENTATION_LANDSCAPE;
 
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), isLandscape ? 2 : 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), isLandscape ? 3 : 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
     }
+
 
     // =============================================================================================
     // Moxy
@@ -205,5 +231,9 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     public void hideLoading() {
         alertDialog.dismiss();
 //        dialog.dismiss();
+    }
+
+    public interface IGroupsRefresh{
+        void refreshGroups(String groupName);
     }
 }

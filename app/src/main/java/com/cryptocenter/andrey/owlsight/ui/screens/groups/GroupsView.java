@@ -10,6 +10,8 @@ interface GroupsView extends BaseView {
 
     void setGroups(List<Group> groups);
 
+    void setGroupsRefreshed(List<Group> groups,String refreshingName);
+
     void showAlertGroupEdit(int position, String title);
 
     void setGroupTitle(String title);

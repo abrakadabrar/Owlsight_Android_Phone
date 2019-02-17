@@ -35,6 +35,18 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         return new CameraVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_camera, parent, false), cameraListener);
     }
 
+    public void setReachable(List<Camera> cameras){
+        if(this.list.size()==cameras.size()) {
+            for(int i = 0; i < cameras.size(); i++){
+                this.list.get(i).setIsReachable(cameras.get(i).getIsReachable());
+                this.list.get(i).setRefreshing(true);
+            }
+            notifyDataSetChanged();
+        } else {
+
+        }
+    }
+
     public void startRefreshing(){
         for(Camera camera:list){
             camera.setRefreshing(true);
@@ -53,16 +65,7 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if(position!=list.size()) {
             ((CameraVH) holder).setCamera(list.get(position));
-            if(list.get(position).isRefreshing()){
-                ((CameraVH) holder).rlProgress.setVisibility(View.VISIBLE);
-                //if(camera)
-                if (((CameraVH) holder).rlShadow != null) {
-                    ((CameraVH) holder).rlShadow.setVisibility(View.VISIBLE);
-                }
-                ((CameraVH) holder).refreshCamera(list.get(position));
-            } else {
-                ((CameraVH) holder).rlProgress.setVisibility(View.GONE);
-            }
+
         } else {
 
         }
@@ -88,11 +91,16 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         for (Camera camera : list) {
             if (camera.getCameraId().equals(newCamera.getCameraId())) {
                 index = list.indexOf(camera);
-                camera.setThumbnailUrl(newCamera.getThumbnailUrl());
                 camera.setRefreshing(false);
+                if(newCamera.getThumbnailUrl()!=null&&newCamera.getThumbnailUrl().length()>10) {
+                    camera.setThumbnailUrl(newCamera.getThumbnailUrl());
+                } else {
+                    camera.setRefreshing(false);
+                }
+                notifyItemChanged(index);
+                return;
             }
         }
-        notifyItemChanged(index);
     }
 
     public interface OnCameraListener {
@@ -103,5 +111,8 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         void onDeleteClick(Camera camera);
 
         void onThumbnailLoad(Camera camera);
+
+        void onThumbnailUploadLoad(Camera camera);
     }
 }
+

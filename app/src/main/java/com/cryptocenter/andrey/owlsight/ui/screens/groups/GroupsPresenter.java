@@ -21,6 +21,7 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
 
     private List<Group> groups;
     private boolean isMonitorMode = false;
+    private String refreshingName="";
 
     @Override
     protected void onFirstViewAttach() {
@@ -67,6 +68,11 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
         getViewState().addScreen(Screen.MONITOR, monitor);
     }
 
+    void fetchGroupsRefreshP(String name){
+        refreshingName = name;
+        fetchGroupsRefresh();
+    }
+
     //==============================================================================================
     // API
     //==============================================================================================
@@ -75,6 +81,14 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
         repository.getGroupsCameras(
                 getViewState()::showLoading,
                 this::proceedGroupsSuccess,
+                this::showFailed,
+                this::showError,
+                getViewState()::hideLoading);
+    }
+    private void fetchGroupsRefresh() {
+        repository.getGroupsCameras(
+                getViewState()::showLoading,
+                this::proceedGroupsRefreshSuccess,
                 this::showFailed,
                 this::showError,
                 getViewState()::hideLoading);
@@ -138,6 +152,34 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
         groupsSorted.add(0, Group.instanceAddGroup());
         this.groups = groupsSorted;
         getViewState().setGroups(this.groups);
+    }
+
+    private void proceedGroupsRefreshSuccess(List<Group> groups) {
+        final List<Group> groupsSorted = new ArrayList<>();
+
+        for (Group group : groups) {
+            if (group.getCams() != null) {
+                for (Camera camera : group.getCams()) {
+                    if (camera.getHasRecordings() == null) {
+                        camera.setGroupName(group.getGroupName());
+                        camera.setGroupId(group.getId());
+                        camera.setIsReachable(camera.getIsReachable());
+                    } else {
+                        camera.setGroupName(group.getGroupName());
+                        camera.setGroupId(group.getId());
+                    }
+                }
+            } else {
+                group.setCams(new ArrayList<>());
+                group.getCams().add(Camera.getInstanceDelete(group));
+            }
+
+            groupsSorted.add(group);
+        }
+
+        groupsSorted.add(0, Group.instanceAddGroup());
+        this.groups = groupsSorted;
+        getViewState().setGroupsRefreshed(this.groups, refreshingName);
     }
 
     private void proceedEditGroupsSuccess(String id, String title) {

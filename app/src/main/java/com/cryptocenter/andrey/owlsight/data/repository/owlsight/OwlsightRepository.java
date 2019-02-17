@@ -46,6 +46,10 @@ public interface OwlsightRepository {
             Response.Error errorListener,
             Response.Complete completeListener);
 
+    void getCameraThumbnailUpdated(
+            String id,
+            Response.Success<String> successListener);
+
     void addGroup(
             String title,
             Response.Start startListener,

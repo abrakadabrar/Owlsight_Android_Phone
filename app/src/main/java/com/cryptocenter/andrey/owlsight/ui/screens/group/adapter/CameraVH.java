@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Optional;
-
 public class CameraVH extends RecyclerView.ViewHolder {
 
     @BindView(R.id.tvName)
@@ -49,6 +48,7 @@ public class CameraVH extends RecyclerView.ViewHolder {
     RelativeLayout rlShadow;
 
     private GroupAdapter.OnCameraListener cameraListener;
+    private boolean isRefreshing = false;
 
     CameraVH(View itemView, GroupAdapter.OnCameraListener cameraListener) {
         super(itemView);
@@ -57,7 +57,8 @@ public class CameraVH extends RecyclerView.ViewHolder {
     }
 
     public void refreshCamera(Camera camera){
-        cameraListener.onThumbnailLoad(camera);
+        isRefreshing = true;
+        cameraListener.onThumbnailUploadLoad(camera);
     }
 
     public void setCamera(Camera camera) {
@@ -65,22 +66,29 @@ public class CameraVH extends RecyclerView.ViewHolder {
 
         if (camera.getIsRecording() != null && camera.getIsRecording().equals("0")) {
             viewRecording.setVisibility(View.GONE);
+        } else {
+            viewRecording.setVisibility(View.VISIBLE);
         }
 
         if (camera.getIsReachable() != null && camera.getIsReachable().equals("1")) {
             tvWarningMessage.setVisibility(View.GONE);
-
             if (rlShadow != null) {
                 rlShadow.setVisibility(View.GONE);
             }
             viewWarning.setVisibility(View.GONE);
+        } else {
+            tvWarningMessage.setVisibility(View.VISIBLE);
+            viewWarning.setVisibility(View.VISIBLE);
         }
 
         if (camera.getHasRecordings() != null && camera.getHasRecordings().equals("0")) {
             btnCalendar.setVisibility(View.GONE);
+        } else {
+            btnCalendar.setVisibility(View.VISIBLE);
         }
 
-        if (!camera.getCameraId().equals("0")) {
+        if (!camera.getCameraId().equals("0")&&!camera.isRefreshing()) {
+            rlProgress.setVisibility(View.GONE);
             if (ivPreview.getDrawable() == null || camera.getThumbnailUrl() == null || camera.getThumbnailUrl().isEmpty()) {
                 cameraListener.onThumbnailLoad(camera);
             } else if (camera.getThumbnailUrl() != null && !camera.getThumbnailUrl().isEmpty()) {
@@ -88,12 +96,12 @@ public class CameraVH extends RecyclerView.ViewHolder {
                 ivPreview.setImageBitmap(BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length));
                 camera.setThumbnailUrl("");
             }
+        }else {
+            rlProgress.setVisibility(View.VISIBLE);
+            cameraListener.onThumbnailUploadLoad(camera);
         }
 
-        if(camera.getIsReachable().equals("1")) {
-            itemView.setOnClickListener(v -> cameraListener.onCameraClick(camera));
-        }
-
+        itemView.setOnClickListener(v -> cameraListener.onCameraClick(camera));
         btnCalendar.setOnClickListener(v -> cameraListener.onCalendarClick(camera));
         btnDelGroup.setOnClickListener(v -> cameraListener.onDeleteClick(camera));
     }
