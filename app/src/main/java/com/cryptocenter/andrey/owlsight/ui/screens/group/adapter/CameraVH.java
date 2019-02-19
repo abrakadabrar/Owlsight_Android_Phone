@@ -86,7 +86,6 @@ public class CameraVH extends RecyclerView.ViewHolder {
         } else {
             btnCalendar.setVisibility(View.VISIBLE);
         }
-
         if (!camera.getCameraId().equals("0")&&!camera.isRefreshing()) {
             rlProgress.setVisibility(View.GONE);
             if (ivPreview.getDrawable() == null || camera.getThumbnailUrl() == null || camera.getThumbnailUrl().isEmpty()) {
@@ -100,7 +99,6 @@ public class CameraVH extends RecyclerView.ViewHolder {
             rlProgress.setVisibility(View.VISIBLE);
             cameraListener.onThumbnailUploadLoad(camera);
         }
-
         if(camera.getIsReachable().equals("1")) {
             itemView.setOnClickListener(v -> cameraListener.onCameraClick(camera));
         }

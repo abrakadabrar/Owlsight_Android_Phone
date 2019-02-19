@@ -24,13 +24,11 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
 
     @InjectPresenter
     StreamPresenter presenter;
-
     private StreamManager streamManager;
 
     public static Intent intent(Context context) {
         return new Intent(context, StreamActivity.class);
     }
-
 
     // =============================================================================================
     // Android

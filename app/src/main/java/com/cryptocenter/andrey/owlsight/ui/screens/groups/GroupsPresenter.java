@@ -128,7 +128,6 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
 
     private void proceedGroupsSuccess(List<Group> groups) {
         final List<Group> groupsSorted = new ArrayList<>();
-
         for (Group group : groups) {
             if (group.getCams() != null) {
                 for (Camera camera : group.getCams()) {
@@ -145,10 +144,8 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
                 group.setCams(new ArrayList<>());
                 group.getCams().add(Camera.getInstanceDelete(group));
             }
-
             groupsSorted.add(group);
         }
-
         groupsSorted.add(0, Group.instanceAddGroup());
         this.groups = groupsSorted;
         getViewState().setGroups(this.groups);

@@ -105,7 +105,6 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
         presenter.fetchGroupsRefreshP(name);
     }
 
-
     // =============================================================================================
     // View
     // =============================================================================================

@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.cryptocenter.andrey.owlsight.base.moxy.MvpAndroidXFragment;
 import com.cryptocenter.andrey.owlsight.data.model.data.FromDateData;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity;

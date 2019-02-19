@@ -18,7 +18,6 @@ public class LauncherActivity extends BaseActivity implements LauncherView {
     @InjectPresenter
     LauncherPresenter presenter;
 
-
     // =============================================================================================
     // Android
     // =============================================================================================
@@ -30,7 +29,6 @@ public class LauncherActivity extends BaseActivity implements LauncherView {
         getWindow().setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN);
         setContentView(R.layout.activity_launcher);
     }
-
 
     // =============================================================================================
     // Moxy

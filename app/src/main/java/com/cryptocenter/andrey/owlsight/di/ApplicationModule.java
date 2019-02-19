@@ -30,20 +30,19 @@ class ApplicationModule extends Module {
 
     private ApplicationModule(Context context, String preferencesName) {
         final HttpLoggingInterceptor okHttpInterceptorLogging = new HttpLoggingInterceptor();
-        okHttpInterceptorLogging.setLevel(HttpLoggingInterceptor.Level.NONE);
+        okHttpInterceptorLogging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(
                         new LoggingInterceptor.Builder()
                                 .loggable(BuildConfig.DEBUG)
-                                .setLevel(Level.NONE)
+                                .setLevel(Level.BODY)
                                 .log(Platform.INFO)
                                 .tag("OkHttp")
                                 .build()
                 )
                 .readTimeout(60, TimeUnit.SECONDS)
                 .build();
-
         final OwlsightAPI api = new Retrofit.Builder()
                 .baseUrl("https://owlsight.com")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -51,9 +50,7 @@ class ApplicationModule extends Module {
                 .client(okHttpClient)
                 .build()
                 .create(OwlsightAPI.class);
-
         final Preferences preferences = new Preferences(context);
-
         bind(OwlsightRepository.class).toInstance(new OwlsightRepositoryImpl(api, preferences));
         bind(Resources.class).toInstance(context.getResources());
         bind(Preferences.class).toInstance(preferences);
