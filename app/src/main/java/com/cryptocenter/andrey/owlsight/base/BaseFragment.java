@@ -10,6 +10,7 @@ import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.cryptocenter.andrey.owlsight.base.moxy.MvpAndroidXFragment;
 import com.cryptocenter.andrey.owlsight.data.model.data.FromDateData;
+import com.cryptocenter.andrey.owlsight.ui.screens.add_camera.AddCameraActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.player.SinglePlayerActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.video.FromDateActivity;
@@ -78,6 +79,9 @@ public abstract class BaseFragment extends MvpAndroidXFragment implements BaseVi
                 break;
             case VIDEO_FROM_DATE:
                startActivity(FromDateActivity.intent(getActivity(), (FromDateData) data));
+                break;
+            case ADD_CAMERA:
+               startActivity(AddCameraActivity.intent(getActivity(), (int) Integer.parseInt((String) data)));
                 break;
         }
     }

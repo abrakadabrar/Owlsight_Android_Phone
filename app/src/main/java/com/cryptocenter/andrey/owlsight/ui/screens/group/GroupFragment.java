@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.cryptocenter.andrey.owlsight.R;
@@ -16,9 +17,11 @@ import com.cryptocenter.andrey.owlsight.ui.custom.CameraLoadingDialog;
 import com.cryptocenter.andrey.owlsight.ui.screens.group.adapter.GroupAdapter;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -48,7 +51,7 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     private IGroupsRefresh iGroupsRefresh;
     private String groupName;
 
-    public static GroupFragment instance(List<Camera> group, IGroupsRefresh iGroupsRefresh,String groupName) {
+    public static GroupFragment instance(List<Camera> group, IGroupsRefresh iGroupsRefresh, String groupName) {
         final Bundle arguments = new Bundle();
         arguments.putSerializable("group", (Serializable) group);
         final GroupFragment groupFragment = new GroupFragment();
@@ -62,7 +65,7 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         return groupName;
     }
 
-    public void setGroups(List<Camera> group){
+    public void setGroups(List<Camera> group) {
         adapter.setReachable(group);
         refreshLayout.refreshComplete();
         presenter.setCameras(group);
@@ -141,6 +144,11 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     }
 
     @Override
+    public void addCamera() {
+        presenter.addCamera();
+    }
+
+    @Override
     public void showWarningDeleteGroup(Camera camera) {
         Alerts.showAlertWarningDeleteDialog(getContext(), () -> presenter.handleWarningDeleteOkClick(camera));
     }
@@ -206,7 +214,6 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     }
 
 
-
     private CameraLoadingDialog dialog;
     private AlertDialog alertDialog;
 
@@ -229,11 +236,13 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
 
     @Override
     public void hideLoading() {
-        alertDialog.dismiss();
+        if (alertDialog != null && alertDialog.isShowing()) {
+            alertDialog.dismiss();
+        }
 //        dialog.dismiss();
     }
 
-    public interface IGroupsRefresh{
+    public interface IGroupsRefresh {
         void refreshGroups(String groupName);
     }
 }

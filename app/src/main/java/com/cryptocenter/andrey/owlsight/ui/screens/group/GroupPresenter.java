@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import static com.cryptocenter.andrey.owlsight.utils.Screen.ADD_CAMERA;
 import static com.cryptocenter.andrey.owlsight.utils.Screen.GROUPS;
 import static com.cryptocenter.andrey.owlsight.utils.Screen.SINGLE_PLAYER;
 
@@ -133,6 +134,10 @@ public class GroupPresenter extends BasePresenter<GroupView> {
 
                     }
                 });
+    }
+
+    void addCamera(){
+        getViewState().addScreen(ADD_CAMERA,cameras.get(0).getGroupId());
     }
 
     private void deleteGroup(Camera camera) {

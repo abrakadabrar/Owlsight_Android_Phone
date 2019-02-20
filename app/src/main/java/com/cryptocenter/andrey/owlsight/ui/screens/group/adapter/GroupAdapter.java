@@ -30,7 +30,7 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType){
             case TYPE_ADD_CAMERA:
-                return new AddCameraVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_camera, parent, false));
+                return new AddCameraVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_camera, parent, false),cameraListener);
         }
         return new CameraVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_camera, parent, false), cameraListener);
     }
@@ -113,6 +113,8 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         void onThumbnailLoad(Camera camera);
 
         void onThumbnailUploadLoad(Camera camera);
+
+        void addCamera();
     }
 }
 
