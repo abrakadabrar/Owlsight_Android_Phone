@@ -27,7 +27,7 @@ public class AddCameraActivity extends BaseActivity implements AddCameraView {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_launcher);
+        setContentView(R.layout.activity_add_camera);
     }
 
     // =============================================================================================

@@ -9,11 +9,11 @@ import com.cryptocenter.andrey.owlsight.utils.Screen;
 
 import javax.inject.Inject;
 
-public class AddCameraPresenter extends BasePresenter<AddGroupView> {
+public class AddCameraPresenter extends BasePresenter<AddCameraView> {
 
     @Inject
     AddCameraPresenter() {
-        new Handler().postDelayed(() -> getViewState().showScreen(Screen.SIGN_IN), 2000);
+       // new Handler().postDelayed(() -> getViewState().showScreen(Screen.ADD_CAMERA));
     }
 
 }
