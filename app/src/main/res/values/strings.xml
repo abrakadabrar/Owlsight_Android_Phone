@@ -174,6 +174,7 @@
     <string name="terms_conditions">By clicking SignUp you agree all the Terms and Conditions.</string>
     <string name="signUp">Регистрация</string>
     <string name="signUpBtn">зарегистрироваться</string>
+    <string name="cam_btn_next">Далее</string>
     <string name="already_user">Already have Account? Login here.</string>
     <string name="registered_emailid">Please enter your Registered Email Id below:</string>
     <string name="submit">SUBMIT</string>
@@ -183,6 +184,7 @@
     <string name="second_name">Second name</string>
     <string name="ok">Ok</string>
     <string name="cancel">Cancel</string>
+    <string name="add_camera">Добавление камеры</string>
 
     <array name="material_calendar_day_abbreviations_array">
         <item>@string/material_calendar_sunday</item>

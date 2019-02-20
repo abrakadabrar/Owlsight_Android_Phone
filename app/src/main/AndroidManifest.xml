@@ -86,6 +86,7 @@
             android:name="com.cryptocenter.andrey.owlsight.ui.screens.video.FromDateActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="userLandscape" />
+        <activity android:name=".ui.screens.add_camera.AddCameraActivity" />
 
     </application>
 
