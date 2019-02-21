@@ -57,7 +57,7 @@
                     android:background="@android:color/transparent"
                     android:foregroundGravity="center"
                     android:gravity="center_vertical"
-                    android:hint="хост"
+                    android:hint="название"
                     android:paddingLeft="14dp"
                     android:paddingRight="14dp"
                     android:singleLine="true"

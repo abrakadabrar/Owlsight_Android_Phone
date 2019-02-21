@@ -46,8 +46,8 @@ public class AddCameraActivity extends BaseActivity implements AddCameraView {
     TextInputEditText etCamPort;
     @BindView(R.id.tvErrorCamPort)
     TextView tvErrorCamPort;
-    @BindView(R.id.etCamOptions)
-    TextInputEditText etCamOptions;
+    @BindView(R.id.etCamExtra)
+    TextInputEditText etCamExtra;
     @BindView(R.id.tvErrorCamOptions)
     TextView tvErrorCamOptions;
     @BindView(R.id.etCamUser)
@@ -88,7 +88,7 @@ public class AddCameraActivity extends BaseActivity implements AddCameraView {
         presenter.addCamera(etCamName.getText().toString(),
                 etCamHost.getText().toString(),
                 etCamPort.getText().toString(),
-                etCamOptions.getText().toString(),
+                etCamExtra.getText().toString(),
                 etCamUser.getText().toString(),
                 etCamUser.getText().toString(),
                 etPassword.getText().toString());
@@ -106,6 +106,10 @@ public class AddCameraActivity extends BaseActivity implements AddCameraView {
     }
 
 
+    @Override
+    public void showTestResult(String message) {
+        textViewdata.setText(message);
+    }
 }
 
 
