@@ -1,15 +1,18 @@
 package com.cryptocenter.andrey.owlsight.data.api;
 
+import com.cryptocenter.andrey.owlsight.data.model.api.response.AddCameraResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.StreamResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.RecordsResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.GroupsResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.MonitorsResponse;
+import com.cryptocenter.andrey.owlsight.data.model.api.response.TestCameraResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.ThumbnailResponse;
 import com.cryptocenter.andrey.owlsight.data.model.records.MotionsRoot;
 import com.cryptocenter.andrey.owlsight.data.model.videofromdatewithmotion.Example;
 import com.google.gson.JsonObject;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.Response;
@@ -20,6 +23,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface OwlsightAPI {
 
@@ -131,4 +135,15 @@ public interface OwlsightAPI {
             @Query("from") String from,
             @Query("to") String to,
             @Header("Cookie") String cookie);
+
+    @GET("/cabinet/camera/ping")
+    Observable<Response<TestCameraResponse>> testCamera(
+            @Query("streamLink") String streamLink,
+            @Header("Cookie") String cookie);
+
+    @GET("/api/papi/save-camera")
+    Observable<Response<AddCameraResponse>> addCamera(
+            @QueryMap() Map<String,String> params,
+            @Header("Cookie") String cookie);
+
 }

@@ -1,12 +1,14 @@
 package com.cryptocenter.andrey.owlsight.data.repository.owlsight;
 
 import com.cryptocenter.andrey.owlsight.data.model.Group;
-import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
-import com.cryptocenter.andrey.owlsight.data.model.monitor.MonitorCamera;
-import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
-import com.cryptocenter.andrey.owlsight.data.model.api.response.StreamResponse;
+import com.cryptocenter.andrey.owlsight.data.model.api.response.AddCameraResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.RecordsResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.Response;
+import com.cryptocenter.andrey.owlsight.data.model.api.response.StreamResponse;
+import com.cryptocenter.andrey.owlsight.data.model.api.response.TestCameraResponse;
+import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
+import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
+import com.cryptocenter.andrey.owlsight.data.model.monitor.MonitorCamera;
 import com.cryptocenter.andrey.owlsight.data.model.motion.DatumFramesMotions;
 import com.cryptocenter.andrey.owlsight.data.model.videofromdatewithmotion.Datum;
 
@@ -127,6 +129,24 @@ public interface OwlsightRepository {
             Response.Success<Void> successListener,
             Response.Failed failedListener,
             Response.Error errorListener);
+
+    void testCamera(String streamLink,
+            Response.Start startListener,
+            Response.Success<TestCameraResponse> successListener,
+            Response.Failed failedListener,
+            Response.Error errorListener,
+            Response.Complete completeListener);
+
+    void addCamera(
+            int groupId, String cameraName,
+            String host, int port,
+            String request, String login,
+            String password, String tz,
+            Response.Start startListener,
+            Response.Success<AddCameraResponse> successListener,
+            Response.Failed failedListener,
+            Response.Error errorListener,
+            Response.Complete completeListener);
 
     void records(
             String id,

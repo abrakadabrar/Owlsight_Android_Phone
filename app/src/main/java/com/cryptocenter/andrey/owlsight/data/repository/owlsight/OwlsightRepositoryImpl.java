@@ -2,9 +2,11 @@ package com.cryptocenter.andrey.owlsight.data.repository.owlsight;
 
 import com.cryptocenter.andrey.owlsight.data.api.OwlsightAPI;
 import com.cryptocenter.andrey.owlsight.data.model.Group;
+import com.cryptocenter.andrey.owlsight.data.model.api.response.AddCameraResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.RecordsResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.Response;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.StreamResponse;
+import com.cryptocenter.andrey.owlsight.data.model.api.response.TestCameraResponse;
 import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.MonitorCamera;
@@ -14,6 +16,7 @@ import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
 import com.cryptocenter.andrey.owlsight.utils.ResourcesUtils;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -464,6 +467,75 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
                         },
                         errorListener::onError
                 );
+    }
+
+    @Override
+    public void testCamera(String streamLink,
+            Response.Start startListener,
+            Response.Success<TestCameraResponse> successListener,
+            Response.Failed failedListener,
+            Response.Error errorListener,
+            Response.Complete completeListener
+    ) {
+        api.testCamera(streamLink,
+                preferences.getCookie())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(d -> startListener.onStart())
+                .doFinally(() -> completeListener.onComplete())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                successListener.onSuccess(response.body());
+                            } else {
+                                failedListener.onFailed();
+                            }
+                        },
+                        errorListener::onError
+                );
+    }
+
+    @Override
+    public void addCamera(int groupId, String cameraName,
+                          String host, int port,
+                          String request, String login,
+                          String password, String tz,
+                          Response.Start startListener,
+                          Response.Success<AddCameraResponse> successListener,
+                          Response.Failed failedListener, Response.Error errorListener,
+                          Response.Complete completeListener) {
+        api.addCamera(getAddCameraParams(groupId, cameraName, host,
+                port, request, login, password, tz), preferences.getCookie())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(d -> startListener.onStart())
+                .doFinally(() -> completeListener.onComplete())
+                .subscribe(
+                        response -> {
+                            if (response.isSuccessful()) {
+                                successListener.onSuccess(response.body());
+                            } else {
+                                failedListener.onFailed();
+                            }
+                        },
+                        errorListener::onError
+                );
+    }
+
+    public static LinkedHashMap<String, String> getAddCameraParams(int groupId, String cameraName,
+                                                                   String host, int port,
+                                                                   String request, String login,
+                                                                   String password, String tz) {
+        LinkedHashMap<String, String> map = new LinkedHashMap();
+        map.put("groupId", String.valueOf(groupId));
+        map.put("cameraName", cameraName);
+        map.put("host", host);
+        map.put("port", String.valueOf(port));
+        map.put("request", request);
+        map.put("login", login);
+        map.put("password", password);
+        map.put("tz", tz);
+        return map;
     }
 
     @Override
