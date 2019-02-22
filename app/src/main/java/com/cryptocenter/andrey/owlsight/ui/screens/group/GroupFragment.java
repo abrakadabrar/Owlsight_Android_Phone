@@ -2,8 +2,10 @@ package com.cryptocenter.andrey.owlsight.ui.screens.group;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -17,10 +19,19 @@ import com.cryptocenter.andrey.owlsight.ui.custom.CameraLoadingDialog;
 import com.cryptocenter.andrey.owlsight.ui.screens.group.adapter.GroupAdapter;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
+import com.cryptocenter.andrey.owlsight.utils.listeners.OnAlertSelectDateListener;
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -153,10 +164,82 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         Alerts.showAlertWarningDeleteDialog(getContext(), () -> presenter.handleWarningDeleteOkClick(camera));
     }
 
+    CaldroidFragment caldroidFragment;
+    CaldroidListener caldroidListener;
+    OnAlertSelectDateListener listener;
     @Override
     public void showAlertCalendar(Camera camera) {
-        Alerts.showDarkCalendar(camera, date -> presenter.handleDateSelect(camera, date), getChildFragmentManager());
+//        Alerts.showDarkCalendar(camera, date -> presenter.handleDateSelect(camera, date), getChildFragmentManager());
+        listener = new OnAlertSelectDateListener() {
+            @Override
+            public void onOkClick(String date) {
+                presenter.handleDateSelect(camera, date);
+            }
+        };
+        caldroidFragment = new CaldroidFragment();
+        Bundle args = new Bundle();
+        Calendar cal = Calendar.getInstance();
+        args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+        args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+        args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
+        args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.MONDAY);
+        args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, false);
+        args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, true);
+        caldroidFragment.setArguments(args);
+        caldroidFragment.setThemeResource(R.style.CaldroidDefaultDark);
+
+        Map<Date, Drawable> dates = new HashMap<>();
+        final Map<Date, Integer> colors = new HashMap<>();
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        final ArrayList<Date> markedDays = new ArrayList<>();
+        try {
+            for (String date : camera.getFolders()) {
+                markedDays.add(format.parse(date));
+            }
+        } catch (ParseException e) {
+
+        }
+        for (int i = 0; i < markedDays.size(); i++) {
+            dates.put(markedDays.get(i), getResources().getDrawable(R.drawable.white_background_vector));
+        }
+
+        for (int i = 0; i < markedDays.size(); i++) {
+            colors.put(markedDays.get(i), (R.color.color_bg_error));
+        }
+        caldroidFragment.setBackgroundDrawableForDates(dates);
+        caldroidFragment.setTextColorForDates(colors);
+        createCaldroidListener();
+        caldroidFragment.setCaldroidListener(caldroidListener);
+        caldroidFragment.show(getChildFragmentManager(),"");
     }
+
+    private void createCaldroidListener() {
+        caldroidListener = new CaldroidListener() {
+            @Override
+            public void onSelectDate(Date date, View view) {
+                dateSecelcted(date);
+            }
+
+            @Override
+            public void onCaldroidViewCreated() {
+                super.onCaldroidViewCreated();
+                caldroidFragment.getWeekdayGridView().setBackground(getResources().getDrawable(R.drawable.week_background));
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                params.bottomMargin = 30;
+                params.topMargin = 30;
+                params.leftMargin = 30;
+                params.rightMargin = 30;
+                caldroidFragment.getWeekdayGridView().setLayoutParams(params);
+            }
+        };
+    }
+
+
+    private void dateSecelcted(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        listener.onOkClick(format.format(date));
+    }
+
 
     @Override
     public void setCameraThumbnail(Camera camera) {
