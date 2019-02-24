@@ -1248,7 +1248,7 @@ public class CustomCaldroidFragment extends DialogFragment {
         // To support keeping instance for dialog
         if (getDialog() != null) {
             try {
-                setRetainInstance(true);
+                setRetainInstance(false);
             } catch (IllegalStateException e) {
                 e.printStackTrace();
             }
