@@ -17,7 +17,7 @@ public class Preferences {
     }
 
     public void saveCookie(String cookie) {
-        preferences.edit().putString(PREFERENCE_COOKIE, cookie).commit();
+        preferences.edit().putString(PREFERENCE_COOKIE, cookie).apply();
     }
 
     public String getCookie() {
@@ -25,7 +25,7 @@ public class Preferences {
     }
 
     public void saveLoginData(String login, String password) {
-        preferences.edit().putString(PREFERENCE_LOGIN, login).putString(PREFERENCE_PASSWORD, password).commit();
+        preferences.edit().putString(PREFERENCE_LOGIN, login).putString(PREFERENCE_PASSWORD, password).apply();
     }
 
     public boolean isLogin() {
@@ -40,7 +40,7 @@ public class Preferences {
     }
 
     public void setFingerAuth(boolean isFinger) {
-        preferences.edit().putBoolean(PREFERENCE_FINGER, isFinger).commit();
+        preferences.edit().putBoolean(PREFERENCE_FINGER, isFinger).apply();
     }
 
     public boolean isFingerAuth() {

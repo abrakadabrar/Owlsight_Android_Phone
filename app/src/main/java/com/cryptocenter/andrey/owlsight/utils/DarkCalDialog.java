@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 
 import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
+import com.cryptocenter.andrey.owlsight.ui.custom.CustomCaldroidFragment;
 import com.cryptocenter.andrey.owlsight.utils.listeners.OnAlertSelectDateListener;
-import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
 import java.text.ParseException;
@@ -30,7 +30,7 @@ public class DarkCalDialog extends androidx.fragment.app.DialogFragment {
     public static final String CAMERA = "DarkCalDialog.CAMERA";
 
     Camera camera;
-    CaldroidFragment caldroidFragment;
+    CustomCaldroidFragment caldroidFragment;
     CaldroidListener caldroidListener;
     OnAlertSelectDateListener listener;
 
@@ -68,15 +68,15 @@ public class DarkCalDialog extends androidx.fragment.app.DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        caldroidFragment = new CaldroidFragment();
+        caldroidFragment = new CustomCaldroidFragment();
         Bundle args = new Bundle();
         Calendar cal = Calendar.getInstance();
-        args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-        args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
-        args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
-        args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.MONDAY);
-        args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, false);
-        args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, true);
+        args.putInt(CustomCaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+        args.putInt(CustomCaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+        args.putInt(CustomCaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
+        args.putInt(CustomCaldroidFragment.START_DAY_OF_WEEK, CustomCaldroidFragment.MONDAY);
+        args.putBoolean(CustomCaldroidFragment.SIX_WEEKS_IN_CALENDAR, false);
+        args.putBoolean(CustomCaldroidFragment.SQUARE_TEXT_VIEW_CELL, true);
         caldroidFragment.setArguments(args);
         caldroidFragment.setThemeResource(R.style.CaldroidDefaultDark);
 

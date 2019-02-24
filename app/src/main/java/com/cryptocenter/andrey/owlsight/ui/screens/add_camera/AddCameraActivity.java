@@ -65,7 +65,7 @@ public class AddCameraActivity extends BaseActivity implements AddCameraView {
 
     @Override
     public void showTestResult(String message) {
-        textViewdata.setText(message);
+        //textViewdata.setText(message);
     }
 }
 
