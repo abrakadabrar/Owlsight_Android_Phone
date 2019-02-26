@@ -17,7 +17,7 @@ public class StreamPresenter extends BasePresenter<StreamView> {
 
     private String streamId;
     private Handler handler = new Handler();
-    private Runnable checkerStatus = () -> handleCheckStatus();
+    private Runnable checkerStatus = this::handleCheckStatus;
 
 
     @Inject

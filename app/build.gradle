@@ -99,7 +99,7 @@ dependencies {
 
     //Media
     implementation 'com.devbrackets.android:exomedia:4.2.3'
-    implementation 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:rtplibrary:1.4.1'
+    implementation 'com.github.pedroSG94.rtmp-rtsp-stream-client-java:rtplibrary:1.5.3'
 
     //Drawer
     implementation "com.mikepenz:materialdrawer:6.1.2"

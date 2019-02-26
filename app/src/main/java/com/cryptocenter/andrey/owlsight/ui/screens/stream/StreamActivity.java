@@ -82,7 +82,7 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
 
     @Override
     public void setupStream(String url) {
-        streamManager.initStream(findViewById(R.id.surfaceView), url);
+        streamManager.initStream(findViewById(R.id.openGlView), url);
         presenter.startingHello();
     }
 
