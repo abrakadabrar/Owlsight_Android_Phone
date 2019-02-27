@@ -2,27 +2,31 @@ package com.cryptocenter.andrey.owlsight.managers;
 
 import android.app.Activity;
 import android.os.Handler;
-import android.util.Size;
 import android.view.SurfaceHolder;
 import android.widget.Toast;
 
 import com.cryptocenter.andrey.owlsight.utils.CameraHelper;
+import com.pedro.rtplibrary.network.AdapterBitrateParser;
+import com.pedro.rtplibrary.network.ConnectionClassManager;
+import com.pedro.rtplibrary.network.UploadBandwidthSampler;
 import com.pedro.rtplibrary.rtmp.RtmpCamera2;
 import com.pedro.rtplibrary.view.OpenGlView;
 
 import net.ossrs.rtmp.ConnectCheckerRtmp;
 
-import java.util.List;
-
-public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback {
+public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback, ConnectionClassManager.ConnectionClassStateChangeListener, AdapterBitrateParser.Callback {
 
     private Activity activity;
     private RtmpCamera2 streamCamera;
     private Handler handler;
-
+    private ConnectionClassManager connectionClassManager;
+    private UploadBandwidthSampler uploadBandwidthSampler;
 
     public StreamManager(Activity activity) {
         this.activity = activity;
+        connectionClassManager = ConnectionClassManager.getInstance();
+        uploadBandwidthSampler = UploadBandwidthSampler.getInstance();
+        connectionClassManager.register(this);
     }
 
     @Override
@@ -76,14 +80,17 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
         streamCamera = new RtmpCamera2(openGlView, this);
         openGlView.getHolder().addCallback(this);
         openGlView.enableAA(true);
+        AdapterBitrateParser.calculateMaxVideoBitrate(streamCamera.getResolutionValue());
+        AdapterBitrateParser.DELAY = 10000;
         if (!streamCamera.isStreaming()) {
-            if (streamCamera.isRecording() || prepareEncodersTest()) {
-
+            if (streamCamera.isRecording() || prepareEncoders()) {
+                uploadBandwidthSampler.startSampling();
                 streamCamera.startStream(url);
             } else {
                 Toast.makeText(activity, "Error preparing stream, This device cant do it", Toast.LENGTH_SHORT).show();
             }
         } else {
+            uploadBandwidthSampler.stopSampling();
             streamCamera.stopStream();
         }
     }
@@ -107,20 +114,27 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
     }
 
     private boolean prepareEncoders() {
-       // return streamCamera.prepareVideo(1280, 720, 30, 1228800,false, CameraHelper.getCameraOrientation(activity))
-        return streamCamera.prepareVideo(640, 480, 30, 1228800,false, CameraHelper.getCameraOrientation(activity))
+        return streamCamera.prepareVideo(1280, 720, 30, 1228800, false, CameraHelper.getCameraOrientation(activity))
                 && streamCamera.prepareAudio(128 * 1024, 32000, false, false, false);
     }
 
-    private boolean prepareEncodersTest(){
-        return streamCamera.prepareVideo() && streamCamera.prepareAudio();
+//    public List<Size> getResolutionsBack() {
+//        return streamCamera.getResolutionsBack();
+//    }
+
+//    public List<Size> getResolutionsFront() {
+//        return streamCamera.getResolutionsFront();
+//    }
+
+    @Override
+    public void onBandwidthStateChange(double bandwidth) {
+        AdapterBitrateParser.parseBitrate(streamCamera.getBitrate(), (int) bandwidth, this);
     }
 
-    public List<Size> getResolutionsBack() {
-        return streamCamera.getResolutionsBack();
+    @Override
+    public void onNewBitrate(int bitrate) {
+        streamCamera.setVideoBitrateOnFly(bitrate);
+        connectionClassManager.remove();
     }
 
-    public List<Size> getResolutionsFront() {
-        return streamCamera.getResolutionsFront();
-    }
 }
