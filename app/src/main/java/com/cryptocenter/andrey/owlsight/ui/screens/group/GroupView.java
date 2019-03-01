@@ -1,5 +1,7 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.group;
 
+import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
+import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.cryptocenter.andrey.owlsight.base.BaseView;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
 
@@ -10,6 +12,7 @@ public interface GroupView extends BaseView {
 
     void showWarningDeleteGroup(Camera camera);
 
+    @StateStrategyType(SkipStrategy.class)
     void showAlertCalendar(Camera camera);
 
     void setCameraThumbnail(Camera camera);

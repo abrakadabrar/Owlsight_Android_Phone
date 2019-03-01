@@ -16,11 +16,11 @@ import com.cryptocenter.andrey.owlsight.data.model.Camera;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 import com.cryptocenter.andrey.owlsight.di.Scopes;
 import com.cryptocenter.andrey.owlsight.ui.custom.CameraLoadingDialog;
+import com.cryptocenter.andrey.owlsight.ui.custom.CustomCaldroidFragment;
 import com.cryptocenter.andrey.owlsight.ui.screens.group.adapter.GroupAdapter;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
 import com.cryptocenter.andrey.owlsight.utils.listeners.OnAlertSelectDateListener;
-import com.roomorama.caldroid.CaldroidFragment;
 import com.roomorama.caldroid.CaldroidListener;
 
 import java.io.Serializable;
@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import androidx.annotation.NonNull;
@@ -164,39 +165,34 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         Alerts.showAlertWarningDeleteDialog(getContext(), () -> presenter.handleWarningDeleteOkClick(camera));
     }
 
-    CaldroidFragment caldroidFragment;
-    CaldroidListener caldroidListener;
-    OnAlertSelectDateListener listener;
+    private CustomCaldroidFragment caldroidFragment;
+    private CaldroidListener caldroidListener;
+    private OnAlertSelectDateListener listener;
     @Override
     public void showAlertCalendar(Camera camera) {
 //        Alerts.showDarkCalendar(camera, date -> presenter.handleDateSelect(camera, date), getChildFragmentManager());
-        listener = new OnAlertSelectDateListener() {
-            @Override
-            public void onOkClick(String date) {
-                presenter.handleDateSelect(camera, date);
-            }
-        };
-        caldroidFragment = new CaldroidFragment();
+        listener = date -> presenter.handleDateSelect(camera, date);
+        caldroidFragment = new CustomCaldroidFragment();
         Bundle args = new Bundle();
         Calendar cal = Calendar.getInstance();
-        args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
-        args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
-        args.putInt(CaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
-        args.putInt(CaldroidFragment.START_DAY_OF_WEEK, CaldroidFragment.MONDAY);
-        args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, false);
-        args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, true);
+        args.putInt(CustomCaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+        args.putInt(CustomCaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+        args.putInt(CustomCaldroidFragment.THEME_RESOURCE, com.caldroid.R.style.CaldroidDefaultDark);
+        args.putInt(CustomCaldroidFragment.START_DAY_OF_WEEK, CustomCaldroidFragment.MONDAY);
+        args.putBoolean(CustomCaldroidFragment.SIX_WEEKS_IN_CALENDAR, false);
+        args.putBoolean(CustomCaldroidFragment.SQUARE_TEXT_VIEW_CELL, true);
         caldroidFragment.setArguments(args);
         caldroidFragment.setThemeResource(R.style.CaldroidDefaultDark);
 
         Map<Date, Drawable> dates = new HashMap<>();
         final Map<Date, Integer> colors = new HashMap<>();
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         final ArrayList<Date> markedDays = new ArrayList<>();
         try {
             for (String date : camera.getFolders()) {
                 markedDays.add(format.parse(date));
             }
-        } catch (ParseException e) {
+        } catch (ParseException ignored) {
 
         }
         for (int i = 0; i < markedDays.size(); i++) {
@@ -210,14 +206,14 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         caldroidFragment.setTextColorForDates(colors);
         createCaldroidListener();
         caldroidFragment.setCaldroidListener(caldroidListener);
-        caldroidFragment.show(getChildFragmentManager(),"");
+        caldroidFragment.show(getChildFragmentManager(),"caldroid");
     }
 
     private void createCaldroidListener() {
         caldroidListener = new CaldroidListener() {
             @Override
             public void onSelectDate(Date date, View view) {
-                dateSecelcted(date);
+                dateSelected(date);
             }
 
             @Override
@@ -235,7 +231,7 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     }
 
 
-    private void dateSecelcted(Date date) {
+    private void dateSelected(Date date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         listener.onOkClick(format.format(date));
     }

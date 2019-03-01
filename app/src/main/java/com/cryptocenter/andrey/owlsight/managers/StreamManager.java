@@ -1,6 +1,7 @@
 package com.cryptocenter.andrey.owlsight.managers;
 
 import android.app.Activity;
+import android.hardware.Camera;
 import android.os.Handler;
 import android.view.SurfaceHolder;
 import android.widget.Toast;

@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.arellomobile.mvp.MvpDelegate;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 
 /**
@@ -40,7 +41,7 @@ public class MvpAndroidXActivity extends FragmentActivity {
 	}
 
 	@Override
-	protected void onSaveInstanceState(Bundle outState) {
+	protected void onSaveInstanceState(@NonNull Bundle outState) {
 		super.onSaveInstanceState(outState);
 
 		getMvpDelegate().onSaveInstanceState(outState);

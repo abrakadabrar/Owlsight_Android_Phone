@@ -85,6 +85,15 @@ public class StreamPresenter extends BasePresenter<StreamView> {
                 this::showError);
     }
 
+    public void handleConnect() {
+        getViewState().restartActivity();
+        getViewState().setVisibilityOfConnectingLayout(false);
+    }
+
+    public void handleDisconnect() {
+        getViewState().setVisibilityOfConnectingLayout(true);
+
+    }
 
     //==============================================================================================
     // Private
