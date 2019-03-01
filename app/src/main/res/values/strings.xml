@@ -333,5 +333,6 @@ OwelSight, для отправки писем рассылок, новостей
     <string name="fingerprint_title">Приложите палец к сенсору</string>
     <string name="menu_finger_enable">Вход с отпечатком пальца</string>
     <string name="menu_screens">виды</string>
+    <string name="no_connection">Отсуствует соединение с сервером, попытка подключения...</string>
 
 </resources>

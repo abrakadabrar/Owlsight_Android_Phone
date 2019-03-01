@@ -88,6 +88,10 @@
             android:screenOrientation="userLandscape" />
         <activity android:name=".ui.screens.add_camera.AddCameraActivity" />
 
+        <service
+            android:exported="false"
+            android:name="com.novoda.merlin.MerlinService" />
+
     </application>
 
 </manifest>

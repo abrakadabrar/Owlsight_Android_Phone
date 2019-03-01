@@ -17,7 +17,7 @@ public class StreamPresenter extends BasePresenter<StreamView> {
 
     private String streamId;
     private Handler handler = new Handler();
-    private Runnable checkerStatus = () -> handleCheckStatus();
+    private Runnable checkerStatus = this::handleCheckStatus;
 
 
     @Inject
@@ -85,6 +85,15 @@ public class StreamPresenter extends BasePresenter<StreamView> {
                 this::showError);
     }
 
+    public void handleConnect() {
+        getViewState().restartActivity();
+        getViewState().setVisibilityOfConnectingLayout(false);
+    }
+
+    public void handleDisconnect() {
+        getViewState().setVisibilityOfConnectingLayout(true);
+
+    }
 
     //==============================================================================================
     // Private

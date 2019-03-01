@@ -33,4 +33,5 @@
     <color name="color_transparent_new">#0FFF</color>
     <color name="color_transparent_progress">#776E7689</color>
     <color name="color_transparent_shadow">#BE050505</color>
+    <color name="colorTransparentDark">#3C000000</color>
 </resources>

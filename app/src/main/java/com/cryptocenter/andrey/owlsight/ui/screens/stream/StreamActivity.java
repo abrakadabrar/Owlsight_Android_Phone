@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -15,16 +16,25 @@ import com.cryptocenter.andrey.owlsight.base.BaseActivity;
 import com.cryptocenter.andrey.owlsight.di.Scopes;
 import com.cryptocenter.andrey.owlsight.managers.StreamManager;
 import com.cryptocenter.andrey.owlsight.utils.Permissions;
+import com.novoda.merlin.Connectable;
+import com.novoda.merlin.Disconnectable;
+import com.novoda.merlin.Merlin;
 import com.pedro.encoder.input.video.CameraOpenException;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import toothpick.Toothpick;
 
-public class StreamActivity extends BaseActivity implements StreamView, View.OnClickListener {
+public class StreamActivity extends BaseActivity implements StreamView, View.OnClickListener, Connectable, Disconnectable {
 
     @InjectPresenter
     StreamPresenter presenter;
+    @BindView(R.id.llTryConnect)
+    LinearLayout llTryConnect;
+
     private StreamManager streamManager;
+    private Merlin merlin;
+    private boolean firstConnect = true;
 
     public static Intent intent(Context context) {
         return new Intent(context, StreamActivity.class);
@@ -44,6 +54,19 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
 
         streamManager = new StreamManager(this);
         Permissions.checkCamera(this, presenter::handlePermissionGranted);
+
+        initMerlin();
+    }
+
+    private void initMerlin() {
+        merlin = new Merlin
+                .Builder()
+                .withConnectableCallbacks()
+                .withDisconnectableCallbacks()
+                .build(this);
+
+        merlin.registerConnectable(this);
+        merlin.registerDisconnectable(this);
     }
 
     @Override
@@ -70,11 +93,21 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
     @Override
     protected void onStop() {
         super.onStop();
-        streamManager.releaseStream();
         presenter.handleStopStream();
         finish();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        merlin.bind();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        merlin.unbind();
+    }
 
     // =============================================================================================
     // View
@@ -84,6 +117,38 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
     public void setupStream(String url) {
         streamManager.initStream(findViewById(R.id.surfaceView), url);
         presenter.startingHello();
+    }
+
+    @Override
+    public void setVisibilityOfConnectingLayout(boolean visible) {
+        runOnUiThread(() -> {
+            if (visible) {
+                llTryConnect.setVisibility(View.VISIBLE);
+            } else {
+                llTryConnect.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    @Override
+    public void restartActivity() {
+        finish();
+        startActivity(getIntent());
+    }
+
+
+    @Override
+    public void onConnect() {
+        if (firstConnect) {
+            firstConnect = false;
+            return;
+        }
+        presenter.handleConnect();
+    }
+
+    @Override
+    public void onDisconnect() {
+        presenter.handleDisconnect();
     }
 
 
