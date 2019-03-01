@@ -23,7 +23,6 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
     private Camera1ApiManager cameraManager;
 
 
-
     public StreamManager(Activity context) {
         this.context = context;
     }
@@ -109,7 +108,7 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
     }
 
     private boolean prepareEncoders() {
-        return streamCamera.prepareVideo(1280, 720, 30, 1228800,false, CameraHelper.getCameraOrientation(context))
+        return streamCamera.prepareVideo(1280, 720, 30, 1228800, false, CameraHelper.getCameraOrientation(context))
                 && streamCamera.prepareAudio(128 * 1024, 32000, false, false, false);
     }
 
