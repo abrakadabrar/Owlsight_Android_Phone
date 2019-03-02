@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "964647224418",
+    "firebase_url": "https://owlsight-app-android.firebaseio.com",
+    "project_id": "owlsight-app-android",
+    "storage_bucket": "owlsight-app-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:964647224418:android:6b04949e64edc320",
+        "android_client_info": {
+          "package_name": "com.example.andrey.owlsight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "964647224418-i75r7tou1lm2gni45dbd5f8f9mcvk70d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.andrey.owlsight",
+            "certificate_hash": "c861e0630b260f3d74e0d0bd02b35de8a4b602fe"
+          }
+        },
+        {
+          "client_id": "964647224418-lforp27rkojbpaqrubl72fkj609r0isu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYKWexA7MuKzIVvigjg0Un8hf4bnBNniQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "964647224418-lforp27rkojbpaqrubl72fkj609r0isu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

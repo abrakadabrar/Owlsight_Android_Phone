@@ -92,6 +92,13 @@
             android:exported="false"
             android:name="com.novoda.merlin.MerlinService" />
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="432606580848fd9e535afb4b7fbd098902090e58" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="432606580848fd9e535afb4b7fbd098902090e58" />
+
     </application>
 
 </manifest>
