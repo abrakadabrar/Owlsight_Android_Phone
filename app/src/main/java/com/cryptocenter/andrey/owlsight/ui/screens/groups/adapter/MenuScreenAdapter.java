@@ -13,7 +13,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MenuScreenAdapter extends RecyclerView.Adapter<MenuScreenAdapter.ViewHoder> {
+public class MenuScreenAdapter extends RecyclerView.Adapter<MenuScreenAdapter.ViewHolder> {
 
     private List<Monitor> monitors;
     private IMonitorSelected iMonitorSelected;
@@ -25,12 +25,12 @@ public class MenuScreenAdapter extends RecyclerView.Adapter<MenuScreenAdapter.Vi
 
     @NonNull
     @Override
-    public ViewHoder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHoder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_menu_screens, parent, false));
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_menu_screens, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHoder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.tvName.setText(monitors.get(position).getViewName());
     }
 
@@ -39,11 +39,11 @@ public class MenuScreenAdapter extends RecyclerView.Adapter<MenuScreenAdapter.Vi
         return monitors == null ? 0 : monitors.size();
     }
 
-    public class ViewHoder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvName;
 
-        public ViewHoder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_item_menu_screen_name);
             itemView.setOnClickListener(v -> iMonitorSelected.monitorSelected(monitors.get(getAdapterPosition())));

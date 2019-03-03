@@ -27,6 +27,7 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         fetchGroups();
+        fetchMonitors();
     }
 
     void handleMenuClick() {
@@ -47,13 +48,14 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
     }
 
     void handleMonitorsModeClick() {
-        if(!isMonitorMode) {
-            fetchMonitors();
-            isMonitorMode = true;
-        } else {
-            getViewState().hideScreens();
-            isMonitorMode = false;
-        }
+        fetchMonitors();
+//        if(!isMonitorMode) {
+//            fetchMonitors();
+//            isMonitorMode = true;
+//        } else {
+//            getViewState().hideScreens();
+//            isMonitorMode = false;
+//        }
     }
 
     void handleStreamModeClick() {

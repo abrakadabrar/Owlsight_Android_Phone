@@ -5,10 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.cryptocenter.andrey.owlsight.R;
@@ -23,7 +23,9 @@ import com.cryptocenter.andrey.owlsight.ui.screens.groups.adapter.MenuScreenAdap
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.DrawerUtil;
 import com.mikepenz.materialdrawer.Drawer;
+
 import java.util.List;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -134,21 +136,21 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     }
 
     @Override
-    public void setGroupsRefreshed(List<Group> groups,String refreshingName) {
-        for(Fragment fragment: getSupportFragmentManager().getFragments()){
-            if(fragment instanceof GroupFragment){
-                if(((GroupFragment)fragment).getGroupName().equalsIgnoreCase(refreshingName)) {
-                    if(getGroupByName(groups,((GroupFragment)fragment).getGroupName())!=null) {
-                        ((GroupFragment) fragment).setGroups(getGroupByName(groups,((GroupFragment)fragment).getGroupName()).getCams());
+    public void setGroupsRefreshed(List<Group> groups, String refreshingName) {
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if (fragment instanceof GroupFragment) {
+                if (((GroupFragment) fragment).getGroupName().equalsIgnoreCase(refreshingName)) {
+                    if (getGroupByName(groups, ((GroupFragment) fragment).getGroupName()) != null) {
+                        ((GroupFragment) fragment).setGroups(getGroupByName(groups, ((GroupFragment) fragment).getGroupName()).getCams());
                     }
                 }
             }
         }
     }
 
-    private Group getGroupByName(List<Group> groups,String name){
-        for(Group group : groups){
-            if(group.getGroupName().equalsIgnoreCase(name)){
+    private Group getGroupByName(List<Group> groups, String name) {
+        for (Group group : groups) {
+            if (group.getGroupName().equalsIgnoreCase(name)) {
                 return group;
             }
         }
@@ -172,8 +174,8 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
 
     @Override
     public void showAlertMonitors(List<Monitor> monitors) {
-        llMainContent.setVisibility(View.GONE);
-        llScreensContent.setVisibility(View.VISIBLE);
+//        llMainContent.setVisibility(View.GONE);
+//        llScreensContent.setVisibility(View.VISIBLE);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvMenuScreens.setLayoutManager(manager);
         rvMenuScreens.setAdapter(new MenuScreenAdapter(monitors, m -> presenter.handleMonitorSelected(m)));
@@ -190,7 +192,7 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     // =============================================================================================
 
     private void setupMenu() {
-        menuView = LayoutInflater.from(this).inflate(R.layout.drawer_latoyut, null, false);
+        menuView = LayoutInflater.from(this).inflate(R.layout.drawer_layout, null, false);
 //        menuView.findViewById(R.id.btnClose).setOnClickListener(v -> drawer.closeDrawer());
         menuView.findViewById(R.id.btn_monitor_mode).setOnClickListener(v -> presenter.handleMonitorsModeClick());
         menuView.findViewById(R.id.btn_camera_mode).setOnClickListener(v -> presenter.handleStreamModeClick());
@@ -199,13 +201,10 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
         llScreensContent = menuView.findViewById(R.id.ll_menu_screens_content);
         swFinger = menuView.findViewById(R.id.sw_activity_menu_finger);
         rvMenuScreens = menuView.findViewById(R.id.rv_menu_rv_screens);
-        swFinger.setChecked(preferences.isFingerAuth());
-        swFinger.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                preferences.setFingerAuth(isChecked);
-            }
-        });
+        rvMenuScreens.setNestedScrollingEnabled(false);
+        preferences.setFingerAuth(true);
+//        swFinger.setChecked(preferences.isFingerAuth());
+//        swFinger.setOnCheckedChangeListener((buttonView, isChecked) -> preferences.setFingerAuth(isChecked));
     }
 
     private void setupUI() {

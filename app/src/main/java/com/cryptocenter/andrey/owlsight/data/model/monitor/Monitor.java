@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Monitor implements Serializable {
 
-    @SerializedName("viewName")
+    @SerializedName("name")
     @Expose
     private String viewName;
 

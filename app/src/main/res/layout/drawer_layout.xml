@@ -6,7 +6,7 @@
     android:background="@color/colorBG"
     android:orientation="vertical">
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -129,6 +129,7 @@
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                    android:visibility="gone"
                     android:orientation="horizontal">
 
                     <TextView
@@ -148,10 +149,9 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/ll_menu_screens_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:orientation="vertical">
 
@@ -173,7 +173,7 @@
         </LinearLayout>
 
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <ImageView
         android:id="@+id/img_bg"

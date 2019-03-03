@@ -13,9 +13,10 @@
 
     <TextView
         android:id="@+id/tv_item_menu_screen_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="start"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:textColor="@color/white" />
 </LinearLayout>
