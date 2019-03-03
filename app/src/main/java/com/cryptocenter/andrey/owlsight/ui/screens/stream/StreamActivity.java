@@ -40,6 +40,11 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
         return new Intent(context, StreamActivity.class);
     }
 
+    public static void start(Context context) {
+        Intent starter = new Intent(context, StreamActivity.class);
+        context.startActivity(starter);
+    }
+
     // =============================================================================================
     // Android
     // =============================================================================================

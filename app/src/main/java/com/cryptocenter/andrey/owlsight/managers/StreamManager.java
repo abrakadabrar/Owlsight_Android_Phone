@@ -1,7 +1,6 @@
 package com.cryptocenter.andrey.owlsight.managers;
 
 import android.app.Activity;
-import android.hardware.Camera;
 import android.os.Handler;
 import android.view.SurfaceHolder;
 import android.widget.Toast;
@@ -97,7 +96,9 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
     }
 
     public void releaseStream() {
-        if (streamCamera != null) streamCamera.stopStream();
+        if (streamCamera != null && streamCamera.isStreaming()) {
+            streamCamera.stopStream();
+        }
     }
 
     public void switchCamera() {
@@ -129,7 +130,9 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
 
     @Override
     public void onBandwidthStateChange(double bandwidth) {
-        AdapterBitrateParser.parseBitrate(streamCamera.getBitrate(), (int) bandwidth, this);
+        if (streamCamera != null) {
+            AdapterBitrateParser.parseBitrate(streamCamera.getBitrate(), (int) bandwidth, this);
+        }
     }
 
     @Override

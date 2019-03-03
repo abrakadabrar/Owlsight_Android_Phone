@@ -50,6 +50,7 @@ public class StreamPresenter extends BasePresenter<StreamView> {
     void startingHello() {
         checkerStatus.run();
     }
+
     void stoppingHello() {
         if (handler != null) handler.removeCallbacks(checkerStatus);
     }
@@ -86,13 +87,20 @@ public class StreamPresenter extends BasePresenter<StreamView> {
     }
 
     public void handleConnect() {
-        getViewState().restartActivity();
-        getViewState().setVisibilityOfConnectingLayout(false);
+        repository.stopStream(streamId,
+                () -> {
+                },
+                result -> getViewState().restartActivity(),
+                this::proceedStreamFailed,
+                this::showError,
+                () -> {
+                }
+        );
     }
 
     public void handleDisconnect() {
         getViewState().setVisibilityOfConnectingLayout(true);
-
+        stoppingHello();
     }
 
     //==============================================================================================
