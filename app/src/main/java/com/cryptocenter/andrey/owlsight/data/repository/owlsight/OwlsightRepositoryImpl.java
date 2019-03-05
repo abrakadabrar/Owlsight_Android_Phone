@@ -95,8 +95,7 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
             Response.Error errorListener,
             Response.Complete completeListener
     ) {
-        api.registerFirstStep(
-                data.getName().split(" ")[0], data.getName().split(" ")[1], data.getEmail(),
+        api.registerFirstStep(data.getName(), data.getEmail(),
                 data.getPhone(), data.getPassword(), data.getConfirmPassword())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -128,7 +127,7 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
             Response.Complete completeListener
     ) {
         api.registerSecondStep(
-                data.getName().split(" ")[0], data.getName().split(" ")[1], data.getEmail(),
+                data.getName(), data.getEmail(),
                 data.getPhone(), data.getPassword(), data.getConfirmPassword(), confirmSms)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -471,11 +470,11 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
 
     @Override
     public void testCamera(String streamLink,
-            Response.Start startListener,
-            Response.Success<TestCameraResponse> successListener,
-            Response.Failed failedListener,
-            Response.Error errorListener,
-            Response.Complete completeListener
+                           Response.Start startListener,
+                           Response.Success<TestCameraResponse> successListener,
+                           Response.Failed failedListener,
+                           Response.Error errorListener,
+                           Response.Complete completeListener
     ) {
         api.testCamera(streamLink,
                 preferences.getCookie())

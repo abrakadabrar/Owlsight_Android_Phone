@@ -40,8 +40,8 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
             if (!isConfirmPolicy) {
                 getViewState().showedFieldError(Field.CONFIRM_POLICY, true);
             }
-        } else if (Validator.isNotValidName(name)) {
-            getViewState().showMessage("Введите имя и фамилию");
+//        } else if (Validator.isNotValidName(name)) {
+//            getViewState().showMessage("Введите имя и фамилию");
         } else if (Validator.isNotValidEmail(email)) {
             getViewState().showMessage("Введите корректный адрес электронной почты");
         } else if (!confirmPassword.equals(password)) {
