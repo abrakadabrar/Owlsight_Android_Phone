@@ -114,7 +114,7 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     @Override
     public void setGroups(List<Group> groups) {
         presenter.handlePageSelected(1);
-        adapter = new GroupsPagerAdapter(getSupportFragmentManager(), this::refreshGroups, groups);
+        adapter = new GroupsPagerAdapter(getSupportFragmentManager(), this, groups);
         pager.setAdapter(adapter);
         pager.setCurrentItem(groups.size() > 0 ? 1 : 0);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {

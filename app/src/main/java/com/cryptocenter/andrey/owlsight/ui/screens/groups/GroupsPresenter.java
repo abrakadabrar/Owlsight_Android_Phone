@@ -144,7 +144,7 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
                 }
             } else {
                 group.setCams(new ArrayList<>());
-                group.getCams().add(Camera.getInstanceDelete(group));
+//                group.getCams().add(Camera.getInstanceDelete(group));
             }
             groupsSorted.add(group);
         }
@@ -170,7 +170,7 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
                 }
             } else {
                 group.setCams(new ArrayList<>());
-                group.getCams().add(Camera.getInstanceDelete(group));
+//                group.getCams().add(Camera.getInstanceDelete(group));
             }
 
             groupsSorted.add(group);
