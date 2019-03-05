@@ -66,7 +66,9 @@ public class CameraVH extends RecyclerView.ViewHolder {
 
         if (camera.getIsRecording() != null && camera.getIsRecording().equals("0")) {
             viewRecording.setVisibility(View.GONE);
+            btnCalendar.setVisibility(View.GONE);
         } else {
+            btnCalendar.setVisibility(View.VISIBLE);
             viewRecording.setVisibility(View.VISIBLE);
         }
 
@@ -81,7 +83,7 @@ public class CameraVH extends RecyclerView.ViewHolder {
             viewWarning.setVisibility(View.VISIBLE);
         }
 
-        if (camera.getHasRecordings() != null && camera.getHasRecordings().equals("0")) {
+        if (camera.getHasRecordings() != null && camera.getHasRecordings().equals("0") || (camera.getIsRecording() != null && camera.getIsRecording().equals("0"))) {
             btnCalendar.setVisibility(View.GONE);
         } else {
             btnCalendar.setVisibility(View.VISIBLE);
