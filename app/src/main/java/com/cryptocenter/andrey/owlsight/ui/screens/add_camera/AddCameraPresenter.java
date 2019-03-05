@@ -1,12 +1,13 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.add_camera;
 
+import com.arellomobile.mvp.InjectViewState;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.AddCameraResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.TestCameraResponse;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 
 import javax.inject.Inject;
-
+@InjectViewState
 public class AddCameraPresenter extends BasePresenter<AddCameraView> {
 
     private int groupId;
