@@ -34,7 +34,6 @@ public interface OwlsightAPI {
     @GET("/user/register/app-first-step")
     Observable<Response<JsonObject>> registerFirstStep(
             @Query("firstName") String firstName,
-            @Query("lastName") String lastName,
             @Query("mail") String email,
             @Query("phone") String phone,
             @Query("password") String password,
