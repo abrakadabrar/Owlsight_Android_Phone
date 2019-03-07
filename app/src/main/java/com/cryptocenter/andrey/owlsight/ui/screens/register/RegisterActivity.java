@@ -3,6 +3,7 @@ package com.cryptocenter.andrey.owlsight.ui.screens.register;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -157,6 +158,7 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
         etPassword.setOnFocusChangeListener((v, hasFocus) -> presenter.handleFieldFocusChanged(etPassword.getText(), hasFocus, PASSWORD));
         etConfirmPassword.setOnFocusChangeListener((v, hasFocus) -> presenter.handleFieldFocusChanged(etConfirmPassword.getText(), hasFocus, CONFIRM_PASSWORD));
         cbConfirmPolicy.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.handleConfirmPolicyChanged(isChecked));
+        etPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher("+7"));
     }
 
     private void showedErrorField(boolean isShowed, EditText field, TextView tvError) {

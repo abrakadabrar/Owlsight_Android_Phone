@@ -129,8 +129,8 @@
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="@dimen/activity_vertical_margin"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                    android:visibility="gone"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -168,6 +168,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvNoSpecies"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:text="@string/you_have_no_species"
+                    android:textColor="@color/colorHint" />
             </LinearLayout>
 
         </LinearLayout>

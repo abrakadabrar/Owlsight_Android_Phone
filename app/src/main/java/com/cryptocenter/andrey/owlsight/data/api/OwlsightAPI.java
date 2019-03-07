@@ -111,7 +111,7 @@ public interface OwlsightAPI {
             @Query("name") String name,
             @Header("Cookie") String cookie);
 
-    @GET("/api/papi/add-camera?tz=10800\"")
+    @GET("/api/papi/set-goodbye")
     Observable<Response<JsonObject>> stopStream(
             @Query("id") String id,
             @Header("Cookie") String cookie);

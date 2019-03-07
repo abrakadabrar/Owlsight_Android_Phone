@@ -27,6 +27,7 @@ import com.mikepenz.materialdrawer.Drawer;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -51,6 +52,7 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     @BindView(R.id.add_group_toolbar)
     Toolbar toolbar;
 
+
     private Drawer drawer;
     private View menuView;
     private Switch swFinger;
@@ -58,6 +60,7 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     private LinearLayout llMainContent;
     private LinearLayout llScreensContent;
     private RecyclerView rvMenuScreens;
+    private AppCompatTextView tvNoSpecies;
     private GroupsPagerAdapter adapter;
 
     public static Intent intent(Context context) {
@@ -178,13 +181,20 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
 //        llScreensContent.setVisibility(View.VISIBLE);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         rvMenuScreens.setLayoutManager(manager);
-        rvMenuScreens.setAdapter(new MenuScreenAdapter(monitors, m -> presenter.handleMonitorSelected(m)));
+        if (!monitors.isEmpty()) {
+            tvNoSpecies.setVisibility(View.GONE);
+            rvMenuScreens.setVisibility(View.VISIBLE);
+            rvMenuScreens.setAdapter(new MenuScreenAdapter(monitors, m -> presenter.handleMonitorSelected(m)));
+        } else {
+            rvMenuScreens.setVisibility(View.GONE);
+            tvNoSpecies.setVisibility(View.VISIBLE);
+
+        }
     }
 
     @Override
     public void hideScreens() {
-        llMainContent.setVisibility(View.VISIBLE);
-        llScreensContent.setVisibility(View.GONE);
+        llScreensContent.setVisibility(View.VISIBLE);
     }
 
     // =============================================================================================
@@ -201,6 +211,7 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
         llScreensContent = menuView.findViewById(R.id.ll_menu_screens_content);
         swFinger = menuView.findViewById(R.id.sw_activity_menu_finger);
         rvMenuScreens = menuView.findViewById(R.id.rv_menu_rv_screens);
+        tvNoSpecies = menuView.findViewById(R.id.tvNoSpecies);
         rvMenuScreens.setNestedScrollingEnabled(false);
         preferences.setFingerAuth(true);
 //        swFinger.setChecked(preferences.isFingerAuth());

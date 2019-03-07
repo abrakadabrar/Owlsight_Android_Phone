@@ -401,7 +401,7 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
             Response.Error errorListener,
             Response.Complete completeListener
     ) {
-        api.stopStream(ResourcesUtils.getDeviceName(), preferences.getCookie())
+        api.stopStream(id, preferences.getCookie())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(d -> startListener.onStart())
