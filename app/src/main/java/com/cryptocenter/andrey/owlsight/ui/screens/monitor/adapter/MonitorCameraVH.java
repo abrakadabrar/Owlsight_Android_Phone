@@ -39,6 +39,7 @@ class MonitorCameraVH extends RecyclerView.ViewHolder {
         if (monitorCamera.hasRequestInfo() || monitorCamera.isRunning()) {
             progress.setVisibility(View.GONE);
             final SinglePlayerManager playerManager = new SinglePlayerManager(itemView.getContext(), id);
+            playerManager.setVolume(0);
             playerView.setPlayer(playerManager.getPlayer());
         } else {
             monitorCameraListener.onMonitorGetInfo(monitorCamera);

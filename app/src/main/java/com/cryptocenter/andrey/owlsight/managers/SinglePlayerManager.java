@@ -59,6 +59,10 @@ public class SinglePlayerManager implements Player.EventListener {
         }
     }
 
+    public void setVolume(float audioVolume){
+        player.setVolume(audioVolume);
+    }
+
     public Player getPlayer() {
         return player;
     }
