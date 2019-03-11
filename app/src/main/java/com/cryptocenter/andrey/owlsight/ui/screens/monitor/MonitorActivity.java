@@ -62,8 +62,28 @@ public class MonitorActivity extends BaseActivity implements MonitorView {
 
     @Override
     public void setMonitors(List<MonitorCamera> monitors) {
-        adapter = new MonitorAdapter(monitors, presenter);
+        int spanCount = getSpanCount(monitors.size());
+        rvMonitor.setLayoutManager(new GridLayoutManager(MonitorActivity.this, spanCount));
+        adapter = new MonitorAdapter(monitors, presenter, spanCount);
         rvMonitor.setAdapter(adapter);
+    }
+
+    private int getSpanCount(int monitorSize) {
+        switch (monitorSize) {
+            case 1:
+                return 1;
+            case 2:
+            case 3:
+            case 4:
+                return 2;
+            default:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+                return 4;
+
+        }
     }
 
     @Override
@@ -77,7 +97,6 @@ public class MonitorActivity extends BaseActivity implements MonitorView {
     // =============================================================================================
 
     private void setupUI() {
-        rvMonitor.setLayoutManager(new GridLayoutManager(MonitorActivity.this, 4));
         rvMonitor.setItemAnimator(new DefaultItemAnimator());
     }
 

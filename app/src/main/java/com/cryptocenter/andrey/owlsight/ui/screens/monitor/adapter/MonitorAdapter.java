@@ -16,11 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 public class MonitorAdapter extends RecyclerView.Adapter<MonitorCameraVH> {
 
     private OnMonitorCameraListener monitorCameraListener;
+    private final int spanCount;
     private List<MonitorCamera> list;
 
-    public MonitorAdapter(List<MonitorCamera> list, OnMonitorCameraListener monitorCameraListener) {
+    public MonitorAdapter(List<MonitorCamera> list, OnMonitorCameraListener monitorCameraListener, int spanCount) {
         this.list = list;
         this.monitorCameraListener = monitorCameraListener;
+        this.spanCount = spanCount;
     }
 
     @NonNull
@@ -28,9 +30,21 @@ public class MonitorAdapter extends RecyclerView.Adapter<MonitorCameraVH> {
     public MonitorCameraVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_monitor, parent, false);
         final GridLayoutManager.LayoutParams lp = (GridLayoutManager.LayoutParams) view.getLayoutParams();
-        lp.height = parent.getMeasuredHeight() / 3;
+        lp.height = calculateHeight(parent.getMeasuredHeight());
         view.setLayoutParams(lp);
         return new MonitorCameraVH(view, monitorCameraListener);
+    }
+
+    private int calculateHeight(int measuredHeight) {
+        switch (spanCount) {
+            case 1:
+                return measuredHeight;
+            case 2:
+                return measuredHeight / 2;
+            default:
+            case 4:
+                return measuredHeight / 3;
+        }
     }
 
     @Override
@@ -54,6 +68,7 @@ public class MonitorAdapter extends RecyclerView.Adapter<MonitorCameraVH> {
 
     public interface OnMonitorCameraListener {
         void onMonitorClick(MonitorCamera monitorCamera);
+
         void onMonitorGetInfo(MonitorCamera monitorCamera);
     }
 }
