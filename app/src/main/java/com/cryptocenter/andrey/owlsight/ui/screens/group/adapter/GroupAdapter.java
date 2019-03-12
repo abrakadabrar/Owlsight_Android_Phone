@@ -36,15 +36,16 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     }
 
     public void setReachable(List<Camera> cameras){
-        if(this.list.size()==cameras.size()) {
+        if(this.list.size()>=cameras.size()) {
             for(int i = 0; i < cameras.size(); i++){
                 this.list.get(i).setIsReachable(cameras.get(i).getIsReachable());
                 this.list.get(i).setRefreshing(true);
             }
-            notifyDataSetChanged();
         } else {
-
+            this.list = cameras;
+            setReachable(cameras);
         }
+        notifyDataSetChanged();
     }
 
     public void startRefreshing(){

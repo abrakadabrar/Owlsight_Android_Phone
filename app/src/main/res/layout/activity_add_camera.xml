@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBgSignUp"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -31,17 +32,29 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.core.widget.NestedScrollView
+    <ScrollView
+        android:overScrollMode="always"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="24dp">
 
+            <TextView
+                android:text="@string/add_camera_help_link"
+                android:linksClickable="true"
+                android:autoLink="web"
+                android:textColorLink="@color/blue"
+                android:textColor="@color/white_greyish"
+                android:id="@+id/tv_add_camera_help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <com.google.android.material.textfield.TextInputLayout
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/sign_up_fields_bg"
@@ -88,6 +101,7 @@
                     android:paddingRight="14dp"
                     android:singleLine="true"
                     android:textColor="@color/colorBack"
+                    android:inputType="numberDecimal"
                     android:textSize="18sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -120,7 +134,7 @@
                     android:background="@android:color/transparent"
                     android:foregroundGravity="center"
                     android:hint="порт"
-                    android:inputType="textEmailAddress"
+                    android:inputType="numberDecimal"
                     android:paddingLeft="14dp"
                     android:paddingRight="14dp"
                     android:singleLine="true"
@@ -195,8 +209,8 @@
                     android:background="@android:color/transparent"
                     android:foregroundGravity="center"
                     android:gravity="center_vertical"
-                    android:hint="поьзователь"
-                    android:inputType="textPassword"
+                    android:hint="пользователь"
+                    android:inputType="text"
                     android:paddingLeft="14dp"
                     android:paddingRight="14dp"
                     android:singleLine="true"
@@ -233,7 +247,7 @@
                     android:foregroundGravity="center"
                     android:gravity="center_vertical"
                     android:hint="пароль"
-                    android:inputType="textPassword"
+                    android:inputType="text"
                     android:paddingLeft="14dp"
                     android:paddingRight="14dp"
                     android:textColor="@color/colorBack"
@@ -262,9 +276,26 @@
                 android:textColor="@color/color_et_error"
                 android:textSize="13sp"
                 android:visibility="gone" />
+            <TextView
+                android:textColor="@color/white_greyish"
+                android:text="@string/add_camera_result_link"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:enabled="false"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:text=""
+                android:id="@+id/textViewdata"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/textViewdata"
+                android:visibility="gone"
+                android:textColor="@color/white_greyish"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:id="@+id/tv_add_camera_test_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -283,6 +314,6 @@
 
         </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
 
 </LinearLayout>

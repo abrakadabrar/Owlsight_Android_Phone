@@ -335,5 +335,7 @@ OwelSight, для отправки писем рассылок, новостей
     <string name="menu_screens">виды</string>
     <string name="no_connection">Отсуствует соединение с сервером, попытка подключения...</string>
     <string name="you_have_no_species">У вас нет видов</string>
+    <string name="add_camera_result_link">Итоговая ссылка (проверьте эту ссылку перед сохранением)</string>
+    <string name="add_camera_help_link">Инструкция по подключению камеры в разделе \'Как это работает\': <a href="https://owlsight.com/how">https://owlsight.com/how</a></string>
 
 </resources>

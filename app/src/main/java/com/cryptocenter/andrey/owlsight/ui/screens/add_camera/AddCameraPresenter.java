@@ -53,9 +53,9 @@ public class AddCameraPresenter extends BasePresenter<AddCameraView> {
     private void handleTest(TestCameraResponse response) {
         isTestSuccess = response.isPinged();
         if(isTestSuccess){
-            getViewState().showTestResult("success");
+            getViewState().testResult(true);
         } else {
-            getViewState().showTestResult("fail");
+            getViewState().testResult(false);
         }
     }
 
@@ -75,9 +75,9 @@ public class AddCameraPresenter extends BasePresenter<AddCameraView> {
 
     private void handleAdding(AddCameraResponse response) {
         if(response.isSuccess()){
-            getViewState().closeScreen("");
+            getViewState().addResult(true);
         } else {
-            getViewState().showTestResult("error");
+            getViewState().addResult(false);
         }
     }
 
