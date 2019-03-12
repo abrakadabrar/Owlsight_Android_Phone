@@ -39,11 +39,10 @@ public class MonitorAdapter extends RecyclerView.Adapter<MonitorCameraVH> {
         switch (spanCount) {
             case 1:
                 return measuredHeight;
-            case 2:
-                return measuredHeight / 2;
             default:
+            case 2:
             case 4:
-                return measuredHeight / 3;
+                return measuredHeight / 2;
         }
     }
 
