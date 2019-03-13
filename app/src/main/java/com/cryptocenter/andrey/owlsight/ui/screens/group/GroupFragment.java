@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
@@ -168,10 +169,10 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     private CustomCaldroidFragment caldroidFragment;
     private CaldroidListener caldroidListener;
     private OnAlertSelectDateListener listener;
+
     @Override
     public void showAlertCalendar(Camera camera) {
 //        Alerts.showDarkCalendar(camera, date -> presenter.handleDateSelect(camera, date), getChildFragmentManager());
-        listener = date -> presenter.handleDateSelect(camera, date);
         caldroidFragment = new CustomCaldroidFragment();
         Bundle args = new Bundle();
         Calendar cal = Calendar.getInstance();
@@ -206,7 +207,19 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         caldroidFragment.setTextColorForDates(colors);
         createCaldroidListener();
         caldroidFragment.setCaldroidListener(caldroidListener);
-        caldroidFragment.show(getChildFragmentManager(),"caldroid");
+        caldroidFragment.show(getChildFragmentManager(), "caldroid");
+        listener = date -> {
+            try {
+                if(markedDays.contains(format.parse(date))){
+                    presenter.handleDateSelect(camera, date);
+                } else {
+                    Toast.makeText(getContext(), "Отсутствуют записи по выбранной дате", Toast.LENGTH_SHORT).show();
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        };
+
     }
 
     private void createCaldroidListener() {

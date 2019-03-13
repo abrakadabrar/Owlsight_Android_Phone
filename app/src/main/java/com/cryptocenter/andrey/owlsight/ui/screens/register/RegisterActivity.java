@@ -16,7 +16,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BaseActivity;
 import com.cryptocenter.andrey.owlsight.di.Scopes;
-import com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity;
+import com.redmadrobot.inputmask.MaskedTextChangedListener;
 
 import androidx.annotation.Nullable;
 import butterknife.BindView;
@@ -158,7 +158,10 @@ public class RegisterActivity extends BaseActivity implements RegisterView {
         etPassword.setOnFocusChangeListener((v, hasFocus) -> presenter.handleFieldFocusChanged(etPassword.getText(), hasFocus, PASSWORD));
         etConfirmPassword.setOnFocusChangeListener((v, hasFocus) -> presenter.handleFieldFocusChanged(etConfirmPassword.getText(), hasFocus, CONFIRM_PASSWORD));
         cbConfirmPolicy.setOnCheckedChangeListener((buttonView, isChecked) -> presenter.handleConfirmPolicyChanged(isChecked));
-        etPhone.addTextChangedListener(new PhoneNumberFormattingTextWatcher("+7"));
+        MaskedTextChangedListener listener = new MaskedTextChangedListener("+7 ([000]) [000]-[00]-[00]", etPhone);
+        etPhone.setHint(listener.placeholder());
+        etPhone.addTextChangedListener(listener);
+        etPhone.setOnFocusChangeListener(listener);
     }
 
     private void showedErrorField(boolean isShowed, EditText field, TextView tvError) {

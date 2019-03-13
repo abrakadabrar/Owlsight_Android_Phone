@@ -33,9 +33,9 @@ public class AddCameraPresenter extends BasePresenter<AddCameraView> {
         }
     }
 
-    private void testCamera(String uesrname, String password, String host, String port, String extra) {
+    private void testCamera(String username, String password, String host, String port, String extra) {
         repository.testCamera(
-                createLink(uesrname, password, host, port, extra),
+                createLink(username, password, host, port, extra),
                 getViewState()::showLoading,
                 this::handleTest,
                 this::showFailed,
@@ -43,9 +43,9 @@ public class AddCameraPresenter extends BasePresenter<AddCameraView> {
                 getViewState()::hideLoading);
     }
 
-    private String createLink(String uesrname, String password, String host, String port, String extra) {
+    private String createLink(String username, String password, String host, String port, String extra) {
         String form = "rtsp://%1$s:%2$s@%3$s:%4$s/%5$s";
-        String result = String.format(form, uesrname, password, host, port, extra);
+        String result = String.format(form, username, password, host, port, extra);
 
         return result;
     }
