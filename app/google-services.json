@@ -8,20 +8,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:964647224418:android:6b04949e64edc320",
+        "mobilesdk_app_id": "1:964647224418:android:67711a195ed6aa65",
         "android_client_info": {
-          "package_name": "com.example.andrey.owlsight"
+          "package_name": "com.cryptocenter.andrey.owlsight"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "964647224418-i75r7tou1lm2gni45dbd5f8f9mcvk70d.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.andrey.owlsight",
-            "certificate_hash": "c861e0630b260f3d74e0d0bd02b35de8a4b602fe"
-          }
-        },
         {
           "client_id": "964647224418-lforp27rkojbpaqrubl72fkj609r0isu.apps.googleusercontent.com",
           "client_type": 3
@@ -37,13 +29,8 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 2,
-          "other_platform_oauth_client": [
-            {
-              "client_id": "964647224418-lforp27rkojbpaqrubl72fkj609r0isu.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2
