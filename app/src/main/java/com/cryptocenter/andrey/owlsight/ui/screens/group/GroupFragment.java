@@ -50,6 +50,7 @@ import toothpick.Toothpick;
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 
 public class GroupFragment extends BaseFragment implements GroupView, SwipeRefreshLayout.OnRefreshListener, GroupAdapter.OnCameraListener {
+    private static final String GROUP_ID = "GROUP_ID";
 
     @InjectPresenter
     GroupPresenter presenter;
@@ -64,8 +65,9 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     private IGroupsRefresh iGroupsRefresh;
     private String groupName;
 
-    public static GroupFragment instance(List<Camera> group, IGroupsRefresh iGroupsRefresh, String groupName) {
+    public static GroupFragment instance(List<Camera> group, IGroupsRefresh iGroupsRefresh, String groupName, String groupId) {
         final Bundle arguments = new Bundle();
+        arguments.putString(GROUP_ID, groupId);
         arguments.putSerializable("group", (Serializable) group);
         final GroupFragment groupFragment = new GroupFragment();
         groupFragment.setArguments(arguments);
@@ -210,7 +212,7 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         caldroidFragment.show(getChildFragmentManager(), "caldroid");
         listener = date -> {
             try {
-                if(markedDays.contains(format.parse(date))){
+                if (markedDays.contains(format.parse(date))) {
                     presenter.handleDateSelect(camera, date);
                 } else {
                     Toast.makeText(getContext(), "Отсутствуют записи по выбранной дате", Toast.LENGTH_SHORT).show();
@@ -302,7 +304,7 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     @ProvidePresenter
     GroupPresenter providePresenter() {
         final OwlsightRepository repository = Toothpick.openScope(Scopes.APP).getInstance(OwlsightRepository.class);
-        return new GroupPresenter(repository, (ArrayList<Camera>) getArguments().getSerializable("group"));
+        return new GroupPresenter(repository, (ArrayList<Camera>) getArguments().getSerializable("group"), getArguments().getString(GROUP_ID, ""));
     }
 
 

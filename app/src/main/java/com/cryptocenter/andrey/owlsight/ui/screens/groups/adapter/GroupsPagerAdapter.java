@@ -4,6 +4,8 @@ import com.cryptocenter.andrey.owlsight.data.model.Group;
 import com.cryptocenter.andrey.owlsight.ui.screens.add_group.AddGroupFragment;
 import com.cryptocenter.andrey.owlsight.ui.screens.group.GroupFragment;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
@@ -21,10 +23,11 @@ public class GroupsPagerAdapter extends FragmentPagerAdapter {
         this.groups = groups;
     }
 
+    @NotNull
     @Override
     public Fragment getItem(int position) {
         if (position == 0) return AddGroupFragment.instance();
-        return GroupFragment.instance(groups.get(position).getCams(),iGroupsRefresh,groups.get(position).getGroupName());
+        return GroupFragment.instance(groups.get(position).getCams(),iGroupsRefresh,groups.get(position).getGroupName(),groups.get(position).getId());
     }
 
 

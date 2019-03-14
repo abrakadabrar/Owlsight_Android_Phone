@@ -1,12 +1,9 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.group;
 
-import android.os.Handler;
-
 import com.arellomobile.mvp.InjectViewState;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.RecordsResponse;
-import com.cryptocenter.andrey.owlsight.data.model.api.response.Response;
 import com.cryptocenter.andrey.owlsight.data.model.data.FromDateData;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
@@ -24,14 +21,16 @@ public class GroupPresenter extends BasePresenter<GroupView> {
 
     private OwlsightRepository repository;
     private List<Camera> cameras;
+    private final String groupId;
     private boolean handleCameraResponce = true;
     private boolean isLoading = false;
 
 
     @Inject
-    GroupPresenter(OwlsightRepository repository, List<Camera> cameras) {
+    GroupPresenter(OwlsightRepository repository, List<Camera> cameras, String groupId) {
         this.repository = repository;
         this.cameras = cameras;
+        this.groupId = groupId;
     }
 
     @Override
@@ -102,42 +101,30 @@ public class GroupPresenter extends BasePresenter<GroupView> {
     void handleCameraClick(Camera camera) {
         repository.getCamera(
                 camera.getCameraId(),
-                new Response.Start() {
-                    @Override
-                    public void onStart() {
-                        if(!isLoading) {
-                            isLoading = true;
-                            getViewState().showLoading();
-                        }
+                () -> {
+                    if(!isLoading) {
+                        isLoading = true;
+                        getViewState().showLoading();
                     }
                 },
                 this::proceedGetCameraSuccess,
-                new Response.Failed() {
-                    @Override
-                    public void onFailed() {
-                        if (handleCameraResponce) {
-                            handleCameraClick(camera);
-                        }
+                () -> {
+                    if (handleCameraResponce) {
+                        handleCameraClick(camera);
                     }
                 },
-                new Response.Error() {
-                    @Override
-                    public void onError(Throwable error) {
-                        if (handleCameraResponce) {
-                            handleCameraClick(camera);
-                        }
+                error -> {
+                    if (handleCameraResponce) {
+                        handleCameraClick(camera);
                     }
                 },
-                new Response.Complete() {
-                    @Override
-                    public void onComplete() {
+                () -> {
 
-                    }
                 });
     }
 
     void addCamera(){
-        getViewState().addScreen(ADD_CAMERA,cameras.get(0).getGroupId());
+        getViewState().addScreen(ADD_CAMERA, groupId);
     }
 
     private void deleteGroup(Camera camera) {
