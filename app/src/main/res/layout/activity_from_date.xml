@@ -71,6 +71,7 @@
         <ImageButton
             android:id="@+id/btnDownload"
             android:layout_width="48dp"
+            android:visibility="gone"
             android:layout_height="48dp"
             android:background="@android:color/transparent"
             android:padding="16dp"
