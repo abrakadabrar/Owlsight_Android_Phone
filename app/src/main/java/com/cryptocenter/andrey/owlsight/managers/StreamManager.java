@@ -17,13 +17,15 @@ import net.ossrs.rtmp.ConnectCheckerRtmp;
 public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback, ConnectionClassManager.ConnectionClassStateChangeListener, AdapterBitrateParser.Callback {
 
     private Activity activity;
+    private final OnDisconnectListener onDisconnectListener;
     private RtmpCamera2 streamCamera;
     private Handler handler;
     private ConnectionClassManager connectionClassManager;
     private UploadBandwidthSampler uploadBandwidthSampler;
 
-    public StreamManager(Activity activity) {
+    public StreamManager(Activity activity, OnDisconnectListener onDisconnectListener) {
         this.activity = activity;
+        this.onDisconnectListener = onDisconnectListener;
         connectionClassManager = ConnectionClassManager.getInstance();
         uploadBandwidthSampler = UploadBandwidthSampler.getInstance();
         connectionClassManager.register(this);
@@ -58,17 +60,21 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
         activity.runOnUiThread(() -> {
             Toast.makeText(activity, "Connection failed. " + reason, Toast.LENGTH_SHORT).show();
             streamCamera.stopStream();
+            onDisconnectListener.onRtmpDisconnect();
+
         });
     }
 
     @Override
     public void onDisconnectRtmp() {
         activity.runOnUiThread(() -> Toast.makeText(activity, "Disconnected", Toast.LENGTH_SHORT).show());
+        onDisconnectListener.onRtmpDisconnect();
     }
 
     @Override
     public void onAuthErrorRtmp() {
         activity.runOnUiThread(() -> Toast.makeText(activity, "Auth error", Toast.LENGTH_SHORT).show());
+        onDisconnectListener.onRtmpDisconnect();
     }
 
     @Override
@@ -141,4 +147,7 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
         connectionClassManager.remove();
     }
 
+    public interface OnDisconnectListener{
+        void onRtmpDisconnect();
+    }
 }

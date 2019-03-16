@@ -25,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import toothpick.Toothpick;
 
-public class StreamActivity extends BaseActivity implements StreamView, View.OnClickListener, Connectable, Disconnectable {
+public class StreamActivity extends BaseActivity implements StreamView, View.OnClickListener, Connectable, Disconnectable, StreamManager.OnDisconnectListener {
 
     @InjectPresenter
     StreamPresenter presenter;
@@ -57,7 +57,7 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
         ButterKnife.bind(this);
         setupUI();
 
-        streamManager = new StreamManager(this);
+        streamManager = new StreamManager(this, this);
         Permissions.checkCamera(this, presenter::handlePermissionGranted);
 
         initMerlin();
@@ -176,5 +176,10 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
     @ProvidePresenter
     StreamPresenter providePresenter() {
         return Toothpick.openScope(Scopes.APP).getInstance(StreamPresenter.class);
+    }
+
+    @Override
+    public void onRtmpDisconnect() {
+        restartActivity();
     }
 }
