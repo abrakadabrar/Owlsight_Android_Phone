@@ -19,9 +19,12 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.ResponseBody;
 
 public class OwlsightRepositoryImpl implements OwlsightRepository {
 
@@ -492,6 +495,13 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
                         },
                         errorListener::onError
                 );
+    }
+
+    @Override
+    public Observable<ResponseBody> downloadVideo(String path, String id){
+        return api.getFile(path, id, preferences.getCookie())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io());
     }
 
     @Override

@@ -14,7 +14,9 @@ import com.cryptocenter.andrey.owlsight.data.model.videofromdatewithmotion.Datum
 
 import java.util.List;
 
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+import okhttp3.ResponseBody;
 
 public interface OwlsightRepository {
 
@@ -166,4 +168,6 @@ public interface OwlsightRepository {
             Response.Failed failedListener,
             Response.Error errorListener,
             Response.Complete completeListener);
+
+    Observable<ResponseBody> downloadVideo(String path, String id);
 }

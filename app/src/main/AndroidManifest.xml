@@ -13,6 +13,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <uses-feature
@@ -92,6 +93,7 @@
         <service
             android:exported="false"
             android:name="com.novoda.merlin.MerlinService" />
+        <service android:name=".managers.video_download.DownloadVideoManager" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

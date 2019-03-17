@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.ResponseBody;
 import retrofit2.Response;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
@@ -24,6 +25,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.Streaming;
 
 public interface OwlsightAPI {
 
@@ -143,5 +145,9 @@ public interface OwlsightAPI {
     Observable<Response<AddCameraResponse>> addCamera(
             @QueryMap() Map<String,String> params,
             @Header("Cookie") String cookie);
+
+    @Streaming
+    @GET("cabinet/record/get-file")
+    Observable<ResponseBody> getFile(@Query("path") String path, @Query("id") String id, @Header("Cookie") String cookie);
 
 }

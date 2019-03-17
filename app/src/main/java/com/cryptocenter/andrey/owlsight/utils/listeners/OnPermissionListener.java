@@ -1,6 +1,6 @@
 package com.cryptocenter.andrey.owlsight.utils.listeners;
 
-public interface OnPermissionStramListener {
+public interface OnPermissionListener {
 
     void onGranted(boolean isGranted);
 }

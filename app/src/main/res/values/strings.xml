@@ -337,5 +337,7 @@ OwelSight, для отправки писем рассылок, новостей
     <string name="you_have_no_species">У вас нет видов</string>
     <string name="add_camera_result_link">Итоговая ссылка (проверьте эту ссылку перед сохранением)</string>
     <string name="add_camera_help_link">Инструкция по подключению камеры в разделе \'Как это работает\': <a href="https://owlsight.com/how">https://owlsight.com/how</a></string>
+    <string name="write_permission">Для скачивания видео необходимо разрешение</string>
+    <string name="video_loading">Видео загружается</string>
 
 </resources>

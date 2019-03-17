@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -20,8 +21,12 @@ import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BaseActivity;
 import com.cryptocenter.andrey.owlsight.data.model.data.FromDateData;
 import com.cryptocenter.andrey.owlsight.di.Scopes;
+import com.cryptocenter.andrey.owlsight.managers.video_download.DownloadVideoManager;
 import com.cryptocenter.andrey.owlsight.ui.custom.MotionInRectView;
 import com.cryptocenter.andrey.owlsight.ui.custom.TimeLineView;
+import com.cryptocenter.andrey.owlsight.utils.Permissions;
+import com.cryptocenter.andrey.owlsight.utils.listeners.OnPermissionListener;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +34,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import toothpick.Toothpick;
 
 import static android.view.View.GONE;
@@ -65,6 +71,9 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
 
     @BindView(R.id.btnClose)
     ImageButton btnClose;
+
+    @BindView(R.id.btnDownload)
+    ImageButton btnDownload;
 
     private Handler handler = new Handler();
     private Runnable runner;
@@ -146,6 +155,7 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
         });
         valueAnimator.start();
         btnFullscreen.setVisibility(isEnable ? GONE : VISIBLE);
+        btnDownload.setVisibility(isEnable ? VISIBLE : GONE);
     }
 
     @Override
@@ -216,5 +226,21 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
     @ProvidePresenter
     FromDatePresenter providePresenter() {
         return Toothpick.openScope(Scopes.APP).getInstance(FromDatePresenter.class);
+    }
+
+    @OnClick(R.id.btnDownload)
+    public void onBtnDownloadClicked() {
+        Permissions.checkStorage(this, isGranted -> {
+            if(isGranted){
+                presenter.handleDownloadButtonClicked();
+            } else {
+                Toast.makeText(this, R.string.write_permission, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    @Override
+    public void downloadVideo(String path, String cameraId) {
+        DownloadVideoManager.Companion.startService(this, path, cameraId);
     }
 }

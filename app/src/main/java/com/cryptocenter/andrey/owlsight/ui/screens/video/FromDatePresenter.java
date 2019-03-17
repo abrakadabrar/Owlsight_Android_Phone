@@ -42,6 +42,8 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
     private boolean requestComplete = false;
     private boolean isFullscreen = false;
 
+    private String path = "";
+
     @Inject
     FromDatePresenter(OwlsightRepository repository, Preferences preferences) {
         this.repository = repository;
@@ -74,7 +76,6 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
     }
 
     void handleTimeLineSecondClick(int progress) {
-        String path = "";
         for (int i = 0; i < records.size(); i++) {
             Datum datum = records.get(i);
             int startSecond = datum.getStartDate().getSecondOfDay();
@@ -168,6 +169,7 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
         int maxTimeSeconds = lastRecord.getStartDate().getSecondOfDay();
         getViewState().setMinMaxTime(minTimeSeconds, maxTimeSeconds);
         getFrameMotions(firstRecord.getStart(), lastRecord.getEnd());
+        path = firstRecord.getPath();
         getViewState().setVideoChanged(Uri.parse(String.format(FILE_PATH, firstRecord.getPath(), cameraId)), header, 0);
     }
 
@@ -182,5 +184,9 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
 
         getViewState().setRedLines(lines);
         requestComplete = true;
+    }
+
+    public void handleDownloadButtonClicked() {
+        getViewState().downloadVideo(path, cameraId);
     }
 }
