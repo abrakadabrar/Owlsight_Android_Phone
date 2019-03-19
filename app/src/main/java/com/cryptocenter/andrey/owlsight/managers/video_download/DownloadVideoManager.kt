@@ -2,6 +2,7 @@ package com.cryptocenter.andrey.owlsight.managers.video_download
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
 import android.app.Service
 import android.content.Context
 import android.content.Intent
@@ -10,9 +11,11 @@ import android.graphics.Color
 import android.os.Environment
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
+import com.crashlytics.android.Crashlytics
 import com.cryptocenter.andrey.owlsight.R
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository
 import com.cryptocenter.andrey.owlsight.di.Scopes
+import com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity
 import io.reactivex.disposables.Disposable
 import okhttp3.ResponseBody
 import toothpick.Toothpick
@@ -33,15 +36,21 @@ class DownloadVideoManager : Service() {
     private lateinit var notificationManager: NotificationManager
 
     private val notificationId = Random(System.currentTimeMillis()).nextInt()
+
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
-        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        setupChannels()
+        try {
+            notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            setupChannels()
 
-        owlsightRepository = Toothpick.openScope(Scopes.APP).getInstance(OwlsightRepository::class.java)
-        videoPath = intent.getStringExtra(VIDEO_PATH)
-        cameraId = intent.getStringExtra(CAMERA_ID)
+            owlsightRepository = Toothpick.openScope(Scopes.APP).getInstance(OwlsightRepository::class.java)
+            videoPath = intent.getStringExtra(VIDEO_PATH)
+            cameraId = intent.getStringExtra(CAMERA_ID)
 
-        startDownloading()
+            startDownloading()
+        } catch (e: Exception) {
+            Crashlytics.logException(e)
+        }
+
 
         return Service.START_REDELIVER_INTENT
     }
@@ -60,6 +69,7 @@ class DownloadVideoManager : Service() {
                         writeResponseBodyToDisk(responseBody, file)
                     }
                 }, { error ->
+                    Crashlytics.logException(Exception("Cant download video", error))
                     error.printStackTrace()
                 })
     }
@@ -111,6 +121,7 @@ class DownloadVideoManager : Service() {
 
                 return true
             } catch (e: IOException) {
+                Crashlytics.logException(Exception("Cant download video", e))
                 e.printStackTrace()
                 return false
             } finally {
@@ -119,6 +130,7 @@ class DownloadVideoManager : Service() {
                 outputStream?.close()
             }
         } catch (e: IOException) {
+            Crashlytics.logException(Exception("Cant download video", e))
             e.printStackTrace()
             return false
         }
@@ -151,12 +163,17 @@ class DownloadVideoManager : Service() {
     }
 
     private fun notificationBuilder(max: Int, progress: Int): NotificationCompat.Builder {
+        val notificationIntent = Intent(this, GroupsActivity::class.java)
+
+        val contentIntent = PendingIntent.getActivity(baseContext, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+
         return NotificationCompat.Builder(this, CHANNEL_ID)
                 .setOngoing(true)
                 .setAutoCancel(false)
                 .setSound(null)
                 .setProgress(max, progress, false)
                 .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentIntent(contentIntent)
                 .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
                 .setContentTitle(getString(R.string.video_loading))
                 .setWhen(System.currentTimeMillis())
@@ -172,6 +189,7 @@ class DownloadVideoManager : Service() {
                 .setContentTitle(text)
                 .setWhen(System.currentTimeMillis())
     }
+
 
     private fun isExternalStorageWritable(): Boolean {
         return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED

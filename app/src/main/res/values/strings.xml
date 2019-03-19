@@ -339,5 +339,7 @@ OwelSight, для отправки писем рассылок, новостей
     <string name="add_camera_help_link">Инструкция по подключению камеры в разделе \'Как это работает\': <a href="https://owlsight.com/how">https://owlsight.com/how</a></string>
     <string name="write_permission">Для скачивания видео необходимо разрешение</string>
     <string name="video_loading">Видео загружается</string>
+    <string name="start_downloading">Начинаем скачивать...</string>
+    <string name="have_not_access_to_storage">Нет доступа к хранилищу</string>
 
 </resources>

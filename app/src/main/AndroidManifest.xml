@@ -93,7 +93,8 @@
         <service
             android:exported="false"
             android:name="com.novoda.merlin.MerlinService" />
-        <service android:name=".managers.video_download.DownloadVideoManager" />
+
+        <service android:name="com.cryptocenter.andrey.owlsight.managers.video_download.DownloadVideoManager"  />
 
         <meta-data
             android:name="io.fabric.ApiKey"

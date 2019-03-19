@@ -111,6 +111,14 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if(adapter!=null){
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    @Override
     public void addScreen(Screen screen, Object data) {
         hideLoading();
         super.addScreen(screen, data);
