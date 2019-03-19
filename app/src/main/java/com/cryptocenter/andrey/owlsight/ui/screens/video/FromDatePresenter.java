@@ -4,6 +4,7 @@ import android.graphics.RectF;
 import android.net.Uri;
 
 import com.arellomobile.mvp.InjectViewState;
+import com.crashlytics.android.Crashlytics;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.data.FromDateData;
 import com.cryptocenter.andrey.owlsight.data.model.motion.DatumFramesMotions;
@@ -104,26 +105,38 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
     }
 
     void handleTimerUpdate(boolean isPlaying, int current) {
-        if (!requestComplete) return;
+        try {
 
-        if (isPlaying) {
-            Datum currentRecord = records.get(currentRecordInd);
-            int seconds = currentRecord.getStartDate().getSecondOfDay() + current / 1000;
-            getViewState().setTimeProgress(convertTime(seconds));
-            getViewState().setCurrentProgress(seconds);
-            rectList.clear();
 
-            for (Integer second : motions.keySet()) {
-                if (motions.get(seconds) != null && motions.get(seconds).getFrames() != null && second == seconds) {
-                    for (Frame frame : motions.get(second).getFrames()) {
-                        rectList.add(frame.toRect());
+            if (!requestComplete) return;
+
+            if (isPlaying) {
+                Datum currentRecord = records.get(currentRecordInd);
+                int seconds = currentRecord.getStartDate().getSecondOfDay() + current / 1000;
+                getViewState().setTimeProgress(convertTime(seconds));
+                getViewState().setCurrentProgress(seconds);
+                rectList.clear();
+
+                for (Integer second : motions.keySet()) {
+                    if (motions.get(seconds) != null && motions.get(seconds).getFrames() != null && second == seconds) {
+                        for (Frame frame : motions.get(second).getFrames()) {
+                            if (frame != null) {
+                                RectF rect = frame.toRect();
+                                if (rect != null) {
+                                    rectList.add(rect);
+                                }
+                            }
+                        }
+
+                        getViewState().setMotionRect(rectList);
                     }
-
-                    getViewState().setMotionRect(rectList);
                 }
+            } else {
+                getViewState().setMotionRect(rectList);
             }
-        } else {
-            getViewState().setMotionRect(rectList);
+        } catch (Exception e) {
+            Crashlytics.logException(e);
+            e.printStackTrace();
         }
     }
 

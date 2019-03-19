@@ -5,6 +5,8 @@ import android.graphics.RectF;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import androidx.annotation.Nullable;
+
 public class Frame {
 
     public static final int WIDTH = 1920;
@@ -77,7 +79,11 @@ public class Frame {
         this.y1 = y1;
     }
 
+    @Nullable
     public RectF toRect() {
+        if(x == null || x1 ==null || y == null || y1 == null){
+            return null;
+        }
         RectF rect = new RectF();
         rect.set(x, y, x1, y1);
         return rect;

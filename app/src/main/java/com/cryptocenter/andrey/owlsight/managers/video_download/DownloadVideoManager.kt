@@ -9,7 +9,6 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Environment
 import android.os.IBinder
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.cryptocenter.andrey.owlsight.R
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository
@@ -19,6 +18,7 @@ import okhttp3.ResponseBody
 import toothpick.Toothpick
 import java.io.*
 import javax.inject.Inject
+import kotlin.random.Random
 
 class DownloadVideoManager : Service() {
 
@@ -32,16 +32,18 @@ class DownloadVideoManager : Service() {
 
     private lateinit var notificationManager: NotificationManager
 
+    private val notificationId = Random(System.currentTimeMillis()).nextInt()
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         setupChannels()
+
         owlsightRepository = Toothpick.openScope(Scopes.APP).getInstance(OwlsightRepository::class.java)
         videoPath = intent.getStringExtra(VIDEO_PATH)
         cameraId = intent.getStringExtra(CAMERA_ID)
 
         startDownloading()
 
-        return Service.START_STICKY
+        return Service.START_REDELIVER_INTENT
     }
 
     private fun startDownloading() {
@@ -82,7 +84,7 @@ class DownloadVideoManager : Service() {
                 val fileReader = ByteArray(4096)
 
                 val fileSize = body.contentLength()
-                startForeground(DEFAULT_NOTIFICATION_ID, notificationBuilder(fileSize.toInt(), 0).build())
+                startForeground(notificationId, notificationBuilder(fileSize.toInt(), 0).build())
                 var fileSizeDownloaded: Long = 0
 
                 inputStream = body.byteStream()
@@ -99,11 +101,11 @@ class DownloadVideoManager : Service() {
 
                     fileSizeDownloaded += read.toLong()
 
-                    notificationManager.notify(DEFAULT_NOTIFICATION_ID, notificationBuilder(fileSize.toInt(), fileSizeDownloaded.toInt()).build())
-                    Log.d("VideoDownload", "file download: $fileSizeDownloaded of $fileSize")
+                    notificationManager.notify(notificationId, notificationBuilder(fileSize.toInt(), fileSizeDownloaded.toInt()).setContentText("""Файл ${file.name} скачивается...""").build())
                 }
 
-                stopForeground(true)
+                notificationManager.notify(notificationId, notification("""Файл${file.name}загружен.""").build())
+                stopForeground(false)
 
                 outputStream.flush()
 
@@ -126,7 +128,7 @@ class DownloadVideoManager : Service() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val adminChannel = NotificationChannel(CHANNEL_ID, CHANNEL_ID, NotificationManager.IMPORTANCE_HIGH)
             adminChannel.description = CHANNEL_ID
-            adminChannel.setSound(null,null)
+            adminChannel.setSound(null, null)
             adminChannel.enableLights(false)
             adminChannel.lightColor = Color.RED
             adminChannel.enableVibration(false)
@@ -146,7 +148,6 @@ class DownloadVideoManager : Service() {
         private const val VIDEO_PATH = "VIDEO_URL"
         private const val CAMERA_ID = "CAMERA_ID"
         private const val CHANNEL_ID = "OWLSIGHT_CHANNEL"
-        private const val DEFAULT_NOTIFICATION_ID = 101
     }
 
     private fun notificationBuilder(max: Int, progress: Int): NotificationCompat.Builder {
@@ -158,6 +159,17 @@ class DownloadVideoManager : Service() {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
                 .setContentTitle(getString(R.string.video_loading))
+                .setWhen(System.currentTimeMillis())
+    }
+
+    private fun notification(text: String): NotificationCompat.Builder {
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+                .setOngoing(true)
+                .setAutoCancel(false)
+                .setSound(null)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
+                .setContentTitle(text)
                 .setWhen(System.currentTimeMillis())
     }
 
