@@ -42,11 +42,12 @@
         android:layout_gravity="top"
         android:gravity="end"
         android:orientation="horizontal">
+
         <ImageButton
             android:id="@+id/btnClose"
-            android:layout_gravity="end"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_gravity="end"
             android:background="@android:color/transparent"
             android:padding="16dp"
             android:src="@drawable/ic_close" />
@@ -71,12 +72,14 @@
         <ImageButton
             android:id="@+id/btnDownload"
             android:layout_width="48dp"
-            android:visibility="gone"
             android:layout_height="48dp"
+            android:visibility="gone"
             android:background="@android:color/transparent"
+            android:clickable="true"
+            android:focusable="true"
+            android:foreground="?attr/selectableItemBackgroundBorderless"
             android:padding="16dp"
             android:src="@drawable/ic_file_download" />
-
 
 
     </LinearLayout>

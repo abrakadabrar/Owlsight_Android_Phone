@@ -9,7 +9,9 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Environment
+import android.os.Handler
 import android.os.IBinder
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.crashlytics.android.Crashlytics
 import com.cryptocenter.andrey.owlsight.R
@@ -37,9 +39,12 @@ class DownloadVideoManager : Service() {
 
     private val notificationId = Random(System.currentTimeMillis()).nextInt()
 
+    private lateinit var mainHandler : Handler
+
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         try {
             notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            mainHandler = Handler(mainLooper)
             setupChannels()
 
             owlsightRepository = Toothpick.openScope(Scopes.APP).getInstance(OwlsightRepository::class.java)
@@ -66,6 +71,7 @@ class DownloadVideoManager : Service() {
                 }
                 .subscribe({ responseBody ->
                     if (isExternalStorageWritable()) {
+                        showMessage(getString(R.string.start_downloading))
                         writeResponseBodyToDisk(responseBody, file)
                     }
                 }, { error ->
@@ -115,6 +121,7 @@ class DownloadVideoManager : Service() {
                 }
 
                 notificationManager.notify(notificationId, notification("""Файл${file.name}загружен.""").build())
+                showMessage("""Файл${file.name}загружен.""")
                 stopForeground(false)
 
                 outputStream.flush()
@@ -165,7 +172,7 @@ class DownloadVideoManager : Service() {
     private fun notificationBuilder(max: Int, progress: Int): NotificationCompat.Builder {
         val notificationIntent = Intent(this, GroupsActivity::class.java)
 
-        val contentIntent = PendingIntent.getActivity(baseContext, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val contentIntent = PendingIntent.getActivity(baseContext, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE)
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
                 .setOngoing(true)
@@ -180,10 +187,15 @@ class DownloadVideoManager : Service() {
     }
 
     private fun notification(text: String): NotificationCompat.Builder {
+        val notificationIntent = Intent(this, GroupsActivity::class.java)
+
+        val contentIntent = PendingIntent.getActivity(baseContext, 0, notificationIntent, PendingIntent.FLAG_NO_CREATE)
+
         return NotificationCompat.Builder(this, CHANNEL_ID)
                 .setOngoing(true)
                 .setAutoCancel(false)
                 .setSound(null)
+                .setContentIntent(contentIntent)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
                 .setContentTitle(text)
@@ -193,5 +205,11 @@ class DownloadVideoManager : Service() {
 
     private fun isExternalStorageWritable(): Boolean {
         return Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED
+    }
+
+    private fun showMessage(message: String) {
+        mainHandler.post {
+            Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+        }
     }
 }
