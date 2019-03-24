@@ -113,7 +113,7 @@ public interface OwlsightAPI {
             @Query("name") String name,
             @Header("Cookie") String cookie);
 
-    @GET("/api/papi/set-goodbye")
+    @POST("/api/papi/set-goodbye")
     Observable<Response<JsonObject>> stopStream(
             @Query("id") String id,
             @Header("Cookie") String cookie);

@@ -19,9 +19,15 @@
     <uses-feature
         android:name="android.hardware.microphone"
         android:required="false" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-feature android:name="android.hardware.camera2.full" android:required="false" />
-    <uses-feature android:name="android.hardware.camera2.autofocus" android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera2.full"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera2.autofocus"
+        android:required="false" />
     <uses-feature
         android:name="android.hardware.fingerprint"
         android:required="false" />
@@ -64,6 +70,7 @@
         <activity
             android:name="com.cryptocenter.andrey.owlsight.ui.screens.stream.StreamActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:noHistory="true"
             android:screenOrientation="userLandscape" />
 
         <activity
@@ -87,14 +94,15 @@
             android:name="com.cryptocenter.andrey.owlsight.ui.screens.video.FromDateActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="userLandscape" />
-        <activity android:name=".ui.screens.add_camera.AddCameraActivity"
-            android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity
+            android:name=".ui.screens.add_camera.AddCameraActivity"
+            android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <service
-            android:exported="false"
-            android:name="com.novoda.merlin.MerlinService" />
+            android:name="com.novoda.merlin.MerlinService"
+            android:exported="false" />
 
-        <service android:name="com.cryptocenter.andrey.owlsight.managers.video_download.DownloadVideoManager"  />
+        <service android:name="com.cryptocenter.andrey.owlsight.managers.video_download.DownloadVideoManager" />
 
         <meta-data
             android:name="io.fabric.ApiKey"

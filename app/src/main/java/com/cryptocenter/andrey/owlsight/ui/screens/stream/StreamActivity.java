@@ -1,5 +1,6 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.stream;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,38 +12,50 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
+import com.cryptocenter.andrey.owlsight.App;
 import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BaseActivity;
-import com.cryptocenter.andrey.owlsight.di.Scopes;
 import com.cryptocenter.andrey.owlsight.managers.StreamManager;
-import com.cryptocenter.andrey.owlsight.utils.Permissions;
 import com.novoda.merlin.Connectable;
 import com.novoda.merlin.Disconnectable;
 import com.novoda.merlin.Merlin;
 import com.pedro.encoder.input.video.CameraOpenException;
+import com.pedro.rtplibrary.view.OpenGlView;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import toothpick.Toothpick;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
-public class StreamActivity extends BaseActivity implements StreamView, View.OnClickListener, Connectable, Disconnectable, StreamManager.OnDisconnectListener {
+import static android.Manifest.permission.CAMERA;
+import static android.Manifest.permission.RECORD_AUDIO;
+
+public class StreamActivity extends BaseActivity implements StreamView, Connectable, Disconnectable {
+
+    public static int STREAM_REQUEST_CODE = 114;
 
     @InjectPresenter
     StreamPresenter presenter;
     @BindView(R.id.llTryConnect)
     LinearLayout llTryConnect;
+    @BindView(R.id.openGlView)
+    OpenGlView openGlView;
 
     private StreamManager streamManager;
     private Merlin merlin;
-    private boolean firstConnect = true;
+    private RxPermissions rxPermissions;
+    private Unbinder unbinder;
+
+    private boolean wasDisconnected = false;
 
     public static Intent intent(Context context) {
         return new Intent(context, StreamActivity.class);
     }
 
-    public static void start(Context context) {
+    public static void start(Activity context) {
         Intent starter = new Intent(context, StreamActivity.class);
-        context.startActivity(starter);
+        context.startActivityForResult(starter, STREAM_REQUEST_CODE);
     }
 
     // =============================================================================================
@@ -54,41 +67,40 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_streaming);
-        ButterKnife.bind(this);
-        setupUI();
-
-        streamManager = new StreamManager(this, this);
-        Permissions.checkCamera(this, presenter::handlePermissionGranted);
+        unbinder = ButterKnife.bind(this);
 
         initMerlin();
+
+        rxPermissions = new RxPermissions(this);
     }
 
     private void initMerlin() {
         merlin = new Merlin
                 .Builder()
-                .withConnectableCallbacks()
                 .withDisconnectableCallbacks()
+                .withConnectableCallbacks()
                 .build(this);
 
         merlin.registerConnectable(this);
         merlin.registerDisconnectable(this);
     }
 
-    @Override
-    public void onClick(View view) {
+    @OnClick({R.id.btnCameraSwitch, R.id.btnMicrophone, R.id.btnClose})
+    public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnCameraSwitch:
                 try {
                     streamManager.switchCamera();
                 } catch (CameraOpenException e) {
-                    Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(App.getInstance(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 break;
             case R.id.btnMicrophone:
                 ((ImageView) view).setImageResource(streamManager.checkAudioMuted() ? R.drawable.microphone_off : R.drawable.microphone_on);
                 break;
             case R.id.btnClose:
-                onBackClicked();
+                setResult(RESULT_OK);
+                finish();
                 break;
             default:
                 break;
@@ -98,9 +110,10 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
     @Override
     protected void onStop() {
         super.onStop();
-        streamManager.releaseStream();
+        if (streamManager != null) {
+            streamManager.releaseStream();
+        }
         presenter.handleStopStream();
-        finish();
     }
 
     @Override
@@ -121,7 +134,19 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
 
     @Override
     public void setupStream(String url) {
-        streamManager.initStream(findViewById(R.id.openGlView), url);
+        streamManager = new StreamManager(openGlView, new StreamManager.StreamManagerListener() {
+            @Override
+            public void onMessage(String message) {
+                showMessageOnUiThread(message);
+            }
+
+            @Override
+            public void onConnectionFailed() {
+                onDisconnect();
+            }
+        });
+
+        streamManager.initStream(url);
         presenter.startingHello();
     }
 
@@ -137,35 +162,52 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
     }
 
     @Override
+    protected void onDestroy() {
+        destroy();
+        super.onDestroy();
+    }
+
+    private void destroy() {
+        if (streamManager != null) {
+            streamManager.dropContext();
+            streamManager = null;
+        }
+        unbinder.unbind();
+        merlin = null;
+        rxPermissions = null;
+
+    }
+
+    @Override
     public void restartActivity() {
+        setResult(RESULT_CANCELED);
         finish();
-        startActivity(getIntent());
+    }
+
+    @Override
+    public void setWasDisconnected(boolean wasDisconnected) {
+        this.wasDisconnected = wasDisconnected;
     }
 
 
     @Override
     public void onConnect() {
-        if (firstConnect) {
-            firstConnect = false;
-            return;
+        if (wasDisconnected) {
+            disposeOnDestroy(rxPermissions.
+                    request(CAMERA, RECORD_AUDIO)
+                    .subscribe(presenter::handlePermissionGrantedOnDisconnected));
+        } else {
+            disposeOnDestroy(rxPermissions.
+                    request(CAMERA, RECORD_AUDIO)
+                    .subscribe(presenter::handlePermissionGranted));
         }
-        presenter.handleConnect();
+
     }
+
 
     @Override
     public void onDisconnect() {
         presenter.handleDisconnect();
-    }
-
-
-    // =============================================================================================
-    // Private
-    // =============================================================================================
-
-    private void setupUI() {
-        findViewById(R.id.btnCameraSwitch).setOnClickListener(this);
-        findViewById(R.id.btnMicrophone).setOnClickListener(this);
-        findViewById(R.id.btnClose).setOnClickListener(this);
     }
 
 
@@ -175,11 +217,10 @@ public class StreamActivity extends BaseActivity implements StreamView, View.OnC
 
     @ProvidePresenter
     StreamPresenter providePresenter() {
-        return Toothpick.openScope(Scopes.APP).getInstance(StreamPresenter.class);
+        return new StreamPresenter();
     }
 
-    @Override
-    public void onRtmpDisconnect() {
-        restartActivity();
+    private void showMessageOnUiThread(String message) {
+        runOnUiThread(() -> Toast.makeText(App.getInstance(), message, Toast.LENGTH_LONG).show());
     }
 }

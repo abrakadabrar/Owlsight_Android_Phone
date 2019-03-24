@@ -1,34 +1,27 @@
 package com.cryptocenter.andrey.owlsight.managers;
 
-import android.app.Activity;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.SurfaceHolder;
-import android.widget.Toast;
 
+import com.cryptocenter.andrey.owlsight.App;
 import com.cryptocenter.andrey.owlsight.utils.CameraHelper;
-import com.pedro.rtplibrary.network.AdapterBitrateParser;
-import com.pedro.rtplibrary.network.ConnectionClassManager;
-import com.pedro.rtplibrary.network.UploadBandwidthSampler;
 import com.pedro.rtplibrary.rtmp.RtmpCamera2;
 import com.pedro.rtplibrary.view.OpenGlView;
 
 import net.ossrs.rtmp.ConnectCheckerRtmp;
 
-public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback, ConnectionClassManager.ConnectionClassStateChangeListener, AdapterBitrateParser.Callback {
 
-    private Activity activity;
-    private final OnDisconnectListener onDisconnectListener;
+public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback {
+
+    private final StreamManagerListener streamManagerListener;
     private RtmpCamera2 streamCamera;
-    private Handler handler;
-    private ConnectionClassManager connectionClassManager;
-    private UploadBandwidthSampler uploadBandwidthSampler;
 
-    public StreamManager(Activity activity, OnDisconnectListener onDisconnectListener) {
-        this.activity = activity;
-        this.onDisconnectListener = onDisconnectListener;
-        connectionClassManager = ConnectionClassManager.getInstance();
-        uploadBandwidthSampler = UploadBandwidthSampler.getInstance();
-        connectionClassManager.register(this);
+    public StreamManager(OpenGlView openGlView, StreamManagerListener streamManagerListener) {
+        this.streamManagerListener = streamManagerListener;
+        streamCamera = new RtmpCamera2(openGlView, this);
+        openGlView.getHolder().addCallback(this);
+        openGlView.enableAA(true);
     }
 
     @Override
@@ -43,6 +36,10 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        if (streamCamera.isRecording()) {
+            streamCamera.stopRecord();
+
+        }
         if (streamCamera.isStreaming()) {
             streamCamera.stopStream();
         }
@@ -52,51 +49,42 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
 
     @Override
     public void onConnectionSuccessRtmp() {
-        activity.runOnUiThread(() -> Toast.makeText(activity, "Connection success", Toast.LENGTH_SHORT).show());
+        streamManagerListener.onMessage("Connection success");
     }
 
     @Override
     public void onConnectionFailedRtmp(final String reason) {
-        activity.runOnUiThread(() -> {
-            Toast.makeText(activity, "Connection failed. " + reason, Toast.LENGTH_SHORT).show();
+        streamManagerListener.onMessage("Connection failed. " + reason);
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(() -> {
             streamCamera.stopStream();
-            onDisconnectListener.onRtmpDisconnect();
-
+            streamManagerListener.onConnectionFailed();
         });
     }
 
     @Override
     public void onDisconnectRtmp() {
-        activity.runOnUiThread(() -> Toast.makeText(activity, "Disconnected", Toast.LENGTH_SHORT).show());
-        onDisconnectListener.onRtmpDisconnect();
+        streamManagerListener.onMessage("Disconnected");
     }
 
     @Override
     public void onAuthErrorRtmp() {
-        activity.runOnUiThread(() -> Toast.makeText(activity, "Auth error", Toast.LENGTH_SHORT).show());
-        onDisconnectListener.onRtmpDisconnect();
+        streamManagerListener.onMessage("Auth error");
     }
 
     @Override
     public void onAuthSuccessRtmp() {
-        activity.runOnUiThread(() -> Toast.makeText(activity, "Auth success", Toast.LENGTH_SHORT).show());
+        streamManagerListener.onMessage("Auth error");
     }
 
-    public void initStream(OpenGlView openGlView, String url) {
-        streamCamera = new RtmpCamera2(openGlView, this);
-        openGlView.getHolder().addCallback(this);
-        openGlView.enableAA(true);
-        AdapterBitrateParser.calculateMaxVideoBitrate(streamCamera.getResolutionValue());
-        AdapterBitrateParser.DELAY = 10000;
+    public void initStream(String url) {
         if (!streamCamera.isStreaming()) {
             if (streamCamera.isRecording() || prepareEncoders()) {
-                uploadBandwidthSampler.startSampling();
                 streamCamera.startStream(url);
             } else {
-                Toast.makeText(activity, "Error preparing stream, This device cant do it", Toast.LENGTH_SHORT).show();
+                streamManagerListener.onMessage("Error preparing stream, This device cant do it");
             }
         } else {
-            uploadBandwidthSampler.stopSampling();
             streamCamera.stopStream();
         }
     }
@@ -122,7 +110,7 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
     }
 
     private boolean prepareEncoders() {
-        return streamCamera.prepareVideo(1280, 720, 30, 1228800, false, CameraHelper.getCameraOrientation(activity))
+        return streamCamera.prepareVideo(1280, 720, 30, 1228800, false, CameraHelper.getCameraOrientation(App.getInstance()))
                 && streamCamera.prepareAudio(128 * 1024, 32000, false, false, false);
     }
 
@@ -134,20 +122,13 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
 //        return streamCamera.getResolutionsFront();
 //    }
 
-    @Override
-    public void onBandwidthStateChange(double bandwidth) {
-        if (streamCamera != null) {
-            AdapterBitrateParser.parseBitrate(streamCamera.getBitrate(), (int) bandwidth, this);
-        }
+    public interface StreamManagerListener {
+        void onMessage(String message);
+
+        void onConnectionFailed();
     }
 
-    @Override
-    public void onNewBitrate(int bitrate) {
-        streamCamera.setVideoBitrateOnFly(bitrate);
-        connectionClassManager.remove();
-    }
-
-    public interface OnDisconnectListener{
-        void onRtmpDisconnect();
+    public void dropContext() {
+        streamCamera.dropContext();
     }
 }

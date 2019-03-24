@@ -6,8 +6,11 @@ import com.arellomobile.mvp.InjectViewState;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.StreamResponse;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
+import com.cryptocenter.andrey.owlsight.di.Scopes;
 
 import javax.inject.Inject;
+
+import toothpick.Toothpick;
 
 @InjectViewState
 public class StreamPresenter extends BasePresenter<StreamView> {
@@ -20,8 +23,8 @@ public class StreamPresenter extends BasePresenter<StreamView> {
     private Runnable checkerStatus = this::handleCheckStatus;
 
 
-    @Inject
     StreamPresenter() {
+        repository = Toothpick.openScope(Scopes.APP).getInstance(OwlsightRepository.class);
     }
 
     @Override
@@ -37,8 +40,16 @@ public class StreamPresenter extends BasePresenter<StreamView> {
         }
     }
 
+    void handlePermissionGrantedOnDisconnected(boolean isGranted) {
+        getViewState().setWasDisconnected(false);
+        if (isGranted) {
+            stopStream();
+        } else {
+            getViewState().closeScreen("Для работы требуется разрешение");
+        }
+    }
+
     void handleStopStream() {
-        stopStream();
         stoppingHello();
     }
 
@@ -86,29 +97,25 @@ public class StreamPresenter extends BasePresenter<StreamView> {
                 this::showError);
     }
 
-    public void handleConnect() {
-        repository.stopStream(streamId,
-                () -> {
-                },
-                result -> getViewState().restartActivity(),
-                this::proceedStreamFailed,
-                this::showError,
-                () -> {
-                }
-        );
-    }
-
     public void handleDisconnect() {
         getViewState().setVisibilityOfConnectingLayout(true);
+        getViewState().setWasDisconnected(true);
         stoppingHello();
     }
 
+    public void handleMaxFramesDiscarded() {
+        getViewState().setVisibilityOfConnectingLayout(true);
+        getViewState().restartActivity();
+        stoppingHello();
+
+    }
     //==============================================================================================
     // Private
     //==============================================================================================
 
     private void proceedPrepareStreamSuccess(StreamResponse response) {
         streamId = response.getId();
+        getViewState().setVisibilityOfConnectingLayout(false);
         getViewState().setupStream(response.getData());
     }
 

@@ -52,7 +52,7 @@ public abstract class Camera2Base implements GetAacData, GetVideoData, GetMicrop
   private boolean streaming = false;
   private SurfaceView surfaceView;
   private TextureView textureView;
-  private GlInterface glInterface;
+  protected GlInterface glInterface;
   private boolean videoEnabled = false;
   private boolean onPreview = false;
   private boolean isBackground = false;

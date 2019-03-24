@@ -5,15 +5,22 @@ import android.app.Application;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.cryptocenter.andrey.owlsight.di.DependencyInjection;
+import com.squareup.leakcanary.LeakCanary;
 
 import es.dmoral.toasty.Toasty;
 import io.fabric.sdk.android.Fabric;
 
 public class App extends Application {
+    private static App instance;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
+        instance = this;
         Toasty.Config.getInstance().apply();
         DependencyInjection.configure(this);
         initCrashlytics();
@@ -34,6 +41,9 @@ public class App extends Application {
                 .kits(crashlytics).build();
 
         Fabric.with(fabric);
+    }
 
+    public static App getInstance() {
+        return instance;
     }
 }

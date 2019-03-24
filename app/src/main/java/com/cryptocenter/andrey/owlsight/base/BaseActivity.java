@@ -3,9 +3,10 @@ package com.cryptocenter.andrey.owlsight.base;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.cryptocenter.andrey.owlsight.App;
 import com.cryptocenter.andrey.owlsight.base.moxy.MvpAndroidXActivity;
-import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
+import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.ui.screens.add_camera.AddCameraActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.menu.MenuActivity;
@@ -22,15 +23,21 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import es.dmoral.toasty.Toasty;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import me.drakeet.support.toast.ToastCompat;
 
 public abstract class BaseActivity extends MvpAndroidXActivity implements BaseView {
 
     private KProgressHUD loader;
 
+    private CompositeDisposable compositeDisposable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loader = Alerts.loader(this);
+        compositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -68,7 +75,7 @@ public abstract class BaseActivity extends MvpAndroidXActivity implements BaseVi
                 startActivity(RegisterActivity.intent(this));
                 break;
             case STREAM:
-                startActivity(StreamActivity.intent(this));
+                StreamActivity.start(this);
                 break;
             case MENU:
                 startActivity(MenuActivity.intent(this));
@@ -110,6 +117,16 @@ public abstract class BaseActivity extends MvpAndroidXActivity implements BaseVi
         finish();
     }
 
+    protected void disposeOnDestroy(Disposable disposable){
+        compositeDisposable.add(disposable);
+    }
+
+    @Override
+    protected void onDestroy() {
+        compositeDisposable.clear();
+        super.onDestroy();
+    }
+
     public void closeScreenWithResult(int resultCode, String message) {
         if (message != null) showMessage(message);
         if (loader != null) loader.dismiss();
@@ -118,7 +135,7 @@ public abstract class BaseActivity extends MvpAndroidXActivity implements BaseVi
     }
 
     public void showMessage(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        ToastCompat.makeText(App.getInstance(), message, Toast.LENGTH_SHORT).show();
     }
 
     public void showAlertMessage(String title, String message) {

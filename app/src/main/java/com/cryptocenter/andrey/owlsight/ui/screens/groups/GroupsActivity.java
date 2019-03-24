@@ -3,6 +3,7 @@ package com.cryptocenter.andrey.owlsight.ui.screens.groups;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,6 +21,7 @@ import com.cryptocenter.andrey.owlsight.di.Scopes;
 import com.cryptocenter.andrey.owlsight.ui.screens.group.GroupFragment;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.adapter.GroupsPagerAdapter;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.adapter.MenuScreenAdapter;
+import com.cryptocenter.andrey.owlsight.ui.screens.stream.StreamActivity;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.DrawerUtil;
 import com.mikepenz.materialdrawer.Drawer;
@@ -27,6 +29,7 @@ import com.mikepenz.materialdrawer.Drawer;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -189,6 +192,14 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
             rvMenuScreens.setVisibility(View.GONE);
             tvNoSpecies.setVisibility(View.VISIBLE);
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == StreamActivity.STREAM_REQUEST_CODE && resultCode == RESULT_CANCELED) {
+            new Handler().postDelayed(() -> presenter.handleStreamModeClick(),1000);
         }
     }
 
