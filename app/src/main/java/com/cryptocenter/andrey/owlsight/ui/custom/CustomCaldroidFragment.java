@@ -5,16 +5,19 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.text.format.Time;
 import android.view.ContextThemeWrapper;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -246,6 +249,7 @@ public class CustomCaldroidFragment extends DialogFragment {
 
     /**
      * Retrieve current month
+     *
      * @return
      */
     public int getMonth() {
@@ -254,6 +258,7 @@ public class CustomCaldroidFragment extends DialogFragment {
 
     /**
      * Retrieve current year
+     *
      * @return
      */
     public int getYear() {
@@ -805,9 +810,10 @@ public class CustomCaldroidFragment extends DialogFragment {
                 .getDateFromString(toDateString, dateFormat);
         setSelectedDates(fromDate, toDate);
     }
-    
+
     /**
      * Select single date
+     *
      * @author Alov Maxim <alovmax@yandex.ru>
      */
     public void setSelectedDate(Date date) {
@@ -817,9 +823,10 @@ public class CustomCaldroidFragment extends DialogFragment {
         DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
         selectedDates.add(dateTime);
     }
-    
+
     /**
      * Clear selection of the specified date
+     *
      * @author Alov Maxim <alovmax@yandex.ru>
      */
     public void clearSelectedDate(Date date) {
@@ -829,9 +836,10 @@ public class CustomCaldroidFragment extends DialogFragment {
         DateTime dateTime = CalendarHelper.convertDateToDateTime(date);
         selectedDates.remove(dateTime);
     }
-    
+
     /**
      * Checks whether the specified date is selected
+     *
      * @author Alov Maxim <alovmax@yandex.ru>
      */
     public boolean isSelectedDate(Date date) {
@@ -1194,7 +1202,7 @@ public class CustomCaldroidFragment extends DialogFragment {
      * @return
      */
     public static CustomCaldroidFragment newInstance(String dialogTitle, int month,
-                                               int year) {
+                                                     int year) {
         CustomCaldroidFragment f = new CustomCaldroidFragment();
 
         // Supply num input as an argument.
@@ -1263,7 +1271,7 @@ public class CustomCaldroidFragment extends DialogFragment {
         //reason why theme is changed
         //getActivity().setTheme(themeResource);
 
-        View view = localInflater.inflate(R.layout.calendar_view, container, false);
+        View view = localInflater.inflate(com.cryptocenter.andrey.owlsight.R.layout.calendar_view, container, false);
 
         // For the monthTitleTextView
         monthTitleTextView = (TextView) view
@@ -1309,18 +1317,18 @@ public class CustomCaldroidFragment extends DialogFragment {
         return view;
     }
 
-	@Override
-	public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-		// Inform client that all views are created and not null
-		// Client should perform customization for buttons and textviews here
-		if (caldroidListener != null) {
-			caldroidListener.onCaldroidViewCreated();
-		}
-	}
+        // Inform client that all views are created and not null
+        // Client should perform customization for buttons and textviews here
+        if (caldroidListener != null) {
+            caldroidListener.onCaldroidViewCreated();
+        }
+    }
 
-	/**
+    /**
      * This method can be used to provide different gridview.
      *
      * @return

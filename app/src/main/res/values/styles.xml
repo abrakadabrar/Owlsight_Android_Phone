@@ -122,5 +122,9 @@
         <item name="android:paddingTop">6dp</item>
         <item name="android:paddingBottom">5dp</item>
     </style>
+
+    <style name="ProgressBarWhite">
+        <item name="colorAccent">#FFFFFF</item>
+    </style>
 </resources>
 

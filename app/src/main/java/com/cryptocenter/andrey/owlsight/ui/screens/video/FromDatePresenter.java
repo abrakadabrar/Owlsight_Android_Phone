@@ -160,8 +160,7 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
         return repository.motions(
                 cameraId,
                 from,
-                to,
-                getViewState()::showLoading,
+                to, () -> getViewState().setVisibilityOfProgressBar(true),
                 this::proceedMotionsSuccess,
                 this::showFailed,
                 this::showError,
@@ -196,6 +195,7 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
         }
 
         getViewState().setRedLines(lines);
+        getViewState().setVisibilityOfProgressBar(false);
         requestComplete = true;
     }
 

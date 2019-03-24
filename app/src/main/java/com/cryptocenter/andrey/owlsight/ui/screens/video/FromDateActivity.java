@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +26,6 @@ import com.cryptocenter.andrey.owlsight.managers.video_download.DownloadVideoMan
 import com.cryptocenter.andrey.owlsight.ui.custom.MotionInRectView;
 import com.cryptocenter.andrey.owlsight.ui.custom.TimeLineView;
 import com.cryptocenter.andrey.owlsight.utils.Permissions;
-import com.cryptocenter.andrey.owlsight.utils.listeners.OnPermissionListener;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +73,9 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
 
     @BindView(R.id.btnDownload)
     ImageButton btnDownload;
+
+    @BindView(R.id.pbTimeLine)
+    ProgressBar pbTimeLine;
 
     private Handler handler = new Handler();
     private Runnable runner;
@@ -231,7 +233,7 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
     @OnClick(R.id.btnDownload)
     public void onBtnDownloadClicked() {
         Permissions.checkStorage(this, isGranted -> {
-            if(isGranted){
+            if (isGranted) {
                 presenter.handleDownloadButtonClicked();
             } else {
                 Toast.makeText(this, R.string.write_permission, Toast.LENGTH_SHORT).show();
@@ -242,5 +244,14 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
     @Override
     public void downloadVideo(String path, String cameraId) {
         DownloadVideoManager.Companion.startService(this, path, cameraId);
+    }
+
+    @Override
+    public void setVisibilityOfProgressBar(boolean visibility) {
+        if (visibility) {
+            pbTimeLine.setVisibility(VISIBLE);
+        } else {
+            pbTimeLine.setVisibility(GONE);
+        }
     }
 }

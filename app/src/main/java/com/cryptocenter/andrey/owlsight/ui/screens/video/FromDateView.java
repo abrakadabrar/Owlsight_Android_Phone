@@ -3,6 +3,7 @@ package com.cryptocenter.andrey.owlsight.ui.screens.video;
 import android.graphics.RectF;
 import android.net.Uri;
 
+import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.OneExecutionStateStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
 import com.cryptocenter.andrey.owlsight.base.BaseView;
@@ -27,4 +28,7 @@ public interface FromDateView extends BaseView {
 
     @StateStrategyType(OneExecutionStateStrategy.class)
     void downloadVideo(String path, String cameraId);
+
+    @StateStrategyType(AddToEndSingleStrategy.class)
+    void setVisibilityOfProgressBar(boolean visibility);
 }

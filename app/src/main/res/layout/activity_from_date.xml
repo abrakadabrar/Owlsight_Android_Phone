@@ -73,13 +73,13 @@
             android:id="@+id/btnDownload"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:visibility="gone"
             android:background="@android:color/transparent"
             android:clickable="true"
             android:focusable="true"
             android:foreground="?attr/selectableItemBackgroundBorderless"
             android:padding="16dp"
-            android:src="@drawable/ic_file_download" />
+            android:src="@drawable/ic_file_download"
+            android:visibility="gone" />
 
 
     </LinearLayout>
@@ -119,4 +119,15 @@
 
     </com.cryptocenter.andrey.owlsight.ui.custom.TimeLineView>
 
+    <ProgressBar
+        android:id="@+id/pbTimeLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:theme="@style/ProgressBarWhite"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewTimeLine" />
 </androidx.constraintlayout.widget.ConstraintLayout>
