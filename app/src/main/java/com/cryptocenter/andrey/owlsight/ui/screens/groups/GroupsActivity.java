@@ -14,6 +14,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BaseActivity;
+import com.cryptocenter.andrey.owlsight.data.event.AddCameraEvent;
 import com.cryptocenter.andrey.owlsight.data.model.Group;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
@@ -25,6 +26,10 @@ import com.cryptocenter.andrey.owlsight.ui.screens.stream.StreamActivity;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.DrawerUtil;
 import com.mikepenz.materialdrawer.Drawer;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -120,6 +125,7 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     @Override
     public void setGroups(List<Group> groups) {
         presenter.handlePageSelected(1);
+
         adapter = new GroupsPagerAdapter(getSupportFragmentManager(), this, groups);
         pager.setAdapter(adapter);
         pager.setCurrentItem(groups.size() > 0 ? 1 : 0);
@@ -199,7 +205,7 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == StreamActivity.STREAM_REQUEST_CODE && resultCode == RESULT_CANCELED) {
-            new Handler().postDelayed(() -> presenter.handleStreamModeClick(),1000);
+            new Handler().postDelayed(() -> presenter.handleStreamModeClick(), 1000);
         }
     }
 
@@ -238,6 +244,26 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
         drawer.openDrawer();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCameraAdded(AddCameraEvent event) {
+        presenter.onCameraAdded(event.getGroupId());
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
+    }
 
     // =============================================================================================
     // Moxy

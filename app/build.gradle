@@ -145,6 +145,10 @@ dependencies {
     // Optional, if you use support library fragments:
     debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
 
+    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.annimon:stream:1.2.1'
+
+
 }
 
 repositories {

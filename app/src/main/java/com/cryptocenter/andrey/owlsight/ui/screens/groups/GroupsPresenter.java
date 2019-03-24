@@ -2,6 +2,7 @@ package com.cryptocenter.andrey.owlsight.ui.screens.groups;
 
 import android.util.Log;
 
+import com.annimon.stream.Stream;
 import com.arellomobile.mvp.InjectViewState;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
@@ -14,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+
+import androidx.annotation.Nullable;
 
 @InjectViewState
 public class GroupsPresenter extends BasePresenter<GroupsView> {
@@ -181,6 +184,25 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
         groupsSorted.add(0, Group.instanceAddGroup());
         this.groups = groupsSorted;
         getViewState().setGroupsRefreshed(this.groups, refreshingName);
+    }
+
+    public void onCameraAdded(Integer groupId) {
+        Group group = findGroupById(groupId);
+        if (group != null) {
+            fetchGroupsRefreshP(group.getGroupName());
+        }
+        fetchGroups();
+        fetchMonitors();
+
+    }
+
+    @Nullable
+    private Group findGroupById(Integer groupId) {
+        return Stream.ofNullable(groups)
+                .filter(group -> group.getId().equals(groupId.toString()))
+                .findFirst()
+                .or(null)
+                .get();
     }
 
     private void proceedEditGroupsSuccess(String id, String title) {
