@@ -25,6 +25,10 @@ public class MonitorPresenter extends BasePresenter<MonitorView> implements Moni
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
+//        getViewState().setMonitors(monitor.getCams());
+    }
+
+    void onActivityResumed(){
         getViewState().setMonitors(monitor.getCams());
     }
 

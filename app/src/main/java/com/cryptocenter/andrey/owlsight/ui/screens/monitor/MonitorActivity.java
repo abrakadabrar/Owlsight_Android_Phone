@@ -68,6 +68,12 @@ public class MonitorActivity extends BaseActivity implements MonitorView {
         rvMonitor.setAdapter(adapter);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.onActivityResumed();
+    }
+
     private int getSpanCount(int monitorSize) {
         switch (monitorSize) {
             case 1:

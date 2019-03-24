@@ -34,6 +34,7 @@ public class SinglePlayerActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         playerManager = new SinglePlayerManager(this, getIntent().getStringExtra("id"));
+        playerManager.setVolume(1);
         (((PlayerView) findViewById(R.id.playerView))).setPlayer(playerManager.getPlayer());
     }
 
