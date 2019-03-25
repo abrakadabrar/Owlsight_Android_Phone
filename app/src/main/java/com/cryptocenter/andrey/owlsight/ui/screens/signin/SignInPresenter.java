@@ -1,6 +1,8 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.signin;
 
 import com.arellomobile.mvp.InjectViewState;
+import com.cryptocenter.andrey.owlsight.App;
+import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
@@ -18,14 +20,14 @@ public class SignInPresenter extends BasePresenter<SignInView> {
 
     @Override
     public void showFailed() {
-        getViewState().showMessage("Неверный логин или пароль");
+        getViewState().showMessage(App.getInstance().getString(R.string.wrong_login_or_password));
     }
 
     void handleLoginClick(String email, String password) {
         if (Validator.isEmptyFields(email, password)) {
-            getViewState().showMessage("Все поля обязательны к заполнению");
+            getViewState().showMessage(App.getInstance().getString(R.string.all_fields_are_required));
         } else if (Validator.isNotValidEmail(email)) {
-            getViewState().showMessage("Введите корректный адрес электронной почты");
+            getViewState().showMessage(App.getInstance().getString(R.string.enter_a_valid_email_address));
         } else {
             fetchLogin(email, password);
         }

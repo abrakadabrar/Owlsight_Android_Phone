@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.cryptocenter.andrey.owlsight.App;
+import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.moxy.MvpAndroidXActivity;
 import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
@@ -57,12 +58,12 @@ public abstract class BaseActivity extends MvpAndroidXActivity implements BaseVi
 
     @Override
     public void showFailed() {
-        Toasty.error(this, "Что - то пошло не так...", Toast.LENGTH_SHORT, true).show();
+        Toasty.error(this, getString(R.string.something_went_wrong), Toast.LENGTH_SHORT, true).show();
     }
 
     @Override
     public void showError(Throwable error) {
-        Toasty.error(this, "Ошибка сети, проверьте интернет соединение ", Toast.LENGTH_SHORT, true).show();
+        Toasty.error(this, getString(R.string.network_error), Toast.LENGTH_SHORT, true).show();
     }
 
     public void onBackClicked() {

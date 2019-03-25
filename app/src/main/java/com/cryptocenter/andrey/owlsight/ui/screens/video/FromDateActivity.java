@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -75,7 +76,7 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
     ImageButton btnDownload;
 
     @BindView(R.id.pbTimeLine)
-    ProgressBar pbTimeLine;
+    LinearLayout pbTimeLine;
 
     private Handler handler = new Handler();
     private Runnable runner;

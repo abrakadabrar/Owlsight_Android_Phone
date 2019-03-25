@@ -1,6 +1,8 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.group;
 
 import com.arellomobile.mvp.InjectViewState;
+import com.cryptocenter.andrey.owlsight.App;
+import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.RecordsResponse;
@@ -87,7 +89,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
     //==============================================================================================
 
     public void showFailed() {
-        getViewState().showMessage("Не удалось выполнить действие. Попробуйте позже");
+        getViewState().showMessage(App.getInstance().getString(R.string.cannot_perform_action));
     }
 
     void handleGetThumbnail(Camera camera) {
@@ -175,7 +177,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
     }
 
     private void proceedDeleteGroupSuccess(Void v) {
-        getViewState().showMessage("Группа удалена");
+        getViewState().showMessage(App.getInstance().getString(R.string.group_deleted));
         getViewState().showScreen(GROUPS);
     }
 }

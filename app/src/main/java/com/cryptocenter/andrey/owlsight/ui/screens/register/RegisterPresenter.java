@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.text.Editable;
 
 import com.arellomobile.mvp.InjectViewState;
+import com.cryptocenter.andrey.owlsight.App;
+import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
@@ -43,9 +45,9 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
 //        } else if (Validator.isNotValidName(name)) {
 //            getViewState().showMessage("Введите имя и фамилию");
         } else if (Validator.isNotValidEmail(email)) {
-            getViewState().showMessage("Введите корректный адрес электронной почты");
+            getViewState().showMessage(App.getInstance().getString(R.string.enter_a_valid_email_address));
         } else if (!confirmPassword.equals(password)) {
-            getViewState().showMessage("Пароли не совпадают");
+            getViewState().showMessage(App.getInstance().getString(R.string.passwords_do_not_match));
         } else {
             registerFirstStep(name, email, phone, password, confirmPassword);
         }

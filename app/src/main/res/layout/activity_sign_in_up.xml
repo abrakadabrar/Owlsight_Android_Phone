@@ -6,7 +6,6 @@
     android:padding="10dp">
 
     <LinearLayout
-        android:id="@+id/login_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
@@ -23,7 +22,6 @@
 
 
         <ImageView
-            android:id="@+id/image_logo_vector"
             android:layout_width="80dp"
             android:layout_height="60dp"
             android:layout_gravity="center"

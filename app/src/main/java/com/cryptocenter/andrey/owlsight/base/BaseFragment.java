@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
+import com.cryptocenter.andrey.owlsight.App;
+import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.moxy.MvpAndroidXFragment;
 import com.cryptocenter.andrey.owlsight.data.model.data.FromDateData;
 import com.cryptocenter.andrey.owlsight.ui.screens.add_camera.AddCameraActivity;
@@ -64,12 +66,12 @@ public abstract class BaseFragment extends MvpAndroidXFragment implements BaseVi
 
     @Override
     public void showFailed() {
-        Toasty.error(getActivity(), "Что - то пошло не так...", Toast.LENGTH_SHORT, true).show();
+        Toasty.error(getActivity(), App.getInstance().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT, true).show();
     }
 
     @Override
     public void showError(Throwable error) {
-        Toasty.error(getActivity(), "Ошибка сети, проверьте интернет соединение ", Toast.LENGTH_SHORT, true).show();
+        Toasty.error(getActivity(), App.getInstance().getString(R.string.network_error), Toast.LENGTH_SHORT, true).show();
     }
 
     public void addScreen(Screen screen, Object data) {

@@ -8,16 +8,4 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppThemeTranslucentCustom" parent="@android:style/Theme.Translucent.NoTitleBar">
-        <item name="colorPrimary">@color/colorBar</item>
-        <item name="colorPrimaryDark">@color/colorBar</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="CustomBar" parent="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large">
-        <item name="colorPrimary">@color/colorBar</item>
-        <item name="colorPrimaryDark">@color/colorBar</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
 </resources>

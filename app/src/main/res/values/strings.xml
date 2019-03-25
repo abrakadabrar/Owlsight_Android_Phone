@@ -1,345 +1,82 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">OwlSight</string>
-    <string name="title_activity_navigation">Navigation</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
-    <string name="some_text">Some text</string>
-    <string name="add_group_btn">Добавить группу</string>
-    <string name="add_camera_btn">Добавить камеру</string>
-    <string name="warning_message">Нет подключения</string>
-    <string name="email">Электронная почта</string>
-    <string name="password">Пароль</string>
-    <string name="login">LOGIN</string>
+    <string name="app_name" translatable="false">OwlSight</string>
+    <string name="add_group_btn">Add a group</string>
+    <string name="add_camera_btn">Add camera</string>
+    <string name="warning_message">No connection</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
     <string name="sign_in">Sign in</string>
-    <string name="bg">bg</string>
-    <string name="del_group">Удалить группу</string>
-    <string name="monitor_m">Режим просмотра</string>
-    <string name="payment">Пополнить</string>
-    <string name="balance">Баланс: 0 ₽</string>
-    <string name="camera_mode">Режим камеры</string>
-    <string name="close">close</string>
-    <string name="start_broadcasting">Start Broadcasting</string>
-    <string name="stream_name">Stream Name</string>
-    <string name="nocamera">No camera exists in your device</string>
-    <string name="camera_not_running_properly">Camera is not running properly</string>
-    <string name="restart">Restart</string>
-    <string name="streaming_not_finished">Your previous broadcast still sends packets due to slow internet speed</string>
-    <string name="oopps_shouldnt_happen">Oopps this shouldn\'t be happened. Please let the library developer this status</string>
-    <string name="broadcast_connection_lost">Connection to media server is lost</string>
-    <string name="low_bandwidth">Network speed is low. Latency is increasing.</string>
-    <string name="not_eligible_for_broadcast">Your device is not eligible to broadcast. There is no hardware encoder.</string>
-    <string name="no_network_connectivity">You\'re not connected to any network. Please connect to Internet</string>
-    <string name="stop_broadcasting">Stop</string>
-    <string name="camera_permission_is_required">Camera permission is required to run this app</string>
-    <string name="microphone_permission_is_required">Microphone permission is required to run this app</string>
-    <string name="permission">Permission</string>
-    <string name="app_doesnot_work_without_permissions">App does not work without permissions. Please give Camera and Record Audio permission on app settings</string>
-    <string name="live_indicator">On Air</string>
-    <string name="permission_is_required">Camera and Microphone permission is required to run this app</string>
-    <string name="first_call_open_camera">First call openCamera function</string>
-    <string name="only_one_camera_exists">Only one camera exists in this device</string>
-    <string name="connecting_text">Connecting&#8230;</string>
-    <string name="connected_text">Connection successful</string>
-    <string name="connection_error_text">Connection error</string>
-    <string name="video">Video</string>
-    <string name="header">Выбор вида для запуска режима Монитор</string>
-    <string name="audio">Audio</string>
-    <string name="text">Text</string>
+    <string name="del_group">Delete group</string>
+    <string name="monitor_m">Monitor mode</string>
+    <string name="payment">Top-up the balance</string>
+    <string name="balance">Balance: 0 ₽</string>
+    <string name="camera_mode">Camera mode</string>
+    <string name="header">Choosing the type to start Monitor mode</string>
 
-
-    <string name="retry">Retry</string>
-    <string name="selection_disabled">Disabled</string>
-    <string name="selection_default">Default</string>
-    <string name="selection_default_none">Default (none)</string>
-    <string name="error_unsupported_video">Media includes video tracks, but none are playable by this device</string>
-    <string name="error_unsupported_audio">Media includes audio tracks, but none are playable by this device</string>
-    <string name="storage_permission_denied">Permission to access storage was denied</string>
-    <string name="sample_list_load_error">One or more sample lists failed to load</string>
-    <string name="stream_not_started">Failed to start. Please check server url and security credentials.</string>
-    <string name="unexpected_intent_action">Unexpected intent action: <xliff:g id="action">%1$s</xliff:g></string>
-    <string name="enable_random_adaptation">Enable random adaptation</string>
-    <string name="error_drm_not_supported">Protected content not supported on API levels below 18</string>
-    <string name="error_drm_unsupported_scheme">This device does not support the required DRM scheme</string>
-    <string name="error_drm_unknown">An unknown DRM error occurred</string>
-    <string name="error_no_decoder">This device does not provide a decoder for <xliff:g id="mime_type">%1$s</xliff:g></string>
-    <string name="error_no_secure_decoder">This device does not provide a secure decoder for <xliff:g id="mime_type">%1$s</xliff:g></string>
-    <string name="error_querying_decoders">Unable to query device decoders</string>
-    <string name="error_instantiating_decoder">Unable to instantiate decoder <xliff:g id="decoder_name">%1$s</xliff:g></string>
-    <string name="rtsp_streamer">Custom RTSP</string>
-    <string name="rtmp_streamer">Custom RTMP</string>
-    <string name="default_rtmp">Default RTMP</string>
-    <string name="default_rtsp">Default RTSP</string>
-    <string name="from_file_rtsp">From file RTSP</string>
-    <string name="from_file_rtmp">From file RTMP</string>
-    <string name="surface_mode_rtsp">Surface mode RTSP</string>
-    <string name="surface_mode_rtmp">Surface mode RTMP</string>
-    <string name="texture_mode_rtsp">Texture mode RTSP</string>
-    <string name="texture_mode_rtmp">Texture mode RTMP</string>
-    <string name="display_rtmp">Display RTMP</string>
-    <string name="display_rtsp">Display RTSP</string>
-    <string name="opengl_rtmp">OpenGl RTMP</string>
-    <string name="opengl_rtsp">OpenGl RTSP</string>
-    <string name="cube_test_rtmp">Cube test RTMP</string>
-    <string name="tv_select">Select your streamer</string>
-    <string name="hint_rtsp">rtsp://yourendpoint</string>
-    <string name="hint_rtmp">rtmp://yourendpoint</string>
-    <string name="start_button">Start stream</string>
-    <string name="stop_button">Stop stream</string>
-    <string name="switch_camera_button">Switch camera</string>
-    <string name="select_file">Select file</string>
-    <string name="start_record">Start record</string>
-    <string name="stop_record">Stop record</string>
-    <string name="resync_file">ReSync file</string>
-    <string name="add_group_title">Введите имя для группы</string>
-    <!--menu-->
-    <string name="microphone">Microphone</string>
-    <string name="filters">Filters</string>
-    <string name="clear">Clear</string>
-    <string name="grey_scale">Grey scale</string>
-    <string name="negative">Negative</string>
-    <string name="sepia">Sepia</string>
-    <string name="aqua">Aqua</string>
-    <string name="posterize">Posterize</string>
-    <!--gl menu-->
-    <string name="enable_disable_fxaa">enable/disable FXAA</string>
-    <!--filters-->
-    <string name="no_filter">No filter</string>
-    <string name="android_view">Android view</string>
-    <string name="basic_deformation">Basic deformation</string>
-    <string name="beauty">Beauty</string>
-    <string name="blur">Blur</string>
-    <string name="brightness">Brightness</string>
-    <string name="cartoon">Cartoon</string>
-    <string name="color">Color</string>
-    <string name="contrast">Contrast</string>
-    <string name="duotone">Duotone</string>
-    <string name="earlybird">EarlyBird</string>
-    <string name="edge_detection">Edge detection</string>
-    <string name="exposure">Exposure</string>
-    <string name="fire">Fire</string>
-    <string name="gamma">Gamma</string>
-    <string name="gif">Gif</string>
-    <string name="halftone_lines">Halftone lines</string>
-    <string name="image">Image</string>
-    <string name="image_70s">Image 70s</string>
-    <string name="lamoish">Lamoish</string>
-    <string name="money">Money</string>
-    <string name="pixelated">Pixelated</string>
-    <string name="polygonization">Polygonization</string>
-    <string name="rgb_saturate">RGB saturate</string>
-    <string name="ripple">Ripple</string>
-    <string name="rotation">Rotation</string>
-    <string name="saturation">Saturation</string>
-    <string name="surface_filter">Surface filter</string>
-    <string name="rainbow">Rainbow</string>
-    <string name="sharpness">Sharpness</string>
-    <string name="temperature">Temperature</string>
-    <string name="zebra">Zebra</string>
-    <!--drawer-->
-    <string name="drawer_title">Options</string>
-    <string name="protocols">Protocol</string>
-    <string name="tcp">TCP</string>
-    <string name="udp">UDP</string>
-    <string name="resolution">Resolution</string>
-    <string name="video_bitrate">Bitrate (on fly)</string>
-    <string name="audio_bitrate">Bitrate</string>
-    <string name="fps">FPS</string>
-    <string name="orientation">Orientation</string>
-    <string name="hardware_rotation">Hardware rotation</string>
-    <string name="samplerate">SampleRate</string>
-    <string name="channel">Channel</string>
-    <string name="stereo">Stereo</string>
-    <string name="mono">Mono</string>
-    <string name="echo_canceler">Echo canceler</string>
-    <string name="camera">Camera</string>
-    <string name="wowza_auth">Wowza Auth</string>
-    <string name="wowza_user">User</string>
-    <string name="wowza_password">Password</string>
-    <string name="noise_suppressor">Noise suppressor</string>
-    <string name="alert_cancel">Отмена</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="show_pwd">Show Password</string>
-    <string name="hide_pwd">Hide Password</string>
-    <string name="forgot">Forgot password?</string>
-    <string name="closebutton">Close Button for Activity</string>
+    <string name="alert_cancel">Cancel</string>
     <string name="newUser">Don\'t have account yet? Register.</string>
-    <string name="fullName">Full Name</string>
-    <string name="mobileNumber">Телефон</string>
-    <string name="location">Location</string>
-    <string name="confirmPassword">Повтор пароля</string>
-    <string name="terms_conditions">By clicking SignUp you agree all the Terms and Conditions.</string>
-    <string name="signUp">Регистрация</string>
-    <string name="signUpBtn">зарегистрироваться</string>
-    <string name="cam_btn_next">Далее</string>
-    <string name="already_user">Already have Account? Login here.</string>
-    <string name="registered_emailid">Please enter your Registered Email Id below:</string>
-    <string name="submit">SUBMIT</string>
-    <string name="back">BACK</string>
+    <string name="confirmPassword">Repeat password</string>
+    <string name="signUp">Registration</string>
+    <string name="signUpBtn">register</string>
     <string name="logo">Logo</string>
-    <string name="first_name">Имя</string>
-    <string name="second_name">Second name</string>
-    <string name="ok">Ok</string>
-    <string name="cancel">Cancel</string>
-    <string name="add_camera">Добавление камеры</string>
+    <string name="first_name">Name</string>
+    <string name="add_camera">Add camera</string>
 
-    <array name="material_calendar_day_abbreviations_array">
-        <item>@string/material_calendar_sunday</item>
-        <item>@string/material_calendar_monday</item>
-        <item>@string/material_calendar_tuesday</item>
-        <item>@string/material_calendar_wednesday</item>
-        <item>@string/material_calendar_thursday</item>
-        <item>@string/material_calendar_friday</item>
-        <item>@string/material_calendar_saturday</item>
-    </array>
-    <string name="material_calendar_monday">Пн</string>
-    <string name="material_calendar_tuesday">Вт</string>
-    <string name="material_calendar_wednesday">Ср</string>
-    <string name="material_calendar_thursday">Чт</string>
-    <string name="material_calendar_friday">Пт</string>
-    <string name="material_calendar_saturday">Сб</string>
-    <string name="material_calendar_sunday">Вс</string>
+    <string name="entering_group_name">Enter group name:</string>
+    <string name="iAgree">I agree to the</string>
+    <string name="agreement"><u>terms of use</u></string>
+    <string name="and">and</string>
+    <string name="privacyPolicy"><u>privacy policy</u></string>
+    <string name="wasRegister">Already registered?</string>
+    <string name="goToLogin"><u>Sign in</u></string>
 
-    <array name="material_calendar_months_array">
-        <item>Январь</item>
-        <item>Февраль</item>
-        <item>Март</item>
-        <item>Апрель</item>
-        <item>Май</item>
-        <item>Июнь</item>
-        <item>Июль</item>
-        <item>Август</item>
-        <item>Сентябрь</item>
-        <item>Октябрь</item>
-        <item>Ноябрь</item>
-        <item>Декабрь</item>
-    </array>
+    <string name="user_name_err">"You must fill in the first and last name "</string>
+    <string name="user_email_err">Email address is required</string>
+    <string name="user_phone_err">You must specify the phone</string>
+    <string name="user_pass_err">"Password is required "</string>
+    <string name="user_conf_pass_err">"You must enter the password again "</string>
+    <string name="user_consent_err">Confirmation required</string>
+    <string name="connecting_to_camera">Connect to camera</string>
+    <string name="please_wait">Please, wait</string>
+    <string name="menu_finger_enable">Fingerprint login</string>
+    <string name="menu_screens">Species</string>
+    <string name="no_connection">No connection to the server, trying to connect …</string>
+    <string name="you_have_no_species">You have no species</string>
+    <string name="add_camera_result_link">"Summary link (check this link before saving). "</string>
+    <string name="add_camera_help_link">Instructions for connecting the camera in the \'How it works\' section: <a href="https://owlsight.com/how">https://owlsight.com/how</a></string>
+    <string name="write_permission">You need permission to download videos</string>
+    <string name="video_loading">The video is loading</string>
+    <string name="start_downloading">Starting to download…</string>
 
-    <string name="material_calendar_today_button">Today</string>
-    <string name="material_calendar_positive_button">OK</string>
-    <string name="material_calendar_negative_button">Cancel</string>
-    <string name="entering_group_name">Введите имя для группы:</string>
-    <string name="launch">launch</string>
-    <string name="iAgree">Я согласен с</string>
-    <string name="agreement"><u>соглашением об использовании</u></string>
-    <string name="and">и</string>
-    <string name="privacyPolicy"><u>политикой конфедициальности</u></string>
-    <string name="wasRegister">Уже зарегистрированы? </string>
-    <string name="goToLogin"><u>Авторизация</u></string>
-
-    <string name="user_name_err">Необходимо заполнить имя и фамилию</string>
-    <string name="user_second_name_err">Введите имя и фамилию</string>
-    <string name="user_email_err">Необходимо указать адрес электронной почты</string>
-    <string name="user_phone_err">Необходимо указать телефон</string>
-    <string name="user_pass_err">Необходимо ввести пароль</string>
-    <string name="user_conf_pass_err">Необходимо ввести пароль еще раз</string>
-    <string name="user_consent_err">Необходимо подтвердить согласие</string>
-    <string name="user_privacy_policy">
-                            Политика конфиденциальности
-    Политика конфиденциальности персональных данных (далее — Политика) действует в отношении
-всей информации, которую Администрация сайта owelsight.com может получить о Пользователе
-при пользовании им Сайта — https://owlsight.com, предоставляемого Администрацией сайта,
-а также в ходе исполнения Администрацией сайта любых соглашений и договоров Пользователем.
-    1. ОБЩИЕ ПОЛОЖЕНИЯ
-1.1. Администрация сайта обрабатывает персональные данные на законной и справедливой
-основе для выполнения возложенных на Администрацию сайта законодательством функций,
-обязанностей и полномочий, осуществления прав и законных интересов Администрации сайта
-и Пользователей.
-1.2. Использование Сайта, а также его отдельных функций означает полное и безоговорочное
-согласие Пользователя с настоящей Политикой и указанными в ней условиями обработки его
-персональных данных; в случае несогласия с этими условиями Пользователь должен прекратить
-использование Сайта.
-    2. ОБРАБОТКА И КОНФИДЕНЦИАЛЬНОСТЬ ПЕРСОНАЛЬНЫХ ДАННЫХ ПОЛЬЗОВАТЕЛЯ
-2.1. Настоящая Политика устанавливает обязательства Администрации сайта по неразглашению
-и обеспечению защиты конфиденциальности персональных данных, предоставленных
-Пользователем при использовании Сайта.
-2.2. Согласие дается на обработку следующих персональных данных, которые Администрация
-сайта может собирать с Пользователей для предоставления доступа к функциям Сайта:
-Персональные данные, не являющиеся биометрическими или специальными: номера контактных
-телефонов; фамилия, имя, отчество; адреса электронной почты; адрес; пользовательские данные
-(сведения о местоположении; тип и версия ОС; версия и тип Браузера; тип устройства
-и разрешение его экрана; язык операционной системы и Веб-браузера; ip-адрес; источник, откуда
-пользователь перешел на сайт; с какого сайта или рекламного объявления; какие страницы
-открывает и с какими элементами управления взаимодействует пользователь; ip-адрес).
-2.4. Настоящая Политика применима только к информации, обрабатываемой в ходе
-использования Сайта. Администрация сайта не контролирует и не несет ответственность
-за обработку информации сайтами третьих лиц, на которые Пользователь может перейти
-по ссылкам, доступным внутри Сайта.
-2.5. Администрация сайта не проверяет достоверность персональных данных, предоставляемых
-Пользователем, и не имеет возможности оценить его дееспособность. При этом Администрация
-сайта исходит из того, что пользователь предоставляет достоверные и достаточные персональные
-данные и поддерживает их в актуальном состоянии.
-    3. ЦЕЛИ СБОРА ПЕРСОНАЛЬНЫХ ДАННЫХ ПОЛЬЗОВАТЕЛЯ
-3.1. Администрация сайта собирает и хранит только те персональные данные, которые
-необходимы для предоставления полного или частичного функционала Сайта или исполнения
-соглашений и договоров с Пользователем, за исключением случаев, когда законодательством
-предусмотрено обязательное хранение персональных данных в течение определенного законом
-срока.
-3.2. Администрация сайта обрабатывает персональные данные Пользователя в следующих целях:
-обработка входящих запросов физических лиц с целью оказания консультирования; аналитики
-действий физического лица на веб-сайте и функционирования веб-сайта; проведение рекламных
-и новостных рассылок, предоставления услуг сервиса OwlSight, оформления заказов в интернетмагазине.
-    4. УСЛОВИЯ ОБРАБОТКИ ПЕРСОНАЛЬНЫХ ДАННЫХ ПОЛЬЗОВАТЕЛЕЙ
-4.1. Обработка персональных данных Пользователя осуществляется без ограничения срока,
-любым законным способом, в том числе в информационных системах персональных данных
-с использованием средств автоматизации или без использования таковых.
-4.2. В отношении персональных данных Пользователя сохраняется их конфиденциальность, кроме
-случаев добровольного предоставления Пользователем информации о себе для общего доступа
-неограниченному кругу лиц. При использовании отдельных функций Сайта, Пользователь
-соглашается с тем, что определѐнная часть его персональной информации становится
-общедоступной.
-4.3. При обработке персональных данных Пользователей Администрация сайта руководствуется:
-4.3.1. Федеральным законом от 27.07.2006 г. № 152-ФЗ «О персональных данных»;
-4.3.2. Постановлением Правительства Российской Федерации от 01.11.2012 г. № 1119
-«Об утверждении требований к защите персональных данных при их обработке
-в информационных системах персональных данных»;
-4.3.3. Постановлением Правительства Российской Федерации от 15.09.2008 г. № 687
-«Об утверждении Положением об особенностях обработки персональных данных,
-осуществляемой без использования средств автоматизации»;
-4.3.4. Приказом ФСТЭК России от 18 февраля 2013 г. № 21 «Об утверждении Состава
-и содержания организационных и технических мер по обеспечению безопасности персональных
-данных при их обработке в информационных системах персональных данных»;
-4.3.5. Приказом ФСБ России от 10.07.2014 № 378 «Об утверждении Состава и содержания
-организационных и технических мер по обеспечению безопасности персональных данных при
-их обработке в информационных системах персональных данных с использованием средств
-криптографической защиты информации, необходимых для выполнения установленных
-Правительством Российской Федерации требований к защите персональных данных для каждого
-из уровней защищенности».
-4.4. Администрация сайта вправе передать персональные данные Пользователя третьим лицам
-в следующих случаях: для проведения доставки заказов оформленных в интернет-магазине
-OwelSight, для отправки писем рассылок, новостей сайта, предложений по участию
-в маркетинговых исследованиях, полезных материалов по рекламе в поисковых системах,
-коммерческих предложений.
-    6. ОБРАБОТКА ПЕРСОНАЛЬНЫХ ДАННЫХ ПРИ ПОМОЩИ ФАЙЛОВ COOKIE
-6.1. Файлы cookie, передаваемые Администрации сайта техническим устройствам Пользователя,
-могут использоваться для предоставления Пользователю персонализированных функций Сайта,
-для персональной рекламы, которая показывается Пользователю, в статистических
-и исследовательских целях, а также для улучшения Сайта.
-7. МЕРЫ ЗАЩИТЫ ПЕРСОНАЛЬНЫХ ДАННЫХ ПОЛЬЗОВАТЕЛЯ
-7.1. Администрация сайта принимает необходимые и достаточные организационные и технические
-меры для защиты персональных данных Пользователя от неправомерного или случайного
-доступа, уничтожения, изменения, блокирования, копирования, распространения, а также от иных
-неправомерных действий с ней третьих лиц.
-8. ОБРАТНАЯ СВЯЗЬ. ВОПРОСЫ И ПРЕДЛОЖЕНИЯ
-8.1. Все вопросы и пожелания по поводу настоящей Политики Пользователь вправе направлять
-в Службу поддержки пользователей сайта по электронной почте support@owelsight.com
-</string>
-    <string name="received_code">Введите полученный код</string>
-    <string name="connecting_to_camera">Подключение к камере</string>
-    <string name="please_wait">Пожалуйста подождите</string>
-    <string name="fingerprint_title">Приложите палец к сенсору</string>
-    <string name="menu_finger_enable">Вход с отпечатком пальца</string>
-    <string name="menu_screens">виды</string>
-    <string name="no_connection">Отсуствует соединение с сервером, попытка подключения...</string>
-    <string name="you_have_no_species">У вас нет видов</string>
-    <string name="add_camera_result_link">Итоговая ссылка (проверьте эту ссылку перед сохранением)</string>
-    <string name="add_camera_help_link">Инструкция по подключению камеры в разделе \'Как это работает\': <a href="https://owlsight.com/how">https://owlsight.com/how</a></string>
-    <string name="write_permission">Для скачивания видео необходимо разрешение</string>
-    <string name="video_loading">Видео загружается</string>
-    <string name="start_downloading">Начинаем скачивать...</string>
-    <string name="have_not_access_to_storage">Нет доступа к хранилищу</string>
-
+    <string name="name">Name</string>
+    <string name="host">Host</string>
+    <string name="port">Port</string>
+    <string name="additional_options">Additional options</string>
+    <string name="user">User</string>
+    <string name="test">Test</string>
+    <string name="enter_the_code">Enter the hode</string>
+    <string name="enter_code_number_or_push">Enter the code sent to the number or as push:</string>
+    <string name="code_request_again">The code can be requested again after 40 seconds.</string>
+    <string name="something_went_wrong">Something went wrong…</string>
+    <string name="network_error">Network error, check internet connection</string>
+    <string name="empty_for_now">"It's empty here for now "</string>
+    <string name="cannot_perform_action">"Action failed. Try again later "</string>
+    <string name="video_loading_wait">Video loading, wait…</string>
+    <string name="file">File</string>
+    <string name="loaded">loaded</string>
+    <string name="login">Login</string>
+    <string name="group">Group</string>
+    <string name="successfully_created">successfully created</string>
+    <string name="passwords_do_not_match">Password do not match</string>
+    <string name="enter_a_valid_email_address">Enter a valid email address</string>
+    <string name="all_fields_are_required">All fields are required</string>
+    <string name="wrong_login_or_password">Wrong login or password</string>
+    <string name="group_name_edited">Group name edited</string>
+    <string name="group_deleted">Group deleted</string>
+    <string name="have_not_access_to_storage">No access to the repository</string>
+    <string name="fingerprint_title">Put your finger on the sensor</string>
+    <string name="user_privacy_policy">Privacy policy</string>
+    <string name="received_code">Enter received code</string>
+    <string name="user_second_name_err">Enter your first and last name</string>
+    <string name="records_doesnt_exists">There are no records for the selected date</string>
 </resources>

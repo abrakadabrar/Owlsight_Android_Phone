@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.annimon.stream.Stream;
 import com.arellomobile.mvp.InjectViewState;
+import com.cryptocenter.andrey.owlsight.App;
+import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
 import com.cryptocenter.andrey.owlsight.data.model.Group;
@@ -210,7 +212,7 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
             if (group.getId().equals(id)) group.setGroupName(title);
         }
         getViewState().setGroupTitle(title);
-        getViewState().showMessage("Название группы отредактировано");
+        getViewState().showMessage(App.getInstance().getString(R.string.group_name_edited));
         getViewState().restart();
     }
 }

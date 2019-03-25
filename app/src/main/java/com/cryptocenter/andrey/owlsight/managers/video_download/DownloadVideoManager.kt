@@ -39,7 +39,7 @@ class DownloadVideoManager : Service() {
 
     private val notificationId = Random(System.currentTimeMillis()).nextInt()
 
-    private lateinit var mainHandler : Handler
+    private lateinit var mainHandler: Handler
 
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         try {
@@ -120,8 +120,12 @@ class DownloadVideoManager : Service() {
                     notificationManager.notify(notificationId, notificationBuilder(fileSize.toInt(), fileSizeDownloaded.toInt()).setContentText("""Файл ${file.name} скачивается...""").build())
                 }
 
-                notificationManager.notify(notificationId, notification("""Файл${file.name}загружен.""").build())
-                showMessage("""Файл${file.name}загружен.""")
+                val fileString = getString(R.string.file)
+                val loaded = getString(R.string.loaded)
+                val notifyMessage = """$fileString ${file.name} $loaded."""
+
+                notificationManager.notify(notificationId, notification(notifyMessage).build())
+                showMessage(notifyMessage)
                 stopForeground(false)
 
                 outputStream.flush()

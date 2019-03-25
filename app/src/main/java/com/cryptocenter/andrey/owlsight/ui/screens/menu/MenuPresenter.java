@@ -3,6 +3,8 @@ package com.cryptocenter.andrey.owlsight.ui.screens.menu;
 import android.util.Log;
 
 import com.arellomobile.mvp.InjectViewState;
+import com.cryptocenter.andrey.owlsight.App;
+import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
@@ -57,7 +59,7 @@ public class MenuPresenter extends BasePresenter<MenuView> {
     }
     private void proceedMonitorsSuccess(List<Monitor> monitors) {
         if (monitors.isEmpty()) {
-            getViewState().showMessage("Пока тут пусто");
+            getViewState().showMessage(App.getInstance().getString(R.string.empty_for_now));
         } else {
             getViewState().showAlertMonitors(monitors);
         }

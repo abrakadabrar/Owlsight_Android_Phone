@@ -142,7 +142,7 @@ public class SignInActivity extends BaseActivity implements SignInView,Fingerpri
     @Override
     public void onAuthenticationFingerprintFailed(boolean isCanceled) {
 
-        Toast.makeText(this, "Отпечаток не подходит. Повторите еще раз.",Toast.LENGTH_LONG).show();
+        Toast.makeText(this, R.string.fingerprint_doesnt_fit,Toast.LENGTH_LONG).show();
     }
 
     @Override

@@ -223,7 +223,7 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
                 if (markedDays.contains(format.parse(date))) {
                     presenter.handleDateSelect(camera, date);
                 } else {
-                    Toast.makeText(getContext(), "Отсутствуют записи по выбранной дате", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.records_doesnt_exists, Toast.LENGTH_SHORT).show();
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
