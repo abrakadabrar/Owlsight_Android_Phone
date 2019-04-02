@@ -1,7 +1,6 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.group.adapter;
 
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
@@ -9,14 +8,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.cryptocenter.andrey.owlsight.data.model.Camera;
 import com.cryptocenter.andrey.owlsight.R;
+import com.cryptocenter.andrey.owlsight.data.model.Camera;
 
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Optional;
+
 public class CameraVH extends RecyclerView.ViewHolder {
 
     @BindView(R.id.tvName)
@@ -56,7 +55,7 @@ public class CameraVH extends RecyclerView.ViewHolder {
         this.cameraListener = cameraListener;
     }
 
-    public void refreshCamera(Camera camera){
+    public void refreshCamera(Camera camera) {
         isRefreshing = true;
         cameraListener.onThumbnailUploadLoad(camera);
     }
@@ -64,12 +63,12 @@ public class CameraVH extends RecyclerView.ViewHolder {
     public void setCamera(Camera camera) {
         tvName.setText(camera.getCameraName());
 
-        if (camera.getIsRecording() != null && camera.getIsRecording().equals("0")) {
-            viewRecording.setVisibility(View.GONE);
-            btnCalendar.setVisibility(View.GONE);
-        } else {
+        if (camera.getIsRecording() != null && camera.getIsRecording().equals("1")) {
             btnCalendar.setVisibility(View.VISIBLE);
             viewRecording.setVisibility(View.VISIBLE);
+        } else {
+            viewRecording.setVisibility(View.GONE);
+            btnCalendar.setVisibility(View.GONE);
         }
 
         if (camera.getIsReachable() != null && camera.getIsReachable().equals("1")) {
@@ -81,14 +80,16 @@ public class CameraVH extends RecyclerView.ViewHolder {
         } else {
             tvWarningMessage.setVisibility(View.VISIBLE);
             viewWarning.setVisibility(View.VISIBLE);
+            viewRecording.setVisibility(View.GONE);
+            btnCalendar.setVisibility(View.GONE);
         }
 
-        if (camera.getHasRecordings() != null && camera.getHasRecordings().equals("0") || (camera.getIsRecording() != null && camera.getIsRecording().equals("0"))) {
-            btnCalendar.setVisibility(View.GONE);
-        } else {
+        if (camera.getHasRecordings() != null && camera.getHasRecordings().equals("1") || (camera.getIsRecording() != null && camera.getIsRecording().equals("1"))) {
             btnCalendar.setVisibility(View.VISIBLE);
+        } else {
+            btnCalendar.setVisibility(View.GONE);
         }
-        if (!camera.getCameraId().equals("0")&&!camera.isRefreshing()) {
+        if (!camera.getCameraId().equals("0") && !camera.isRefreshing()) {
             rlProgress.setVisibility(View.GONE);
             if (ivPreview.getDrawable() == null || camera.getThumbnailUrl() == null || camera.getThumbnailUrl().isEmpty()) {
                 cameraListener.onThumbnailLoad(camera);
@@ -97,11 +98,11 @@ public class CameraVH extends RecyclerView.ViewHolder {
                 ivPreview.setImageBitmap(BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length));
                 camera.setThumbnailUrl("");
             }
-        }else {
+        } else {
             rlProgress.setVisibility(View.VISIBLE);
             cameraListener.onThumbnailUploadLoad(camera);
         }
-        if(camera.getIsReachable().equals("1")) {
+        if (camera.getIsReachable().equals("1")) {
             itemView.setOnClickListener(v -> cameraListener.onCameraClick(camera));
         }
         btnCalendar.setOnClickListener(v -> cameraListener.onCalendarClick(camera));

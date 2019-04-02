@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.os.Environment
 import android.os.Handler
 import android.os.IBinder
+import android.util.Log
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import com.crashlytics.android.Crashlytics
@@ -106,6 +107,7 @@ class DownloadVideoManager : Service() {
                 inputStream = body.byteStream()
                 outputStream = FileOutputStream(file)
 
+                var counter = 0
                 while (true) {
                     val read = inputStream!!.read(fileReader)
 
@@ -117,7 +119,12 @@ class DownloadVideoManager : Service() {
 
                     fileSizeDownloaded += read.toLong()
 
-                    notificationManager.notify(notificationId, notificationBuilder(fileSize.toInt(), fileSizeDownloaded.toInt()).setContentText("""Файл ${file.name} скачивается...""").build())
+                    counter++
+                    if(counter == 500){
+                        notificationManager.notify(notificationId, notificationBuilder(fileSize.toInt(), fileSizeDownloaded.toInt()).setContentText("""Файл ${file.name} скачивается...""").build())
+                        counter = 0
+                    }
+                    Log.d("DOWNLOAD", "fileSizeDownloaded = $fileSizeDownloaded")
                 }
 
                 val fileString = getString(R.string.file)

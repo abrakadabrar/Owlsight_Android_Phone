@@ -1,17 +1,15 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.group.adapter;
 
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
-import com.cryptocenter.andrey.owlsight.data.model.Camera;
 import com.cryptocenter.andrey.owlsight.R;
+import com.cryptocenter.andrey.owlsight.data.model.Camera;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_CAMERA = 0;
@@ -28,19 +26,20 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        switch (viewType){
+        switch (viewType) {
             case TYPE_ADD_CAMERA:
-                return new AddCameraVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_camera, parent, false),cameraListener);
+                return new AddCameraVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_add_camera, parent, false), cameraListener);
         }
         return new CameraVH(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_camera, parent, false), cameraListener);
     }
 
-    public void setReachable(List<Camera> cameras){
-        if(this.list.size()>=cameras.size()) {
-            for(int i = 0; i < cameras.size(); i++){
+    public void setReachable(List<Camera> cameras) {
+        if (this.list.size() >= cameras.size()) {
+            for (int i = 0; i < cameras.size(); i++) {
                 this.list.get(i).setIsReachable(cameras.get(i).getIsReachable());
                 this.list.get(i).setRefreshing(true);
             }
+            this.list = cameras;
         } else {
             this.list = cameras;
             setReachable(cameras);
@@ -48,15 +47,15 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    public void startRefreshing(){
-        for(Camera camera:list){
+    public void startRefreshing() {
+        for (Camera camera : list) {
             camera.setRefreshing(true);
         }
         notifyDataSetChanged();
     }
 
-    public void completeRefreshing(){
-        for(Camera camera:list){
+    public void completeRefreshing() {
+        for (Camera camera : list) {
             camera.setRefreshing(false);
         }
         notifyDataSetChanged();
@@ -64,7 +63,7 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if(position!=list.size()) {
+        if (position != list.size()) {
             ((CameraVH) holder).setCamera(list.get(position));
 
         } else {
@@ -75,7 +74,7 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        if(position!=list.size()){
+        if (position != list.size()) {
             return TYPE_CAMERA;
         } else {
             return TYPE_ADD_CAMERA;
@@ -84,7 +83,7 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return list.size()+1;
+        return list.size() + 1;
     }
 
     public void setCamera(Camera newCamera) {
@@ -93,7 +92,7 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             if (camera.getCameraId().equals(newCamera.getCameraId())) {
                 index = list.indexOf(camera);
                 camera.setRefreshing(false);
-                if(newCamera.getThumbnailUrl()!=null&&newCamera.getThumbnailUrl().length()>10) {
+                if (newCamera.getThumbnailUrl() != null && newCamera.getThumbnailUrl().length() > 10) {
                     camera.setThumbnailUrl(newCamera.getThumbnailUrl());
                 } else {
                     camera.setRefreshing(false);

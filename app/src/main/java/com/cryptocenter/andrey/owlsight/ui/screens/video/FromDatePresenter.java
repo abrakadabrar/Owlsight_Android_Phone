@@ -1,6 +1,7 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.video;
 
 import android.graphics.RectF;
+import android.media.MediaPlayer;
 import android.net.Uri;
 
 import com.arellomobile.mvp.InjectViewState;
@@ -201,5 +202,12 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
 
     public void handleDownloadButtonClicked() {
         getViewState().downloadVideo(path, cameraId);
+    }
+
+    boolean onVideoInfo(int what) {
+        if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START){
+            getViewState().setVisibilityOfProgressBar(false);
+            return true;
+        } else return false;
     }
 }

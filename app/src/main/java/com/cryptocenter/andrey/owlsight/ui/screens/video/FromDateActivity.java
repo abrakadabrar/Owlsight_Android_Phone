@@ -4,14 +4,15 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.RectF;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -208,9 +209,9 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
         viewTimeLine.callOnClick();
 
         presenter.setCameraData((FromDateData) getIntent().getSerializableExtra("data"));
-
         viewVideo.setOnPreparedListener(mediaPlayer -> hideLoading());
         viewVideo.setOnCompletionListener(mediaPlayer -> presenter.handleVideoCompleted());
+        viewVideo.setOnInfoListener((mp, what, extra) -> presenter.onVideoInfo(what));
     }
 
     private void setupTimer() {
