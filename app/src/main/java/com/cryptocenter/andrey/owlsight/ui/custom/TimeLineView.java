@@ -206,7 +206,7 @@ public class TimeLineView extends FrameLayout implements ScaleGestureDetector.On
             ArrayList<RedLine> redLi = new ArrayList<>();
             for (int i = 1; i < redSeconds.size(); i++) {
                 if (redSeconds.get(i) - redSeconds.get(i - 1) > 1) {
-                    redLi.add(new RedLine(startSec, redSeconds.get(i - 1)));
+                    redLi.add(new RedLine(startSec, redSeconds.get(i - 1), 0, 0));
                     startSec = redSeconds.get(i);
                 }
             }
@@ -589,50 +589,6 @@ public class TimeLineView extends FrameLayout implements ScaleGestureDetector.On
 
         public void setPosX(float posX) {
             this.posX = posX;
-        }
-    }
-
-    private class RedLine {
-        private float startSec;
-        private float endSec;
-        private float startXPos;
-        private float endXPos;
-
-        public RedLine(float startSec, float endSec) {
-            this.startSec = startSec;
-            this.endSec = endSec;
-        }
-
-        public float getStartSec() {
-            return startSec;
-        }
-
-        public void setStartSec(float startSec) {
-            this.startSec = startSec;
-        }
-
-        public float getEndSec() {
-            return endSec;
-        }
-
-        public void setEndSec(float endSec) {
-            this.endSec = endSec;
-        }
-
-        public float getStartXPos() {
-            return startXPos;
-        }
-
-        public void setStartXPos(float startXPos) {
-            this.startXPos = startXPos;
-        }
-
-        public float getEndXPos() {
-            return endXPos;
-        }
-
-        public void setEndXPos(float endXPos) {
-            this.endXPos = endXPos;
         }
     }
 

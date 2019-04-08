@@ -24,6 +24,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import io.reactivex.disposables.Disposable;
+import kotlin.Pair;
 
 @InjectViewState
 public class FromDatePresenter extends BasePresenter<FromDateView> {
@@ -92,6 +93,13 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
         }
 
         getViewState().setVideoChanged(Uri.parse(String.format(FILE_PATH, path, cameraId)), header, seek * 1000);
+    }
+
+    Pair<Integer, Integer> getCurrentInterval() {
+        Datum currentRecord = records.get(currentRecordInd);
+        int startSecond = currentRecord.getStartDate().getSecondOfDay();
+        int endSecond = currentRecord.getEndDate().getSecondOfDay();
+        return new Pair<>(startSecond, endSecond);
     }
 
     void handleVideoCompleted() {
@@ -189,10 +197,16 @@ public class FromDatePresenter extends BasePresenter<FromDateView> {
     private void proceedMotionsSuccess(List<DatumFramesMotions> frames) {
         final List<Integer> lines = new ArrayList<>();
 
+        int prevSeconds = -1;
         for (DatumFramesMotions framesMotions : frames) {
             int seconds = framesMotions.getDate().getSecondOfDay();
+            if (seconds < prevSeconds) {
+                // next day begun
+                break;
+            }
             lines.add(seconds);
             motions.put(seconds, framesMotions);
+            prevSeconds = seconds;
         }
 
         getViewState().setRedLines(lines);
