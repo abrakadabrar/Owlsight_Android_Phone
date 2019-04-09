@@ -97,6 +97,7 @@
         <activity
             android:name=".ui.screens.add_camera.AddCameraActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
+        <activity android:name=".ui.screens.choose_group.ChooseGroupActivity" />
 
         <service
             android:name="com.novoda.merlin.MerlinService"

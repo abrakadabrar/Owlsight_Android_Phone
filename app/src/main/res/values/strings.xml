@@ -80,4 +80,11 @@
     <string name="user_second_name_err">Enter your first and last name</string>
     <string name="records_doesnt_exists">There are no records for the selected date</string>
     <string name="fingerprint_doesnt_fit">"The fingerprint does not fit. Repeat again. "</string>
+    <string name="mobile_camera_description">Enable Phone-camera mode to use this phone as a camera. Install the OwlSight application also on another phone to watch the broadcast from this camera and receive notifications when motion is detected.</string>
+    <string name="add_ip_camera_description">Add an ip-camera, specifying all the necessary parameters: ip, port, advanced camera parameters, login, password. You can also insert a ready-made rtsp link.</string>
+    <string name="enable_phone_camera_mode">Enable phone-camera mode</string>
+    <string name="add_ip_camera">Add ip-camera</string>
+    <string name="unable_to_find_group">Unable to find group</string>
+    <string name="please_add_group">Please add at least one group first.</string>
+    <string name="select_a_group_to_add_camera_to">Select a group to add a camera to:</string>
 </resources>

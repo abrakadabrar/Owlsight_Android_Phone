@@ -9,6 +9,7 @@ import com.cryptocenter.andrey.owlsight.base.moxy.MvpAndroidXActivity;
 import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.ui.screens.add_camera.AddCameraActivity;
+import com.cryptocenter.andrey.owlsight.ui.screens.choose_group.ChooseGroupActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.menu.MenuActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.monitor.MonitorActivity;
@@ -90,6 +91,8 @@ public abstract class BaseActivity extends MvpAndroidXActivity implements BaseVi
             case ADD_CAMERA:
                 startActivity(AddCameraActivity.intent(this, Integer.parseInt((String) data)));
                 break;
+            case CHOOSE_GROUP:
+                ChooseGroupActivity.start(this);
         }
     }
 
@@ -107,6 +110,7 @@ public abstract class BaseActivity extends MvpAndroidXActivity implements BaseVi
                 startActivity(SignInActivity.intent(this));
                 break;
             case GROUPS:
+                finish();
                 startActivity(GroupsActivity.intent(this));
                 break;
         }

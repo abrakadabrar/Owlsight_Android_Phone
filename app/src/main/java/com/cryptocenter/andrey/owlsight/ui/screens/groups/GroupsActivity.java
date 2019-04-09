@@ -72,7 +72,9 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     private GroupsPagerAdapter adapter;
 
     public static Intent intent(Context context) {
-        return new Intent(context, GroupsActivity.class);
+        Intent intent = new Intent(context, GroupsActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        return intent;
     }
 
 
@@ -124,11 +126,11 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
 
     @Override
     public void setGroups(List<Group> groups) {
-        presenter.handlePageSelected(1);
+        presenter.handlePageSelected(0);
 
         adapter = new GroupsPagerAdapter(getSupportFragmentManager(), this, groups);
         pager.setAdapter(adapter);
-        pager.setCurrentItem(groups.size() > 0 ? 1 : 0);
+        pager.setCurrentItem(0);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {

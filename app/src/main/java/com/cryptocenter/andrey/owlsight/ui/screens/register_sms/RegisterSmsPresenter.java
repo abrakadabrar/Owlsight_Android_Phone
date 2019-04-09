@@ -1,20 +1,27 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.register_sms;
 
-import android.app.Activity;
 import android.os.CountDownTimer;
 
 import com.arellomobile.mvp.InjectViewState;
+import com.cryptocenter.andrey.owlsight.App;
+import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
 import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
+import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 
 import javax.inject.Inject;
+
+import static com.cryptocenter.andrey.owlsight.utils.Screen.GROUPS;
 
 @InjectViewState
 public class RegisterSmsPresenter extends BasePresenter<RegisterSmsView> {
 
     @Inject
     OwlsightRepository repository;
+
+    @Inject
+    Preferences preferences;
 
     private RegisterData registerData;
     private CountDownTimer timer;
@@ -23,6 +30,11 @@ public class RegisterSmsPresenter extends BasePresenter<RegisterSmsView> {
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
         startSmsTimer();
+    }
+
+    @Override
+    public void showFailed() {
+        getViewState().showMessage(App.getInstance().getString(R.string.wrong_login_or_password));
     }
 
     @Override
@@ -74,6 +86,17 @@ public class RegisterSmsPresenter extends BasePresenter<RegisterSmsView> {
     }
 
     private void proceedRegisterSecondStepSuccess(Void v) {
-        getViewState().closeScreenWithResult(Activity.RESULT_OK, null);
+        repository.login(registerData.getEmail(), registerData.getPassword(),
+                getViewState()::showLoading,
+                this::proceedLoginSuccess,
+                this::showFailed,
+                this::showError,
+                getViewState()::hideLoading);
+//        getViewState().closeScreenWithResult(Activity.RESULT_OK, null);
+    }
+
+    private void proceedLoginSuccess(Void v) {
+        preferences.saveLoginData(registerData.getEmail(), registerData.getPassword());
+        getViewState().showScreen(GROUPS);
     }
 }

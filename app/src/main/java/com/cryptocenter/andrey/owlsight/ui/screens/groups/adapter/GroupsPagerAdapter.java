@@ -3,6 +3,7 @@ package com.cryptocenter.andrey.owlsight.ui.screens.groups.adapter;
 import com.cryptocenter.andrey.owlsight.data.model.Group;
 import com.cryptocenter.andrey.owlsight.ui.screens.add_group.AddGroupFragment;
 import com.cryptocenter.andrey.owlsight.ui.screens.group.GroupFragment;
+import com.cryptocenter.andrey.owlsight.ui.screens.new_add_camera_fragment.NewAddCameraFragment;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -26,8 +27,13 @@ public class GroupsPagerAdapter extends FragmentPagerAdapter {
     @NotNull
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) return AddGroupFragment.instance();
-        return GroupFragment.instance(groups.get(position).getCams(),iGroupsRefresh,groups.get(position).getGroupName(),groups.get(position).getId());
+        if (position == 0) {
+            return NewAddCameraFragment.Companion.newInstance();
+        } else if (position == 1) {
+            return AddGroupFragment.instance();
+        } else {
+            return GroupFragment.instance(groups.get(position).getCams(), iGroupsRefresh, groups.get(position).getGroupName(), groups.get(position).getId());
+        }
     }
 
 

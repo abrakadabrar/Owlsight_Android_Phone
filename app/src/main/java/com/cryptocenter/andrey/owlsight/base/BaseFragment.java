@@ -13,8 +13,10 @@ import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.moxy.MvpAndroidXFragment;
 import com.cryptocenter.andrey.owlsight.data.model.data.FromDateData;
 import com.cryptocenter.andrey.owlsight.ui.screens.add_camera.AddCameraActivity;
+import com.cryptocenter.andrey.owlsight.ui.screens.choose_group.ChooseGroupActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.player.SinglePlayerActivity;
+import com.cryptocenter.andrey.owlsight.ui.screens.stream.StreamActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.video.FromDateActivity;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
@@ -84,6 +86,12 @@ public abstract class BaseFragment extends MvpAndroidXFragment implements BaseVi
                 break;
             case ADD_CAMERA:
                startActivity(AddCameraActivity.intent(getActivity(), (int) Integer.parseInt((String) data)));
+                break;
+            case STREAM:
+                StreamActivity.start(getActivity());
+                break;
+            case CHOOSE_GROUP:
+                ChooseGroupActivity.start(getActivity());
                 break;
         }
     }

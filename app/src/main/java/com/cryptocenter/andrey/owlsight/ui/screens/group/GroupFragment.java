@@ -50,7 +50,7 @@ import toothpick.Toothpick;
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 
 public class GroupFragment extends BaseFragment implements GroupView, SwipeRefreshLayout.OnRefreshListener, GroupAdapter.OnCameraListener {
-    private static final String GROUP_ID = "GROUP_ID";
+    public static final String GROUP_ID = "GROUP_ID";
 
     @InjectPresenter
     GroupPresenter presenter;

@@ -2,26 +2,38 @@ package com.cryptocenter.andrey.owlsight.managers;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 import com.cryptocenter.andrey.owlsight.App;
 import com.cryptocenter.andrey.owlsight.utils.CameraHelper;
+import com.pedro.rtplibrary.network.AdapterBitrateParser;
+import com.pedro.rtplibrary.network.ConnectionClassManager;
+import com.pedro.rtplibrary.network.UploadBandwidthSampler;
 import com.pedro.rtplibrary.rtmp.RtmpCamera2;
 import com.pedro.rtplibrary.view.OpenGlView;
 
 import net.ossrs.rtmp.ConnectCheckerRtmp;
 
 
-public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback {
+public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback, ConnectionClassManager.ConnectionClassStateChangeListener, AdapterBitrateParser.Callback {
 
     private final StreamManagerListener streamManagerListener;
     private RtmpCamera2 streamCamera;
+    private ConnectionClassManager connectionClassManager;
+    private UploadBandwidthSampler uploadBandwidthSampler;
 
     public StreamManager(OpenGlView openGlView, StreamManagerListener streamManagerListener) {
         this.streamManagerListener = streamManagerListener;
         streamCamera = new RtmpCamera2(openGlView, this);
         openGlView.getHolder().addCallback(this);
         openGlView.enableAA(true);
+
+        connectionClassManager = ConnectionClassManager.getInstance();
+        uploadBandwidthSampler = UploadBandwidthSampler.getInstance();
+        connectionClassManager.register(this);
+//        AdapterBitrateParser.calculateMaxVideoBitrate(streamCamera.getResolutionValue());
+        AdapterBitrateParser.DELAY = 100;
     }
 
     @Override
@@ -80,11 +92,13 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
     public void initStream(String url) {
         if (!streamCamera.isStreaming()) {
             if (streamCamera.isRecording() || prepareEncoders()) {
+                uploadBandwidthSampler.startSampling();
                 streamCamera.startStream(url);
             } else {
                 streamManagerListener.onMessage("Error preparing stream, This device cant do it");
             }
         } else {
+            uploadBandwidthSampler.stopSampling();
             streamCamera.stopStream();
         }
     }
@@ -92,6 +106,7 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
     public void releaseStream() {
         if (streamCamera != null && streamCamera.isStreaming()) {
             streamCamera.stopStream();
+            connectionClassManager.remove();
         }
     }
 
@@ -122,13 +137,26 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
 //        return streamCamera.getResolutionsFront();
 //    }
 
+    @Override
+    public void onBandwidthStateChange(double bandwidth) {
+        if (streamCamera != null) {
+            AdapterBitrateParser.parseBitrate(streamCamera.getBitrate(), (int) bandwidth, this);
+        }
+    }
+
+    @Override
+    public void onNewBitrate(int bitrate) {
+        if (streamCamera != null) {
+            Log.d("newBitrate", "new bitrate = " + bitrate);
+            streamCamera.setVideoBitrateOnFly(bitrate);
+        }
+    }
+
     public interface StreamManagerListener {
         void onMessage(String message);
 
         void onConnectionFailed();
     }
 
-    public void dropContext() {
-        streamCamera.dropContext();
-    }
 }
+

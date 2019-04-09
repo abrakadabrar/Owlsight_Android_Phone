@@ -1,5 +1,5 @@
-include ':app', ':rtmp', ':encoder', ':rtsp', ':rtplibrary'
-project(':rtmp').projectDir = new File('libs/stream/rtmp')
-project(':encoder').projectDir = new File('libs/stream/encoder')
-project(':rtsp').projectDir = new File('libs/stream/rtsp')
-project(':rtplibrary').projectDir = new File('libs/stream/rtplibrary')
+include ':app'//, ':rtmp', ':encoder', ':rtsp', ':rtplibrary'
+//project(':rtmp').projectDir = new File('libs/stream/rtmp')
+//project(':encoder').projectDir = new File('libs/stream/encoder')
+//project(':rtsp').projectDir = new File('libs/stream/rtsp')
+//project(':rtplibrary').projectDir = new File('libs/stream/rtplibrary')

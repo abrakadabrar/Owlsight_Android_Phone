@@ -156,6 +156,7 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
             groupsSorted.add(group);
         }
         groupsSorted.add(0, Group.instanceAddGroup());
+        groupsSorted.add(0, Group.instanceNewCamera());
         this.groups = groupsSorted;
         getViewState().setGroups(this.groups);
     }
@@ -184,6 +185,8 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
         }
 
         groupsSorted.add(0, Group.instanceAddGroup());
+        groupsSorted.add(0, Group.instanceNewCamera());
+
         this.groups = groupsSorted;
         getViewState().setGroupsRefreshed(this.groups, refreshingName);
     }

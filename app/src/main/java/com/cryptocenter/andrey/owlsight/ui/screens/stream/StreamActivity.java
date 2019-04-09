@@ -168,10 +168,6 @@ public class StreamActivity extends BaseActivity implements StreamView, Connecta
     }
 
     private void destroy() {
-        if (streamManager != null) {
-            streamManager.dropContext();
-            streamManager = null;
-        }
         unbinder.unbind();
         merlin = null;
         rxPermissions = null;

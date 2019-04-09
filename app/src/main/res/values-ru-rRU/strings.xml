@@ -20,7 +20,7 @@
     <string name="signUpBtn">зарегистрироваться</string>
     <string name="logo">Logo</string>
     <string name="first_name">Имя</string>
-    <string name="add_camera">Добавление камеры</string>
+    <string name="add_camera">Добавить камеру</string>
 
     <string name="entering_group_name">Введите имя группы:</string>
     <string name="iAgree">Я согласен с</string>
@@ -79,4 +79,11 @@
     <string name="user_second_name_err">"Введите свое имя и фамилию "</string>
     <string name="records_doesnt_exists">Отсутствуют записи по выбранной дате</string>
     <string name="fingerprint_doesnt_fit">Отпечаток не подходит. Повторите еще раз.</string>
+    <string name="mobile_camera_description">Включите режим Телефон-камера, чтобы использовать этот телефон в качестве камеры. Установите приложение OwlSight также на другой телефон, чтобы смотреть трансляцию с этой камеры и получать уведомления при обнаружении движения.</string>
+    <string name="add_ip_camera_description">Добавьте ip-камеру, указав все необходимые параметры: ip, порт, дополнительные параметры камеры, логин, пароль. Вы также можете вставить готовую rtsp-ссылку.</string>
+    <string name="enable_phone_camera_mode">"Включить режим телефон-камера "</string>
+    <string name="add_ip_camera">Добавить ip-камеру</string>
+    <string name="unable_to_find_group">Невозможно найти группу</string>
+    <string name="please_add_group">Пожалуйста, для начала добавьте хотя бы одну группу</string>
+    <string name="select_a_group_to_add_camera_to">Выберите группу, в которую нужно добавить камеру:</string>
 </resources>

@@ -1,5 +1,7 @@
 package com.cryptocenter.andrey.owlsight.data.model;
 
+import com.cryptocenter.andrey.owlsight.App;
+import com.cryptocenter.andrey.owlsight.R;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -24,6 +26,13 @@ public class Group {
         final Group group = new Group();
         group.setId("-1");
         group.setGroupName("Добавить группу");
+        return group;
+    }
+
+    public static Group instanceNewCamera() {
+        final Group group = new Group();
+        group.setId("-2");
+        group.setGroupName(App.getInstance().getString(R.string.add_camera));
         return group;
     }
 
