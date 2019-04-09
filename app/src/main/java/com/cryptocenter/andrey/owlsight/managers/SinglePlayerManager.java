@@ -33,7 +33,7 @@ public class SinglePlayerManager implements Player.EventListener {
         this.id = id;
         progress = new ProgressDialog(context);
         progress.setCancelable(false);
-        progress.setTitle("Загузка стрима");
+        progress.setTitle("Загрузка стрима");
         initPlayer();
     }
 

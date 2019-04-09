@@ -28,3 +28,7 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+ext {
+    exoplayerVersion = "2.9.4"
+}
