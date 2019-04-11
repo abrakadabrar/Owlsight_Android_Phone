@@ -80,7 +80,7 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
         repository.registerFirstStep(registerData,
                 getViewState()::showLoading,
                 v -> proceedRegisterFirstStepSuccess(registerData),
-                this::showFailed,
+                this::showFailedWithMessage,
                 this::showError,
                 getViewState()::hideLoading);
     }
@@ -94,6 +94,9 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
         getViewState().addScreenForResult(Screen.REGISTER_SMS, 100, registerData);
     }
 
+    private void showFailedWithMessage(String error) {
+        getViewState().showAlertMessage(App.getInstance().getString(R.string.errors_occurred_during_registration), error);
+    }
 
     enum Field {
         NAME, EMAIL, PHONE, PASSWORD, CONFIRM_PASSWORD, CONFIRM_POLICY

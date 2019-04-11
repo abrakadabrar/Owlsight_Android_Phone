@@ -92,4 +92,5 @@
     <string name="delete_camera_question">Вы точно хотите удалить камеру?</string>
     <string name="no">Нет</string>
     <string name="yes">Да</string>
+    <string name="errors_occurred_during_registration">При регистрации произошли ошибки:</string>
 </resources>

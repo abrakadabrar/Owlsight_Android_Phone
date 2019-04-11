@@ -25,4 +25,8 @@ public class Response<T> {
     public interface Complete {
         void onComplete();
     }
+
+    public interface FailedWithMessage{
+        void onFailed(String message);
+    }
 }

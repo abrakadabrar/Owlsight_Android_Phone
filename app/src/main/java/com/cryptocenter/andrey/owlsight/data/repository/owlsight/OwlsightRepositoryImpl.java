@@ -1,8 +1,10 @@
 package com.cryptocenter.andrey.owlsight.data.repository.owlsight;
 
+import com.annimon.stream.Stream;
 import com.cryptocenter.andrey.owlsight.data.api.OwlsightAPI;
 import com.cryptocenter.andrey.owlsight.data.model.Group;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.AddCameraResponse;
+import com.cryptocenter.andrey.owlsight.data.model.api.response.ErrorBody;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.RecordsResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.Response;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.StreamResponse;
@@ -15,6 +17,7 @@ import com.cryptocenter.andrey.owlsight.data.model.motion.DatumFramesMotions;
 import com.cryptocenter.andrey.owlsight.data.model.videofromdatewithmotion.Datum;
 import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
 import com.cryptocenter.andrey.owlsight.utils.ResourcesUtils;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -94,7 +97,7 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
             RegisterData data,
             Response.Start startListener,
             Response.Success<Void> successListener,
-            Response.Failed failedListener,
+            Response.FailedWithMessage failedListener,
             Response.Error errorListener,
             Response.Complete completeListener
     ) {
@@ -106,14 +109,21 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
                     String cookie = response.headers().get("Set-Cookie");
                     cookie = cookie.split(";")[0];
                     preferences.saveCookie(cookie);
-                    return response.code();
+                    return response;
                 })
                 .doOnSubscribe(d -> startListener.onStart())
                 .doFinally(() -> completeListener.onComplete())
                 .subscribe(
-                        code -> {
-                            if (code == 200) successListener.onSuccess(null);
-                            if (code == 401) failedListener.onFailed();
+                        response -> {
+                            if (response.code() == 200) successListener.onSuccess(null);
+                            if (response.code() == 401) {
+                                StringBuilder errors = new StringBuilder();
+                                String errorBodyString = response.errorBody().string();
+                                ErrorBody errorBody = new Gson().fromJson(errorBodyString, ErrorBody.class);
+                                Stream.ofNullable(errorBody.getErrors())
+                                        .forEach(error -> errors.append(error).append("\n\n"));
+                                failedListener.onFailed(errors.toString());
+                            }
                         },
                         errorListener::onError
                 );

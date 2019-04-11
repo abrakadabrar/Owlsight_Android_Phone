@@ -93,4 +93,5 @@
     <string name="delete_camera_question">Are you sure you want to remove the camera?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="errors_occurred_during_registration">Errors occurred during registration:</string>
 </resources>
