@@ -22,4 +22,7 @@ public interface GroupView extends BaseView {
     void completeRefreshing();
 
     void refreshGroups();
+
+    @StateStrategyType(SkipStrategy.class)
+    void showOptionsDialog(Integer cameraId);
 }

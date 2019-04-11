@@ -27,9 +27,9 @@ public class GroupsPagerAdapter extends FragmentPagerAdapter {
     @NotNull
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
+        if (position == 1) {
             return NewAddCameraFragment.Companion.newInstance();
-        } else if (position == 1) {
+        } else if (position == 0) {
             return AddGroupFragment.instance();
         } else {
             return GroupFragment.instance(groups.get(position).getCams(), iGroupsRefresh, groups.get(position).getGroupName(), groups.get(position).getId());

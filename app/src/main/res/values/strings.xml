@@ -87,4 +87,10 @@
     <string name="unable_to_find_group">Unable to find group</string>
     <string name="please_add_group">Please add at least one group first.</string>
     <string name="select_a_group_to_add_camera_to">Select a group to add a camera to:</string>
+    <string name="motion_detection">Motion detection</string>
+    <string name="remove_camera">Remove camera</string>
+    <string name="could_not_remove_camera">Could not remove camera</string>
+    <string name="delete_camera_question">Are you sure you want to remove the camera?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
 </resources>

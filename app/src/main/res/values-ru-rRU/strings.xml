@@ -86,4 +86,10 @@
     <string name="unable_to_find_group">Невозможно найти группу</string>
     <string name="please_add_group">Пожалуйста, для начала добавьте хотя бы одну группу</string>
     <string name="select_a_group_to_add_camera_to">Выберите группу, в которую нужно добавить камеру:</string>
+    <string name="motion_detection">Обнаружение движения</string>
+    <string name="remove_camera">Удалить камеру</string>
+    <string name="could_not_remove_camera">Не удалось удалить камеру</string>
+    <string name="delete_camera_question">Вы точно хотите удалить камеру?</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
 </resources>

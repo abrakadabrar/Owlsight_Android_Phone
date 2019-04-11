@@ -2,12 +2,14 @@ package com.cryptocenter.andrey.owlsight.di;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 
+import com.cryptocenter.andrey.owlsight.BuildConfig;
 import com.cryptocenter.andrey.owlsight.data.api.OwlsightAPI;
 import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepositoryImpl;
-import com.cryptocenter.andrey.owlsight.BuildConfig;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 import com.ihsanbal.logging.Level;
 import com.ihsanbal.logging.LoggingInterceptor;
@@ -51,8 +53,26 @@ class ApplicationModule extends Module {
                 .build()
                 .create(OwlsightAPI.class);
         final Preferences preferences = new Preferences(context);
+        setNotificationToken(preferences);
         bind(OwlsightRepository.class).toInstance(new OwlsightRepositoryImpl(api, preferences));
         bind(Resources.class).toInstance(context.getResources());
         bind(Preferences.class).toInstance(preferences);
+    }
+
+    private void setNotificationToken(Preferences preferences) {
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Log.w("FirebaseInstanceId", "getInstanceId failed", task.getException());
+                        return;
+                    }
+
+                    // Get new Instance ID token
+                    String token = task.getResult().getToken();
+                    preferences.setFirebaseNotificationToken(token);
+
+                    Log.d("FirebaseToken", String.format("New token =%s", token));
+
+                });
     }
 }

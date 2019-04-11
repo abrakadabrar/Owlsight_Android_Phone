@@ -9,6 +9,8 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+
 public class Camera implements Serializable, Parcelable {
 
 
@@ -158,6 +160,12 @@ public class Camera implements Serializable, Parcelable {
         isRefreshing = refreshing;
     }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj) return true;
+        else if (obj == null) return false;
+        else return cameraId.equals(((Camera) obj).cameraId);
+    }
 
     @Override
     public int describeContents() {

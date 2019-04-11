@@ -43,7 +43,7 @@ public class StreamPresenter extends BasePresenter<StreamView> {
     void handlePermissionGrantedOnDisconnected(boolean isGranted) {
         getViewState().setWasDisconnected(false);
         if (isGranted) {
-            stopStream();
+            getViewState().restartActivity();
         } else {
             getViewState().closeScreen("Для работы требуется разрешение");
         }
@@ -79,16 +79,6 @@ public class StreamPresenter extends BasePresenter<StreamView> {
                 getViewState()::hideLoading);
     }
 
-    private void stopStream() {
-        repository.stopStream(
-                streamId,
-                getViewState()::showLoading,
-                this::proceedStopStreamSuccess,
-                this::proceedStreamFailed,
-                this::showError,
-                getViewState()::hideLoading);
-    }
-
     private void checkStatus() {
         repository.statusStream(
                 streamId,
@@ -98,6 +88,7 @@ public class StreamPresenter extends BasePresenter<StreamView> {
     }
 
     public void handleDisconnect() {
+        getViewState().disposeStreamManager();
         getViewState().setVisibilityOfConnectingLayout(true);
         getViewState().setWasDisconnected(true);
         stoppingHello();

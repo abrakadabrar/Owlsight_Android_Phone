@@ -23,6 +23,8 @@ import com.pedro.encoder.input.video.CameraOpenException;
 import com.pedro.rtplibrary.view.OpenGlView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import java.lang.ref.WeakReference;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -43,6 +45,7 @@ public class StreamActivity extends BaseActivity implements StreamView, Connecta
     OpenGlView openGlView;
 
     private StreamManager streamManager;
+
     private Merlin merlin;
     private RxPermissions rxPermissions;
     private Unbinder unbinder;
@@ -146,6 +149,8 @@ public class StreamActivity extends BaseActivity implements StreamView, Connecta
             }
         });
 
+        WeakReference<StreamManager> streamManagerWeakReference = new WeakReference<>(streamManager);
+
         streamManager.initStream(url);
         presenter.startingHello();
     }
@@ -168,6 +173,7 @@ public class StreamActivity extends BaseActivity implements StreamView, Connecta
     }
 
     private void destroy() {
+        streamManager = null;
         unbinder.unbind();
         merlin = null;
         rxPermissions = null;
@@ -183,6 +189,12 @@ public class StreamActivity extends BaseActivity implements StreamView, Connecta
     @Override
     public void setWasDisconnected(boolean wasDisconnected) {
         this.wasDisconnected = wasDisconnected;
+    }
+
+    @Override
+    public void disposeStreamManager() {
+        streamManager = null;
+        System.gc();
     }
 
 

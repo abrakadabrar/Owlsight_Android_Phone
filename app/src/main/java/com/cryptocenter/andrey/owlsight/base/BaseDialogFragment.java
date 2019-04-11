@@ -1,9 +1,14 @@
 package com.cryptocenter.andrey.owlsight.base;
 
+import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Toast;
 
 import com.cryptocenter.andrey.owlsight.App;
@@ -23,11 +28,17 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
+
+import static android.widget.ListPopupWindow.WRAP_CONTENT;
+
 
 public abstract class BaseDialogFragment extends MvpAndroidXDialogFragment implements BaseView {
     protected abstract int getLayoutResId();
+
     private KProgressHUD loader;
+
     @Override
     public void bind() {
 
@@ -41,7 +52,10 @@ public abstract class BaseDialogFragment extends MvpAndroidXDialogFragment imple
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(getLayoutResId(), container, false);
+        View rootView = inflater.inflate(getLayoutResId(), container, false);
+        ButterKnife.bind(this, rootView);
+        return rootView;
+
     }
 
     @Override
@@ -61,6 +75,37 @@ public abstract class BaseDialogFragment extends MvpAndroidXDialogFragment imple
     @Override
     public void showFailed() {
         Toasty.error(getActivity(), App.getInstance().getString(R.string.something_went_wrong), Toast.LENGTH_SHORT, true).show();
+    }
+
+
+    /**
+     * To resize the size of this dialog
+     */
+    private void resizeDialog() {
+        try {
+            Window window = getDialog().getWindow();
+
+            Activity activity = getActivity();
+
+            if (activity == null || window == null) return;
+
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            activity.getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+            int height = displayMetrics.heightPixels;
+            int width = displayMetrics.widthPixels;
+
+            window.setLayout((int) (width * 0.8), WRAP_CONTENT);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));// make tranparent around the popup
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        resizeDialog();
     }
 
     @Override

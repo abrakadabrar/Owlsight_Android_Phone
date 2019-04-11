@@ -18,6 +18,8 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private OnCameraListener cameraListener;
     private List<Camera> list;
 
+    private boolean isRefreshing = false;
+
     public GroupAdapter(List<Camera> list, OnCameraListener cameraListener) {
         this.list = list;
         this.cameraListener = cameraListener;
@@ -115,6 +117,8 @@ public class GroupAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         void onThumbnailUploadLoad(Camera camera);
 
         void addCamera();
+
+        void onOptionsClicked(Integer cameraId);
     }
 }
 

@@ -21,4 +21,6 @@ interface GroupsView extends BaseView {
     void showAlertMonitors(List<Monitor> monitors);
 
     void hideScreens();
+
+    void proceedBtnCameraModeClicked();
 }

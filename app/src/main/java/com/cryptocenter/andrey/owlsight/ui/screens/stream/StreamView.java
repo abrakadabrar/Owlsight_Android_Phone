@@ -19,4 +19,7 @@ public interface StreamView extends BaseView {
 
     @StateStrategyType(AddToEndSingleStrategy.class)
     void setWasDisconnected(boolean wasDisconnected);
+
+    @StateStrategyType(AddToEndSingleStrategy.class)
+    void disposeStreamManager();
 }

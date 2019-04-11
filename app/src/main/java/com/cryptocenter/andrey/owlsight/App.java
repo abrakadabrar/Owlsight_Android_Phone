@@ -1,11 +1,17 @@
 package com.cryptocenter.andrey.owlsight;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.cryptocenter.andrey.owlsight.di.DependencyInjection;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
+import androidx.annotation.NonNull;
 import es.dmoral.toasty.Toasty;
 import io.fabric.sdk.android.Fabric;
 

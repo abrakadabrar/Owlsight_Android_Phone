@@ -32,7 +32,7 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
         connectionClassManager = ConnectionClassManager.getInstance();
         uploadBandwidthSampler = UploadBandwidthSampler.getInstance();
         connectionClassManager.register(this);
-//        AdapterBitrateParser.calculateMaxVideoBitrate(streamCamera.getResolutionValue());
+        AdapterBitrateParser.calculateMaxVideoBitrate(streamCamera.getResolutionValue());
         AdapterBitrateParser.DELAY = 100;
     }
 
@@ -157,6 +157,5 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
 
         void onConnectionFailed();
     }
-
 }
 

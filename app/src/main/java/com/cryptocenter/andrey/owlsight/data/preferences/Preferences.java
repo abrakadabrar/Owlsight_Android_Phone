@@ -2,6 +2,7 @@ package com.cryptocenter.andrey.owlsight.data.preferences;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
 public class Preferences {
 
     private static final String PREFERENCES_NAME = "autohelp-preferences";
@@ -9,6 +10,7 @@ public class Preferences {
     private static final String PREFERENCE_LOGIN = PREFERENCES_NAME + "-login";
     private static final String PREFERENCE_PASSWORD = PREFERENCES_NAME + "-password";
     private static final String PREFERENCE_FINGER = PREFERENCES_NAME + "-finger";
+    private static final String PREFERENCES_NOTIFICATION_TOKEN = PREFERENCES_NAME + "-token";
 
     private SharedPreferences preferences;
 
@@ -41,6 +43,14 @@ public class Preferences {
 
     public void setFingerAuth(boolean isFinger) {
         preferences.edit().putBoolean(PREFERENCE_FINGER, isFinger).apply();
+    }
+
+    public void setFirebaseNotificationToken(String token) {
+        preferences.edit().putString(PREFERENCES_NOTIFICATION_TOKEN, token).apply();
+    }
+
+    public String getFirebaseNotificationToken(){
+        return preferences.getString(PREFERENCES_NOTIFICATION_TOKEN, "");
     }
 
     public boolean isFingerAuth() {

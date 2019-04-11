@@ -6,6 +6,7 @@ import com.cryptocenter.andrey.owlsight.data.model.api.response.RecordsResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.Response;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.StreamResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.TestCameraResponse;
+import com.cryptocenter.andrey.owlsight.data.model.api.response.ThumbnailResponse;
 import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.MonitorCamera;
@@ -58,6 +59,32 @@ public interface OwlsightRepository {
             String title,
             Response.Start startListener,
             Response.Success<String> successListener,
+            Response.Failed failedListener,
+            Response.Error errorListener,
+            Response.Complete completeListener);
+
+    void addMotionNotification(
+            Integer cameraId,
+            String token,
+            Response.Start startListener,
+            Response.Success<String> successListener,
+            Response.Failed failedListener,
+            Response.Error errorListener,
+            Response.Complete completeListener);
+
+    void deleteMotionNotification(
+            Integer cameraId,
+            String token,
+            Response.Start startListener,
+            Response.Success<String> successListener,
+            Response.Failed failedListener,
+            Response.Error errorListener,
+            Response.Complete completeListener);
+
+    void deleteCamera(
+            Integer id,
+            Response.Start startListener,
+            Response.Success<Void> successListener,
             Response.Failed failedListener,
             Response.Error errorListener,
             Response.Complete completeListener);
@@ -133,11 +160,11 @@ public interface OwlsightRepository {
             Response.Error errorListener);
 
     void testCamera(String streamLink,
-            Response.Start startListener,
-            Response.Success<TestCameraResponse> successListener,
-            Response.Failed failedListener,
-            Response.Error errorListener,
-            Response.Complete completeListener);
+                    Response.Start startListener,
+                    Response.Success<TestCameraResponse> successListener,
+                    Response.Failed failedListener,
+                    Response.Error errorListener,
+                    Response.Complete completeListener);
 
     void addCamera(
             int groupId, String cameraName,
@@ -170,4 +197,8 @@ public interface OwlsightRepository {
             Response.Complete completeListener);
 
     Observable<ResponseBody> downloadVideo(String path, String id);
+
+    Observable<ThumbnailResponse> getCameraThumbnail(String id);
+
+    Observable<ThumbnailResponse> getCameraThumbnailUpdated(String id);
 }

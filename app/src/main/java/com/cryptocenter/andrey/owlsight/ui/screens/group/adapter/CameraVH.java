@@ -8,10 +8,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.signature.ObjectKey;
 import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
+import com.cryptocenter.andrey.owlsight.utils.GetThumbnailRequest;
+import com.cryptocenter.andrey.owlsight.utils.GlideApp;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatImageView;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -45,6 +49,9 @@ public class CameraVH extends RecyclerView.ViewHolder {
     @Nullable
     @BindView(R.id.rl_item_camera_shadow)
     RelativeLayout rlShadow;
+
+    @BindView(R.id.btnOptions)
+    AppCompatImageView btnOptions;
 
     private GroupAdapter.OnCameraListener cameraListener;
     private boolean isRefreshing = false;
@@ -102,10 +109,15 @@ public class CameraVH extends RecyclerView.ViewHolder {
             rlProgress.setVisibility(View.VISIBLE);
             cameraListener.onThumbnailUploadLoad(camera);
         }
+        GlideApp.with(ivPreview)
+                .load(new GetThumbnailRequest(camera, true))
+                .into(ivPreview);
+
         if (camera.getIsReachable().equals("1")) {
             itemView.setOnClickListener(v -> cameraListener.onCameraClick(camera));
         }
         btnCalendar.setOnClickListener(v -> cameraListener.onCalendarClick(camera));
         btnDelGroup.setOnClickListener(v -> cameraListener.onDeleteClick(camera));
+        btnOptions.setOnClickListener(v -> cameraListener.onOptionsClicked(Integer.parseInt(camera.getCameraId())));
     }
 }

@@ -69,6 +69,10 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
         getViewState().addScreen(Screen.STREAM, null);
     }
 
+    void handleStreamRestart(){
+        getViewState().proceedBtnCameraModeClicked();
+    }
+
     void drawerclosed() {
         isMonitorMode = false;
     }
@@ -155,8 +159,8 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
             }
             groupsSorted.add(group);
         }
-        groupsSorted.add(0, Group.instanceAddGroup());
         groupsSorted.add(0, Group.instanceNewCamera());
+        groupsSorted.add(0, Group.instanceAddGroup());
         this.groups = groupsSorted;
         getViewState().setGroups(this.groups);
     }
@@ -183,9 +187,8 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
 
             groupsSorted.add(group);
         }
-
-        groupsSorted.add(0, Group.instanceAddGroup());
         groupsSorted.add(0, Group.instanceNewCamera());
+        groupsSorted.add(0, Group.instanceAddGroup());
 
         this.groups = groupsSorted;
         getViewState().setGroupsRefreshed(this.groups, refreshingName);
@@ -198,7 +201,11 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
         }
         fetchGroups();
         fetchMonitors();
+    }
 
+    void onCameraDeleted(){
+        fetchGroups();
+        fetchMonitors();
     }
 
     @Nullable

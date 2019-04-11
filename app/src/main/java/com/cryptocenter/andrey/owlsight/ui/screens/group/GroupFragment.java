@@ -16,6 +16,7 @@ import com.cryptocenter.andrey.owlsight.base.BaseFragment;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 import com.cryptocenter.andrey.owlsight.di.Scopes;
+import com.cryptocenter.andrey.owlsight.ui.screens.camera_options.CameraOptionsDialogFragment;
 import com.cryptocenter.andrey.owlsight.ui.custom.CameraLoadingDialog;
 import com.cryptocenter.andrey.owlsight.ui.custom.CustomCaldroidFragment;
 import com.cryptocenter.andrey.owlsight.ui.screens.group.adapter.GroupAdapter;
@@ -37,6 +38,8 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -51,6 +54,7 @@ import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 
 public class GroupFragment extends BaseFragment implements GroupView, SwipeRefreshLayout.OnRefreshListener, GroupAdapter.OnCameraListener {
     public static final String GROUP_ID = "GROUP_ID";
+    private static final String OPTIONS_DIALOG_TAG = "OPTIONS_DIALOG_TAG";
 
     @InjectPresenter
     GroupPresenter presenter;
@@ -113,7 +117,7 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     @Override
     public void onStart() {
         super.onStart();
-        if(adapter!=null){
+        if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
     }
@@ -169,6 +173,11 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     @Override
     public void addCamera() {
         presenter.addCamera();
+    }
+
+    @Override
+    public void onOptionsClicked(Integer cameraId) {
+        presenter.onOptionsButtonClicked(cameraId);
     }
 
     @Override
@@ -279,6 +288,16 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     @Override
     public void refreshGroups() {
         iGroupsRefresh.refreshGroups(groupName);
+    }
+
+    @Override
+    public void showOptionsDialog(Integer cameraId) {
+        FragmentManager fm = getFragmentManager();
+        Fragment dialog = fm.findFragmentByTag(OPTIONS_DIALOG_TAG);
+        if (dialog != null) {
+            fm.beginTransaction().remove(dialog).commit();
+        }
+        CameraOptionsDialogFragment.newInstance(cameraId).show(fm, OPTIONS_DIALOG_TAG);
     }
 
     // =============================================================================================

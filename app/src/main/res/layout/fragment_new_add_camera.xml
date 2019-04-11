@@ -17,7 +17,7 @@
         <LinearLayout
             android:id="@+id/btnEnterCameraMode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/button_yellow_rounded"
             android:clickable="true"
@@ -45,7 +45,7 @@
         <LinearLayout
             android:id="@+id/btnAddIpCamera"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:layout_marginTop="30dp"
             android:background="@drawable/button_yellow_rounded"
             android:clickable="true"

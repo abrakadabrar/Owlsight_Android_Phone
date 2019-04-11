@@ -41,7 +41,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
         getViewState().setGroup(cameras);
     }
 
-    void setCameras(List<Camera> cameras){
+    void setCameras(List<Camera> cameras) {
         this.cameras = cameras;
 //        getViewState().startRefreshing();
 //        getViewState().setGroup(cameras);
@@ -64,7 +64,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
         getViewState().addScreen(Screen.VIDEO_FROM_DATE, new FromDateData(camera.getCameraId(), date));
     }
 
-    void refresh(){
+    void refresh() {
         getViewState().refreshGroups();
 //        getViewState().startRefreshing();
 //        new Handler().postDelayed(new Runnable() {
@@ -75,11 +75,11 @@ public class GroupPresenter extends BasePresenter<GroupView> {
 //        }, 4000);
     }
 
-    void handleCameraResponce(boolean handle){
+    void handleCameraResponce(boolean handle) {
         this.handleCameraResponce = handle;
     }
 
-    void setLoading(boolean isLoading){
+    void setLoading(boolean isLoading) {
         this.isLoading = isLoading;
     }
 
@@ -104,7 +104,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
         repository.getCamera(
                 camera.getCameraId(),
                 () -> {
-                    if(!isLoading) {
+                    if (!isLoading) {
                         isLoading = true;
                         getViewState().showLoading();
                     }
@@ -125,7 +125,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
                 });
     }
 
-    void addCamera(){
+    void addCamera() {
         getViewState().addScreen(ADD_CAMERA, groupId);
     }
 
@@ -155,7 +155,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
     //==============================================================================================
 
     private void proceedGetCameraSuccess(String id) {
-        if(handleCameraResponce) {
+        if (handleCameraResponce) {
             getViewState().addScreen(SINGLE_PLAYER, id);
         }
     }
@@ -179,5 +179,9 @@ public class GroupPresenter extends BasePresenter<GroupView> {
     private void proceedDeleteGroupSuccess(Void v) {
         getViewState().showMessage(App.getInstance().getString(R.string.group_deleted));
         getViewState().showScreen(GROUPS);
+    }
+
+    void onOptionsButtonClicked(Integer cameraId) {
+        getViewState().showOptionsDialog(cameraId);
     }
 }

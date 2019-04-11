@@ -1,10 +1,10 @@
 package com.cryptocenter.andrey.owlsight.data.api;
 
 import com.cryptocenter.andrey.owlsight.data.model.api.response.AddCameraResponse;
-import com.cryptocenter.andrey.owlsight.data.model.api.response.StreamResponse;
-import com.cryptocenter.andrey.owlsight.data.model.api.response.RecordsResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.GroupsResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.MonitorsResponse;
+import com.cryptocenter.andrey.owlsight.data.model.api.response.RecordsResponse;
+import com.cryptocenter.andrey.owlsight.data.model.api.response.StreamResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.TestCameraResponse;
 import com.cryptocenter.andrey.owlsight.data.model.api.response.ThumbnailResponse;
 import com.cryptocenter.andrey.owlsight.data.model.records.MotionsRoot;
@@ -81,6 +81,11 @@ public interface OwlsightAPI {
             @Query("ids") String ids,
             @Header("Cookie") String cookie);
 
+    @GET("/api/papi/delete-camera")
+    Observable<JsonObject> deleteCamera(
+            @Query("id") Integer id,
+            @Header("Cookie") String cookie);
+
     @Headers({"Accept: */*", "Content-Type: application/json; charset=UTF-8"})
     @GET("/cabinet/view/get-streams-info")
     Observable<JsonObject> getCamera(
@@ -97,6 +102,18 @@ public interface OwlsightAPI {
     @GET("/api/papi/user-cam-record-folders")
     Observable<RecordsResponse> getCameraRecords(
             @Query("id") String id,
+            @Header("Cookie") String cookie);
+
+    @GET("/api/papi/add-motion-notification")
+    Observable<JsonObject> addMotionNotification(
+            @Query("id") Integer cameraId,
+            @Query("device") String device,
+            @Header("Cookie") String cookie);
+
+    @GET("/api/papi/delete-motion-notification")
+    Observable<JsonObject> deleteMotionNotification(
+            @Query("id") Integer cameraId,
+            @Query("device") String device,
             @Header("Cookie") String cookie);
 
     @GET("/api/papi/get-the-view")
@@ -143,7 +160,7 @@ public interface OwlsightAPI {
 
     @GET("/api/papi/save-camera")
     Observable<Response<AddCameraResponse>> addCamera(
-            @QueryMap() Map<String,String> params,
+            @QueryMap() Map<String, String> params,
             @Header("Cookie") String cookie);
 
     @Streaming

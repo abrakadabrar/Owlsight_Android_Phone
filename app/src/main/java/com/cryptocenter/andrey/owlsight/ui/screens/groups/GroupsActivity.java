@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BaseActivity;
 import com.cryptocenter.andrey.owlsight.data.event.AddCameraEvent;
+import com.cryptocenter.andrey.owlsight.data.event.DeleteCameraEvent;
 import com.cryptocenter.andrey.owlsight.data.model.Group;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
@@ -126,11 +129,12 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
 
     @Override
     public void setGroups(List<Group> groups) {
-        presenter.handlePageSelected(0);
+        presenter.handlePageSelected(1);
 
         adapter = new GroupsPagerAdapter(getSupportFragmentManager(), this, groups);
         pager.setAdapter(adapter);
-        pager.setCurrentItem(0);
+        pager.setCurrentItem(1);
+//        pager.post(() -> pager.setCurrentItem(1));
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -207,13 +211,19 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == StreamActivity.STREAM_REQUEST_CODE && resultCode == RESULT_CANCELED) {
-            new Handler().postDelayed(() -> presenter.handleStreamModeClick(), 1000);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> presenter.handleStreamRestart(),  3000);
         }
     }
 
     @Override
     public void hideScreens() {
         llScreensContent.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void proceedBtnCameraModeClicked() {
+        Button btnCameraMode = menuView.findViewById(R.id.btn_camera_mode);
+        btnCameraMode.performClick();
     }
 
     // =============================================================================================
@@ -249,6 +259,11 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCameraAdded(AddCameraEvent event) {
         presenter.onCameraAdded(event.getGroupId());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCameraDeleted(DeleteCameraEvent event) {
+        presenter.onCameraDeleted();
     }
 
     @Override
