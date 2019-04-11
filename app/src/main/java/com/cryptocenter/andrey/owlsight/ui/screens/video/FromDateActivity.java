@@ -231,6 +231,9 @@ public class FromDateActivity extends BaseActivity implements FromDateView, Time
         btnFullscreen.setVisibility(isEnable ? GONE : VISIBLE);
         btnDownload.setVisibility(isEnable ? VISIBLE : GONE);
         videoPlayerView.setUseController(isEnable);
+        if (isEnable) {
+            videoPlayerView.showController();
+        }
     }
 
     @Override
