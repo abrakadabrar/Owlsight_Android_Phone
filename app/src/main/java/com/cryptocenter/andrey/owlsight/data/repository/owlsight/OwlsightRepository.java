@@ -40,7 +40,7 @@ public interface OwlsightRepository {
             RegisterData registerData, String confirmSms,
             Response.Start startListener,
             Response.Success<Void> successListener,
-            Response.Failed failedListener,
+            Response.FailedWithMessage failedListener,
             Response.Error errorListener,
             Response.Complete completeListener);
 

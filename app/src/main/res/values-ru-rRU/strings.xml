@@ -35,7 +35,7 @@
     <string name="user_phone_err">Необходимо указать телефон</string>
     <string name="user_pass_err">Необходимо ввести пароль</string>
     <string name="user_conf_pass_err">Необходимо ввести пароль еще раз</string>
-    <string name="user_consent_err">Необходимо подтвердить согласие</string>
+    <string name="user_consent_err">Необходимо дать согласие</string>
     <string name="connecting_to_camera">Подключение к камере</string>
     <string name="please_wait">Пожалуйста подождите</string>
     <string name="menu_finger_enable">Вход с отпечатком пальца</string>

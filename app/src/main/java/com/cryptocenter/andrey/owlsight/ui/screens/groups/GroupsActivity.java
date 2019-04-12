@@ -261,11 +261,6 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
         presenter.onCameraAdded(event.getGroupId());
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onCameraDeleted(DeleteCameraEvent event) {
-        presenter.onCameraDeleted();
-    }
-
     @Override
     public void onStart() {
         super.onStart();

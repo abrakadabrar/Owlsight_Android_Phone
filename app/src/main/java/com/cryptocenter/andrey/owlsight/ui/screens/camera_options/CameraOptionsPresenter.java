@@ -48,7 +48,7 @@ public class CameraOptionsPresenter extends BasePresenter<CameraOptionsView> {
         owlsightRepository.deleteCamera(cameraId,
                 getViewState()::showLoading,
                 result -> {
-                    EventBus.getDefault().post(new DeleteCameraEvent());
+                    EventBus.getDefault().post(new DeleteCameraEvent(cameraId.toString()));
                     getViewState().closeDialog();
                 },
                 () -> getViewState().showMessage(App.getInstance().getString(R.string.could_not_remove_camera)),

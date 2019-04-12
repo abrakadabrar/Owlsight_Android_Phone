@@ -33,7 +33,7 @@ import butterknife.Unbinder;
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.RECORD_AUDIO;
 
-public class StreamActivity extends BaseActivity implements StreamView, Connectable, Disconnectable {
+public class StreamActivity extends BaseActivity implements StreamView, Connectable, Disconnectable, StreamManager.StreamManagerListener {
 
     public static int STREAM_REQUEST_CODE = 114;
 
@@ -137,17 +137,7 @@ public class StreamActivity extends BaseActivity implements StreamView, Connecta
 
     @Override
     public void setupStream(String url) {
-        streamManager = new StreamManager(openGlView, new StreamManager.StreamManagerListener() {
-            @Override
-            public void onMessage(String message) {
-                showMessageOnUiThread(message);
-            }
-
-            @Override
-            public void onConnectionFailed() {
-                onDisconnect();
-            }
-        });
+        streamManager = new StreamManager(openGlView, this);
 
         WeakReference<StreamManager> streamManagerWeakReference = new WeakReference<>(streamManager);
 
@@ -197,6 +187,11 @@ public class StreamActivity extends BaseActivity implements StreamView, Connecta
         System.gc();
     }
 
+    @Override
+    public void startStream() {
+        streamManager.startStream();
+    }
+
 
     @Override
     public void onConnect() {
@@ -230,5 +225,15 @@ public class StreamActivity extends BaseActivity implements StreamView, Connecta
 
     private void showMessageOnUiThread(String message) {
         runOnUiThread(() -> Toast.makeText(App.getInstance(), message, Toast.LENGTH_LONG).show());
+    }
+
+    @Override
+    public void onMessage(String message) {
+        showMessageOnUiThread(message);
+    }
+
+    @Override
+    public void onConnectionFailed() {
+        presenter.handleManagerDisconnect();
     }
 }

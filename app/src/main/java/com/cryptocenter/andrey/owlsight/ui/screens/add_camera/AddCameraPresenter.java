@@ -14,14 +14,14 @@ import javax.inject.Inject;
 @InjectViewState
 public class AddCameraPresenter extends BasePresenter<AddCameraView> {
 
-    private boolean test = false;
+    private boolean test = true;
 
     public static final String TEST_USERNAME = "owlsight";
     public static final String TEST_PASSWORD = "20170731a";
     public static final String TEST_HOST = "212.30.190.77";
     public static final String TEST_PORT = "54411";
     public static final String TEST_EXTRA = "axis-media/media.amp?streamprofile=owlsight";
-    public static final String TEST_NAME = "TEST";
+    public static final String TEST_NAME = "Камера 1";
 
     private int groupId;
     private OwlsightRepository repository;

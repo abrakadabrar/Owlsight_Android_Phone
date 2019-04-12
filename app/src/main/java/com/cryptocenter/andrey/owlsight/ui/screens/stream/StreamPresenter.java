@@ -21,7 +21,7 @@ public class StreamPresenter extends BasePresenter<StreamView> {
     private String streamId;
     private Handler handler = new Handler();
     private Runnable checkerStatus = this::handleCheckStatus;
-
+    private boolean netDisconnected = false;
 
     StreamPresenter() {
         repository = Toothpick.openScope(Scopes.APP).getInstance(OwlsightRepository.class);
@@ -40,7 +40,18 @@ public class StreamPresenter extends BasePresenter<StreamView> {
         }
     }
 
+    private void stopStream() {
+        repository.stopStream(
+                streamId,
+                getViewState()::showLoading,
+                this::proceedStopStreamSuccess,
+                this::proceedStreamFailed,
+                this::showError,
+                getViewState()::hideLoading);
+    }
+
     void handlePermissionGrantedOnDisconnected(boolean isGranted) {
+        netDisconnected = false;
         getViewState().setWasDisconnected(false);
         if (isGranted) {
             getViewState().restartActivity();
@@ -50,6 +61,7 @@ public class StreamPresenter extends BasePresenter<StreamView> {
     }
 
     void handleStopStream() {
+        stopStream();
         stoppingHello();
     }
 
@@ -88,10 +100,18 @@ public class StreamPresenter extends BasePresenter<StreamView> {
     }
 
     public void handleDisconnect() {
+        netDisconnected = true;
         getViewState().disposeStreamManager();
         getViewState().setVisibilityOfConnectingLayout(true);
         getViewState().setWasDisconnected(true);
         stoppingHello();
+    }
+
+    void handleManagerDisconnect() {
+        if(!netDisconnected){
+//            getViewState().disposeStreamManager();
+            new Handler().postDelayed(() -> getViewState().startStream(), 3000);
+        }
     }
 
     public void handleMaxFramesDiscarded() {
@@ -118,6 +138,8 @@ public class StreamPresenter extends BasePresenter<StreamView> {
     }
 
     private void proceedStreamFailed() {
-        getViewState().closeScreen("Ошибка соединения");
+
     }
+
+
 }

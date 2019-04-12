@@ -62,9 +62,13 @@ public class RegisterSmsPresenter extends BasePresenter<RegisterSmsView> {
         repository.registerSecondStep(registerData, code,
                 getViewState()::showLoading,
                 this::proceedRegisterSecondStepSuccess,
-                this::showFailed,
+                this::showFailedWithMessage,
                 this::showError,
                 getViewState()::hideLoading);
+    }
+
+    private void showFailedWithMessage(String error) {
+        getViewState().showAlertMessage(App.getInstance().getString(R.string.errors_occurred_during_registration), error);
     }
 
 

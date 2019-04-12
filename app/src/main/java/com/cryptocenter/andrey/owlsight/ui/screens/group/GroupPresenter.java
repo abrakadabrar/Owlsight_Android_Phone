@@ -1,5 +1,6 @@
 package com.cryptocenter.andrey.owlsight.ui.screens.group;
 
+import com.annimon.stream.Stream;
 import com.arellomobile.mvp.InjectViewState;
 import com.cryptocenter.andrey.owlsight.App;
 import com.cryptocenter.andrey.owlsight.R;
@@ -88,6 +89,7 @@ public class GroupPresenter extends BasePresenter<GroupView> {
     // API
     //==============================================================================================
 
+
     public void showFailed() {
         getViewState().showMessage(App.getInstance().getString(R.string.cannot_perform_action));
     }
@@ -164,6 +166,22 @@ public class GroupPresenter extends BasePresenter<GroupView> {
         camera.setThumbnailUrl(data);
         getViewState().setCameraThumbnail(camera);
     }
+
+    void onCameraDeleted(String cameraId) {
+        Camera findedCamera = findCameraById(cameraId);
+        if (findedCamera != null) {
+            cameras.remove(findedCamera);
+            getViewState().setGroup(cameras);
+        }
+    }
+
+    private Camera findCameraById(String cameraId) {
+        return Stream.ofNullable(cameras)
+                .filter(camera -> camera.getCameraId().equals(cameraId))
+                .findFirst()
+                .orElse(null);
+    }
+
 
     private void proceedGetCameraThumbnailUploadSuccess(Camera camera, String data) {
         camera.setRefreshing(false);

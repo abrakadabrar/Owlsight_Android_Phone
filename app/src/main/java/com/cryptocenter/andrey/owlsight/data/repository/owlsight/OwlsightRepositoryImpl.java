@@ -135,7 +135,7 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
             String confirmSms,
             Response.Start startListener,
             Response.Success<Void> successListener,
-            Response.Failed failedListener,
+            Response.FailedWithMessage failedListener,
             Response.Error errorListener,
             Response.Complete completeListener
     ) {
@@ -148,14 +148,21 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
                     String cookie = response.headers().get("Set-Cookie");
                     cookie = cookie.split(";")[0];
                     preferences.saveCookie(cookie);
-                    return response.code();
+                    return response;
                 })
                 .doOnSubscribe(d -> startListener.onStart())
                 .doFinally(() -> completeListener.onComplete())
                 .subscribe(
-                        code -> {
-                            if (code == 200) successListener.onSuccess(null);
-                            if (code == 401) failedListener.onFailed();
+                        response -> {
+                            if (response.code() == 200) successListener.onSuccess(null);
+                            if (response.code() == 401) {
+                                StringBuilder errors = new StringBuilder();
+                                String errorBodyString = response.errorBody().string();
+                                ErrorBody errorBody = new Gson().fromJson(errorBodyString, ErrorBody.class);
+                                Stream.ofNullable(errorBody.getErrors())
+                                        .forEach(error -> errors.append(error).append("\n\n"));
+                                failedListener.onFailed(errors.toString());
+                            }
                         },
                         errorListener::onError
                 );

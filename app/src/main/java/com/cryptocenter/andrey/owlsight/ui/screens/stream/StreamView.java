@@ -22,4 +22,7 @@ public interface StreamView extends BaseView {
 
     @StateStrategyType(AddToEndSingleStrategy.class)
     void disposeStreamManager();
+
+    @StateStrategyType(SkipStrategy.class)
+    void startStream();
 }

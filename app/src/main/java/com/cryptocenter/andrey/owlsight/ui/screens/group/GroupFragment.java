@@ -2,6 +2,7 @@ package com.cryptocenter.andrey.owlsight.ui.screens.group;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
@@ -13,17 +14,23 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BaseFragment;
+import com.cryptocenter.andrey.owlsight.data.event.AddCameraEvent;
+import com.cryptocenter.andrey.owlsight.data.event.DeleteCameraEvent;
 import com.cryptocenter.andrey.owlsight.data.model.Camera;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 import com.cryptocenter.andrey.owlsight.di.Scopes;
-import com.cryptocenter.andrey.owlsight.ui.screens.camera_options.CameraOptionsDialogFragment;
 import com.cryptocenter.andrey.owlsight.ui.custom.CameraLoadingDialog;
 import com.cryptocenter.andrey.owlsight.ui.custom.CustomCaldroidFragment;
+import com.cryptocenter.andrey.owlsight.ui.screens.camera_options.CameraOptionsDialogFragment;
 import com.cryptocenter.andrey.owlsight.ui.screens.group.adapter.GroupAdapter;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
 import com.cryptocenter.andrey.owlsight.utils.listeners.OnAlertSelectDateListener;
 import com.roomorama.caldroid.CaldroidListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -106,7 +113,6 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-        setupUI();
     }
 
     @Override
@@ -119,6 +125,9 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
         super.onStart();
         if (adapter != null) {
             adapter.notifyDataSetChanged();
+        }
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
         }
     }
 
@@ -304,6 +313,13 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
     // Private
     // =============================================================================================
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupUI();
+    }
+
     private void setupUI() {
 //        refreshLayout.setOnRefreshListener(this);
         refreshLayout.setOnRefreshListener(new SmoothRefreshLayout.OnRefreshListener() {
@@ -317,10 +333,42 @@ public class GroupFragment extends BaseFragment implements GroupView, SwipeRefre
 
             }
         });
-        final boolean isLandscape = getResources().getConfiguration().orientation == ORIENTATION_LANDSCAPE;
+        boolean isLandscape = getResources().getConfiguration().orientation == ORIENTATION_LANDSCAPE;
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), isLandscape ? 3 : 2));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        RecyclerView.Adapter adapter = recyclerView.getAdapter();
+        if (adapter != null) {
+            adapter.notifyDataSetChanged();
+        }
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            // Do your stuff here
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setupUI();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCameraDeleted(DeleteCameraEvent event) {
+        presenter.onCameraDeleted(event.getCameraId());
+    }
+
+    @Override
+    public void onDestroy() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onDestroy();
     }
 
 

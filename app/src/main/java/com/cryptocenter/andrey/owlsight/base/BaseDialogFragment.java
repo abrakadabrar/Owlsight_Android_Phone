@@ -95,7 +95,7 @@ public abstract class BaseDialogFragment extends MvpAndroidXDialogFragment imple
             int height = displayMetrics.heightPixels;
             int width = displayMetrics.widthPixels;
 
-            window.setLayout((int) (width * 0.8), WRAP_CONTENT);
+            window.setLayout((int) (width * 0.95), WRAP_CONTENT);
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));// make tranparent around the popup
         } catch (Exception e) {
             e.printStackTrace();

@@ -22,6 +22,7 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
     private RtmpCamera2 streamCamera;
     private ConnectionClassManager connectionClassManager;
     private UploadBandwidthSampler uploadBandwidthSampler;
+    private String url;
 
     public StreamManager(OpenGlView openGlView, StreamManagerListener streamManagerListener) {
         this.streamManagerListener = streamManagerListener;
@@ -90,6 +91,11 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
     }
 
     public void initStream(String url) {
+        this.url = url;
+        startStream();
+    }
+
+    public void startStream() {
         if (!streamCamera.isStreaming()) {
             if (streamCamera.isRecording() || prepareEncoders()) {
                 uploadBandwidthSampler.startSampling();
