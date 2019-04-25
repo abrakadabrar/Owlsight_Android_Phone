@@ -236,6 +236,7 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
         menuView.findViewById(R.id.btn_monitor_mode).setOnClickListener(v -> presenter.handleMonitorsModeClick());
         menuView.findViewById(R.id.btn_camera_mode).setOnClickListener(v -> presenter.handleStreamModeClick());
         menuView.findViewById(R.id.btn_camera_mode).setOnClickListener(v -> presenter.handleStreamModeClick());
+        menuView.findViewById(R.id.btnProfile).setOnClickListener(v -> presenter.handleProfileButtonClicked());
         llMainContent = menuView.findViewById(R.id.ll_menu_main_content);
         llScreensContent = menuView.findViewById(R.id.ll_menu_screens_content);
         swFinger = menuView.findViewById(R.id.sw_activity_menu_finger);

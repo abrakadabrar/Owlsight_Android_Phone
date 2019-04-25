@@ -69,6 +69,10 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
         getViewState().addScreen(Screen.STREAM, null);
     }
 
+    void handleProfileButtonClicked() {
+        getViewState().addScreen(Screen.PROFILE, null);
+    }
+
     void handleStreamRestart(){
         getViewState().proceedBtnCameraModeClicked();
     }

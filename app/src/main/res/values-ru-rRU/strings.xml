@@ -100,4 +100,15 @@
     <string name="authorization">Авторизация</string>
     <string name="send_new_password">Выслать новый пароль</string>
     <string name="profile">Профиль</string>
+    <string name="change_password">Изменить пароль</string>
+    <string name="user_id">Идентификатор пользователя</string>
+    <string name="change_account">Сменить аккаунт</string>
+    <string name="save">Сохранить</string>
+    <string name="submit_verification_code">Отправить код подтверждения</string>
+    <string name="verification_code">Код подтверждения</string>
+    <string name="phone_number">Телефон</string>
+    <string name="current_password">Текущий пароль</string>
+    <string name="new_password">Новый пароль</string>
+    <string name="new_password_again">Новый пароль ещё раз</string>
+    <string name="log_out_question">"Вы точно хотите выйти из аккаунта? "</string>
 </resources>

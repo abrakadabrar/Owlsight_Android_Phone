@@ -1,30 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_height="189dp"
     android:layout_gravity="center"
+    android:layout_margin="1dp"
+    android:gravity="center"
+    android:background="@drawable/add_camera_background"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_gravity="center"
-        card_view:cardCornerRadius="20dp"
-        card_view:cardBackgroundColor="@color/colorHorizontalBackLine"
-        android:layout_margin="1dp">
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_add_cam" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="189dp"
-            android:background="@drawable/alert_dialog_bg"/>
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:text="@string/add_camera_btn"
-                android:textColor="#FFFF" />
-    </androidx.cardview.widget.CardView>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:text="@string/add_camera_btn"
+        android:textColor="#FFFF"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView3" />
+
 </LinearLayout>

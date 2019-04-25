@@ -10,8 +10,7 @@
     android:paddingEnd="10dp"
     android:paddingBottom="10dp">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <LinearLayout
         android:id="@+id/clMain"
         android:layout_gravity="center_vertical"
         android:layout_width="match_parent"

@@ -101,4 +101,15 @@
     <string name="authorization">Authorization</string>
     <string name="send_new_password">Send new password</string>
     <string name="profile">Profile</string>
+    <string name="change_password">Change password</string>
+    <string name="user_id">User id</string>
+    <string name="change_account">Change account</string>
+    <string name="save">Save</string>
+    <string name="submit_verification_code">Submit verification code</string>
+    <string name="verification_code">Verification code</string>
+    <string name="phone_number">Phone number</string>
+    <string name="current_password">Current password</string>
+    <string name="new_password">New password</string>
+    <string name="new_password_again">New password again</string>
+    <string name="log_out_question">Do you really want to log out?</string>
 </resources>

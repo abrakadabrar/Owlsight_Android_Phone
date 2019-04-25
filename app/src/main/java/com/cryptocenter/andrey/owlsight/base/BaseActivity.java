@@ -3,17 +3,24 @@ package com.cryptocenter.andrey.owlsight.base;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+
 import com.cryptocenter.andrey.owlsight.App;
 import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.moxy.MvpAndroidXActivity;
 import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.ui.screens.add_camera.AddCameraActivity;
+import com.cryptocenter.andrey.owlsight.ui.screens.change_password.ChangePasswordFragmentDialog;
+import com.cryptocenter.andrey.owlsight.ui.screens.change_phone.ChangePhoneDialogFragment;
 import com.cryptocenter.andrey.owlsight.ui.screens.choose_group.ChooseGroupActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity;
+import com.cryptocenter.andrey.owlsight.ui.screens.leave_profile.LeaveProfileDialogFragment;
 import com.cryptocenter.andrey.owlsight.ui.screens.menu.MenuActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.monitor.MonitorActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.player.SinglePlayerActivity;
+import com.cryptocenter.andrey.owlsight.ui.screens.profile.ProfileActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.register.RegisterActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.register_sms.RegisterSmsActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.signin.activity.SignInActivity;
@@ -22,8 +29,6 @@ import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import es.dmoral.toasty.Toasty;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -79,11 +84,17 @@ public abstract class BaseActivity extends MvpAndroidXActivity implements BaseVi
             case STREAM:
                 StreamActivity.start(this);
                 break;
+            case GROUPS:
+                break;
             case MENU:
                 startActivity(MenuActivity.intent(this));
                 break;
             case MONITOR:
                 startActivity(MonitorActivity.intent(this, (Monitor) data));
+                break;
+            case REGISTER_SMS:
+                break;
+            case SIGN_IN:
                 break;
             case SINGLE_PLAYER:
                 startActivity(SinglePlayerActivity.intent(this, (String) data));
@@ -93,6 +104,21 @@ public abstract class BaseActivity extends MvpAndroidXActivity implements BaseVi
                 break;
             case CHOOSE_GROUP:
                 ChooseGroupActivity.start(this);
+                break;
+            case PROFILE:
+                ProfileActivity.start(this);
+                break;
+            case VIDEO_FROM_DATE:
+                break;
+            case CHANGE_PHONE:
+                ChangePhoneDialogFragment.newInstance().show(getSupportFragmentManager(), "change_phone");
+                break;
+            case LEAVE_ACCOUNT:
+                LeaveProfileDialogFragment.newInstance().show(getSupportFragmentManager(), "leave_profile");
+                break;
+            case CHANGE_PASSWORD:
+                ChangePasswordFragmentDialog.newInstance().show(getSupportFragmentManager(), "change_password");
+                break;
         }
     }
 
@@ -122,7 +148,7 @@ public abstract class BaseActivity extends MvpAndroidXActivity implements BaseVi
         finish();
     }
 
-    protected void disposeOnDestroy(Disposable disposable){
+    protected void disposeOnDestroy(Disposable disposable) {
         compositeDisposable.add(disposable);
     }
 

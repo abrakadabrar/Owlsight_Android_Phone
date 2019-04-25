@@ -19,6 +19,7 @@ import com.cryptocenter.andrey.owlsight.ui.screens.add_camera.AddCameraActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.choose_group.ChooseGroupActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.player.SinglePlayerActivity;
+import com.cryptocenter.andrey.owlsight.ui.screens.profile.ProfileActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.stream.StreamActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.video.FromDateActivity;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
@@ -129,6 +130,9 @@ public abstract class BaseDialogFragment extends MvpAndroidXDialogFragment imple
                 break;
             case CHOOSE_GROUP:
                 ChooseGroupActivity.start(getActivity());
+                break;
+            case PROFILE:
+                ProfileActivity.start(getActivity());
                 break;
         }
     }
