@@ -62,6 +62,9 @@ public interface OwlsightAPI {
     @GET("api/papi/get-user-cams-to-json/")
     Observable<GroupsResponse> cameras(@Header("Cookie") String cookie);
 
+    @GET("/api/papi/send-password-reset-link")
+    Observable<Response<JsonObject>> resetPassword(@Header("Cookie") String cookie, @Query("email") String email);
+
     @Headers({"Accept: */*", "Content-Type: application/json; charset=UTF-8"})
     @GET("api/papi/add-group")
     Observable<JsonObject> addGroup(

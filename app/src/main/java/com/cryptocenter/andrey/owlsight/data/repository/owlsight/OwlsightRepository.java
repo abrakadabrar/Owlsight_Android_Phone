@@ -12,6 +12,7 @@ import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.MonitorCamera;
 import com.cryptocenter.andrey.owlsight.data.model.motion.DatumFramesMotions;
 import com.cryptocenter.andrey.owlsight.data.model.videofromdatewithmotion.Datum;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -201,4 +202,6 @@ public interface OwlsightRepository {
     Observable<ThumbnailResponse> getCameraThumbnail(String id);
 
     Observable<ThumbnailResponse> getCameraThumbnailUpdated(String id);
+
+    Observable<retrofit2.Response<JsonObject>> resetPassword(String email);
 }

@@ -18,12 +18,14 @@ import com.cryptocenter.andrey.owlsight.data.model.videofromdatewithmotion.Datum
 import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
 import com.cryptocenter.andrey.owlsight.utils.ResourcesUtils;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -574,6 +576,13 @@ public class OwlsightRepositoryImpl implements OwlsightRepository {
     @Override
     public Observable<ThumbnailResponse> getCameraThumbnailUpdated(String id) {
         return api.getCameraThumbnailUpdated(id, preferences.getCookie())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    @Override
+    public Observable<retrofit2.Response<JsonObject>> resetPassword(String email) {
+        return api.resetPassword(preferences.getCookie(), email)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }

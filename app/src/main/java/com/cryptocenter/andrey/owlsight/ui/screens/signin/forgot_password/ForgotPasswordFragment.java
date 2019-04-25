@@ -10,12 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BaseFragment;
+import com.cryptocenter.andrey.owlsight.di.Scopes;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import toothpick.Toothpick;
 
 public class ForgotPasswordFragment extends BaseFragment implements ForgotPasswordView {
 
@@ -47,7 +50,7 @@ public class ForgotPasswordFragment extends BaseFragment implements ForgotPasswo
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnSendNewPassword:
-                presenter.handleButtonSendNewPasswordClicked();
+                presenter.handleButtonSendNewPasswordClicked(etEmail.getText().toString());
                 break;
             case R.id.btnAuthorization:
                 presenter.handleButtonAuthorizationClicked();
@@ -55,8 +58,16 @@ public class ForgotPasswordFragment extends BaseFragment implements ForgotPasswo
         }
     }
 
+
     @Override
     public void popBackStack() {
-        getActivity().getSupportFragmentManager().popBackStack();
+        if (getActivity() != null) {
+            getActivity().getSupportFragmentManager().popBackStack();
+        }
+    }
+
+    @ProvidePresenter
+    ForgotPasswordPresenter providePresenter(){
+        return Toothpick.openScope(Scopes.APP).getInstance(ForgotPasswordPresenter.class);
     }
 }
