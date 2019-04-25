@@ -1,36 +1,46 @@
-package com.cryptocenter.andrey.owlsight.ui.screens.signin;
+package com.cryptocenter.andrey.owlsight.ui.screens.signin.fragment;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.widget.AppCompatTextView;
 
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.cryptocenter.andrey.owlsight.R;
-import com.cryptocenter.andrey.owlsight.base.BaseActivity;
+import com.cryptocenter.andrey.owlsight.base.BaseFragment;
 import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
 import com.cryptocenter.andrey.owlsight.di.Scopes;
 import com.cryptocenter.andrey.owlsight.ui.custom.InitFingerPrintDialog;
 import com.cryptocenter.andrey.owlsight.utils.FingerPrint.CryptoUtils;
 import com.cryptocenter.andrey.owlsight.utils.FingerPrint.Fingerprint;
 
-import androidx.annotation.RequiresApi;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import toothpick.Toothpick;
 
-import static android.view.Window.FEATURE_NO_TITLE;
-import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
+public class SignInFragment extends BaseFragment implements SignInView, Fingerprint.OnAuthenticationFingerprintCallback {
 
-public class SignInActivity extends BaseActivity implements SignInView,Fingerprint.OnAuthenticationFingerprintCallback {
+    public static SignInFragment newInstance() {
+
+        Bundle args = new Bundle();
+
+        SignInFragment fragment = new SignInFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @InjectPresenter
     SignInPresenter presenter;
@@ -45,43 +55,44 @@ public class SignInActivity extends BaseActivity implements SignInView,Fingerpri
     Button btnLogin;
 
     @BindView(R.id.tvSignUp)
-    TextView tvSignUp;
+    AppCompatTextView tvSignUp;
 
     private Preferences preferences;
     private Fingerprint mFingerprint;
     private AlertDialog alertDialog;
-
-    public static Intent intent(Context context) {
-        return new Intent(context, SignInActivity.class);
-    }
 
 
     // =============================================================================================
     // Android
     // =============================================================================================
 
+
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        preferences = new Preferences(this);
-        requestWindowFeature(FEATURE_NO_TITLE);
-        getWindow().setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_sign_in_up);
-        ButterKnife.bind(this);
-        setupUI();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_sign_in, container, false);
+
+        ButterKnife.bind(this, rootView);
+
+        return rootView;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        preferences = new Preferences(getContext());
+        setupUI();
+    }
 
     // =============================================================================================
     // Private
     // =============================================================================================
 
     private void setupUI() {
-        if(preferences.isLogin()){
+        if (preferences.isLogin()) {
             String[] loginData = preferences.getLoginData();
             etEmail.setText(loginData[0]);
             etPassword.setText(loginData[1]);
-        }else {
+        } else {
             etEmail.setText("kvazar@gmail.com");
             etPassword.setText("fado5518");
         }
@@ -90,25 +101,25 @@ public class SignInActivity extends BaseActivity implements SignInView,Fingerpri
 
         btnLogin.setOnClickListener(v -> presenter.handleLoginClick(etEmail.getText().toString(), etPassword.getText().toString()));
         tvSignUp.setOnClickListener(v -> presenter.handleRegistrationClick());
-       // btnLogin.callOnClick();
+        // btnLogin.callOnClick();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void initFingerPrint(){
-        if(Fingerprint.isSensorStateAt(Fingerprint.SensorState.READY,this)){
+    private void initFingerPrint() {
+        if (Fingerprint.isSensorStateAt(Fingerprint.SensorState.READY, getContext())) {
             FingerprintManager.CryptoObject cryptoObject = CryptoUtils.getCryptoObject();
-            mFingerprint = new Fingerprint(this);
+            mFingerprint = new Fingerprint(getContext());
             mFingerprint.setOnAuthenticationFingerprintCallback(this);
-            mFingerprint.startAuth(this,cryptoObject);
-            alertDialog = new InitFingerPrintDialog(this);
+            mFingerprint.startAuth(getContext(), cryptoObject);
+            alertDialog = new InitFingerPrintDialog(getContext());
             alertDialog.show();
         }
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        if(preferences.isFingerAuth()) {
+        if (preferences.isFingerAuth()) {
             String[] loginData = preferences.getLoginData();
             etEmail.setText(loginData[0]);
             etPassword.setText(loginData[1]);
@@ -120,7 +131,7 @@ public class SignInActivity extends BaseActivity implements SignInView,Fingerpri
 
     @Override
     public void saveLoginData() {
-        preferences.saveLoginData(etEmail.getText().toString(),etPassword.getText().toString());
+        preferences.saveLoginData(etEmail.getText().toString(), etPassword.getText().toString());
     }
 
     // =============================================================================================
@@ -141,12 +152,16 @@ public class SignInActivity extends BaseActivity implements SignInView,Fingerpri
 
     @Override
     public void onAuthenticationFingerprintFailed(boolean isCanceled) {
-
-        Toast.makeText(this, R.string.fingerprint_doesnt_fit,Toast.LENGTH_LONG).show();
+        Toast.makeText(getContext(), R.string.fingerprint_doesnt_fit, Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onAcuthenticationFingerprintError(String error) {
+    public void onAuthenticationFingerprintError(String error) {
 //        Toast.makeText(this, "ERROR!!! "+error,Toast.LENGTH_LONG).show();
+    }
+
+    @OnClick(R.id.btnForgotPassword)
+    public void onButtonForgotPasswordClicked() {
+        presenter.handleButtonForgotPasswordClicked();
     }
 }

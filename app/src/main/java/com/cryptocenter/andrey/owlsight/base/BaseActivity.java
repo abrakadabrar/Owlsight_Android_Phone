@@ -16,7 +16,7 @@ import com.cryptocenter.andrey.owlsight.ui.screens.monitor.MonitorActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.player.SinglePlayerActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.register.RegisterActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.register_sms.RegisterSmsActivity;
-import com.cryptocenter.andrey.owlsight.ui.screens.signin.SignInActivity;
+import com.cryptocenter.andrey.owlsight.ui.screens.signin.activity.SignInActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.stream.StreamActivity;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.Screen;

@@ -79,7 +79,7 @@
             android:screenOrientation="userLandscape" />
 
         <activity
-            android:name="com.cryptocenter.andrey.owlsight.ui.screens.signin.SignInActivity"
+            android:name="com.cryptocenter.andrey.owlsight.ui.screens.signin.activity.SignInActivity"
             android:screenOrientation="portrait" />
 
         <activity
@@ -98,6 +98,7 @@
             android:name=".ui.screens.add_camera.AddCameraActivity"
             android:windowSoftInputMode="adjustResize|stateHidden" />
         <activity android:name=".ui.screens.choose_group.ChooseGroupActivity" />
+        <activity android:name=".ui.screens.profile.ProfileActivity" />
 
         <service
             android:name="com.novoda.merlin.MerlinService"

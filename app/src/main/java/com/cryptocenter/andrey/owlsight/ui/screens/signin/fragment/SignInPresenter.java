@@ -1,12 +1,15 @@
-package com.cryptocenter.andrey.owlsight.ui.screens.signin;
+package com.cryptocenter.andrey.owlsight.ui.screens.signin.fragment;
 
 import com.arellomobile.mvp.InjectViewState;
 import com.cryptocenter.andrey.owlsight.App;
 import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BasePresenter;
+import com.cryptocenter.andrey.owlsight.data.event.ForgotPasswordEvent;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
 import com.cryptocenter.andrey.owlsight.utils.Validator;
+
+import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
@@ -49,6 +52,10 @@ public class SignInPresenter extends BasePresenter<SignInView> {
                 this::showFailed,
                 this::showError,
                 getViewState()::hideLoading);
+    }
+
+    void handleButtonForgotPasswordClicked() {
+        EventBus.getDefault().post(new ForgotPasswordEvent());
     }
 
 

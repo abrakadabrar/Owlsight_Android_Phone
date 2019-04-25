@@ -16,6 +16,7 @@ import com.cryptocenter.andrey.owlsight.ui.screens.add_camera.AddCameraActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.choose_group.ChooseGroupActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.player.SinglePlayerActivity;
+import com.cryptocenter.andrey.owlsight.ui.screens.register.RegisterActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.stream.StreamActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.video.FromDateActivity;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
@@ -78,6 +79,9 @@ public abstract class BaseFragment extends MvpAndroidXFragment implements BaseVi
 
     public void addScreen(Screen screen, Object data) {
         switch (screen) {
+            case REGISTER:
+                startActivity(RegisterActivity.intent(getContext()));
+                break;
             case SINGLE_PLAYER:
                 startActivity(SinglePlayerActivity.intent(getActivity(), (String) data));
                 break;

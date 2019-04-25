@@ -18,11 +18,25 @@
             android:layout_gravity="start"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/btnProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:background="@color/colorBG"
+                android:drawableStart="@drawable/ic_profile"
+                android:drawablePadding="5dp"
+                android:gravity="left|center_vertical"
+                android:text="@string/profile"
+                android:textAllCaps="false"
+                android:layout_marginTop="24dp"
+                android:textColor="@color/white_greyish"
+                android:textSize="18sp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_marginStart="45dp"
-                android:layout_marginTop="@dimen/materialize_statusbar"
                 android:background="@color/colorLineBG" />
 
             <Button
@@ -36,15 +50,9 @@
                 android:gravity="left|center_vertical"
                 android:text="@string/camera_mode"
                 android:textAllCaps="false"
+                android:layout_marginTop="24dp"
                 android:textColor="@color/white_greyish"
                 android:textSize="18sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:visibility="gone"
-                android:layout_marginStart="45dp"
-                android:background="@color/colorLineBG" />
 
             <Button
                 android:visibility="gone"

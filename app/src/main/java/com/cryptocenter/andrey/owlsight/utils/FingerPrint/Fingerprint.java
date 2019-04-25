@@ -94,7 +94,7 @@ public class Fingerprint {
                         super.onAuthenticationError(errorCode, errString);
                         if (mCallback != null) {
                             if(errorCode != 5){ // TODO: quick costil
-                                mCallback.onAcuthenticationFingerprintError(!TextUtils.isEmpty(errString) ? errString.toString() : null);
+                                mCallback.onAuthenticationFingerprintError(!TextUtils.isEmpty(errString) ? errString.toString() : null);
                             }
                         }
                     }
@@ -211,7 +211,7 @@ public class Fingerprint {
 
         void onAuthenticationFingerprintFailed(boolean isCanceled);
 
-        void onAcuthenticationFingerprintError(String error);
+        void onAuthenticationFingerprintError(String error);
     }
 
 }
