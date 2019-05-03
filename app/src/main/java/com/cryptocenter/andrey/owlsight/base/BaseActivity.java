@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 
 import com.cryptocenter.andrey.owlsight.App;
@@ -35,7 +36,6 @@ import io.reactivex.disposables.Disposable;
 import me.drakeet.support.toast.ToastCompat;
 
 public abstract class BaseActivity extends MvpAndroidXActivity implements BaseView {
-
     private KProgressHUD loader;
 
     private CompositeDisposable compositeDisposable;
@@ -95,6 +95,7 @@ public abstract class BaseActivity extends MvpAndroidXActivity implements BaseVi
             case REGISTER_SMS:
                 break;
             case SIGN_IN:
+                SignInActivity.start(this);
                 break;
             case SINGLE_PLAYER:
                 startActivity(SinglePlayerActivity.intent(this, (String) data));
@@ -172,5 +173,9 @@ public abstract class BaseActivity extends MvpAndroidXActivity implements BaseVi
     public void showAlertMessage(String title, String message) {
         new AlertDialog.Builder(this).setTitle(title).setMessage(message).setPositiveButton("OK", (dialogInterface, i) -> {
         }).show();
+    }
+
+    public void showMessage(@StringRes int stringRes) {
+        Toast.makeText(this, stringRes, Toast.LENGTH_SHORT).show();
     }
 }

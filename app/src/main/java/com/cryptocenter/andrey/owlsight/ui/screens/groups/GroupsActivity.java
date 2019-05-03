@@ -12,15 +12,25 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.ViewPager;
+
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.BaseActivity;
 import com.cryptocenter.andrey.owlsight.data.event.AddCameraEvent;
-import com.cryptocenter.andrey.owlsight.data.event.DeleteCameraEvent;
 import com.cryptocenter.andrey.owlsight.data.model.Group;
 import com.cryptocenter.andrey.owlsight.data.model.monitor.Monitor;
 import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
+import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 import com.cryptocenter.andrey.owlsight.di.Scopes;
 import com.cryptocenter.andrey.owlsight.ui.screens.group.GroupFragment;
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.adapter.GroupsPagerAdapter;
@@ -36,20 +46,12 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import toothpick.Toothpick;
 
 public class GroupsActivity extends BaseActivity implements GroupsView, GroupFragment.IGroupsRefresh {
+    private static final String SELECTED_CAMERA_ID = "SELECTED_CAMERA_ID";
 
     @InjectPresenter
     GroupsPresenter presenter;
@@ -75,8 +77,13 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     private GroupsPagerAdapter adapter;
 
     public static Intent intent(Context context) {
+        return intent(context, "0");
+    }
+
+    public static Intent intent(Context context, String selectedCameraId) {
         Intent intent = new Intent(context, GroupsActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.putExtra(SELECTED_CAMERA_ID, selectedCameraId);
         return intent;
     }
 
@@ -128,12 +135,12 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     // =============================================================================================
 
     @Override
-    public void setGroups(List<Group> groups) {
-        presenter.handlePageSelected(1);
+    public void setGroups(List<Group> groups, int selectedPage) {
+        presenter.handlePageSelected(selectedPage);
 
         adapter = new GroupsPagerAdapter(getSupportFragmentManager(), this, groups);
         pager.setAdapter(adapter);
-        pager.setCurrentItem(1);
+        pager.setCurrentItem(selectedPage);
 //        pager.post(() -> pager.setCurrentItem(1));
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -211,7 +218,7 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == StreamActivity.STREAM_REQUEST_CODE && resultCode == RESULT_CANCELED) {
-            new Handler(Looper.getMainLooper()).postDelayed(() -> presenter.handleStreamRestart(),  3000);
+            new Handler(Looper.getMainLooper()).postDelayed(() -> presenter.handleStreamRestart(), 3000);
         }
     }
 
@@ -284,7 +291,9 @@ public class GroupsActivity extends BaseActivity implements GroupsView, GroupFra
 
     @ProvidePresenter
     GroupsPresenter providePresenter() {
-        return Toothpick.openScope(Scopes.APP).getInstance(GroupsPresenter.class);
+        OwlsightRepository repository = Toothpick.openScope(Scopes.APP).getInstance(OwlsightRepository.class);
+        String selectedCameraId = getIntent().getStringExtra(SELECTED_CAMERA_ID);
+        return new GroupsPresenter(repository, selectedCameraId);
     }
 
 }

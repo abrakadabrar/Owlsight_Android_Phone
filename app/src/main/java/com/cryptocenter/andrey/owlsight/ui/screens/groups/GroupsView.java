@@ -8,7 +8,7 @@ import java.util.List;
 
 interface GroupsView extends BaseView {
 
-    void setGroups(List<Group> groups);
+    void setGroups(List<Group> groups, int selectedPage);
 
     void setGroupsRefreshed(List<Group> groups,String refreshingName);
 

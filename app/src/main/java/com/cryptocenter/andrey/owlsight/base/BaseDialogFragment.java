@@ -11,6 +11,11 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
+
 import com.cryptocenter.andrey.owlsight.App;
 import com.cryptocenter.andrey.owlsight.R;
 import com.cryptocenter.andrey.owlsight.base.moxy.MvpAndroidXDialogFragment;
@@ -20,15 +25,13 @@ import com.cryptocenter.andrey.owlsight.ui.screens.choose_group.ChooseGroupActiv
 import com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.player.SinglePlayerActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.profile.ProfileActivity;
+import com.cryptocenter.andrey.owlsight.ui.screens.signin.activity.SignInActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.stream.StreamActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.video.FromDateActivity;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
 import com.cryptocenter.andrey.owlsight.utils.Screen;
 import com.kaopiz.kprogresshud.KProgressHUD;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import butterknife.ButterKnife;
 import es.dmoral.toasty.Toasty;
 
@@ -116,6 +119,9 @@ public abstract class BaseDialogFragment extends MvpAndroidXDialogFragment imple
 
     public void addScreen(Screen screen, Object data) {
         switch (screen) {
+            case SIGN_IN:
+                SignInActivity.start(getActivity());
+                break;
             case SINGLE_PLAYER:
                 startActivity(SinglePlayerActivity.intent(getActivity(), (String) data));
                 break;
@@ -164,6 +170,10 @@ public abstract class BaseDialogFragment extends MvpAndroidXDialogFragment imple
 
     public void showMessage(String message) {
         Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void showMessage(@StringRes int stringRes) {
+        Toast.makeText(getActivity(), stringRes, Toast.LENGTH_SHORT).show();
     }
 
     @Override

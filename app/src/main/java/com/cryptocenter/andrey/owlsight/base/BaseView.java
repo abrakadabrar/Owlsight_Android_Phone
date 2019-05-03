@@ -1,5 +1,7 @@
 package com.cryptocenter.andrey.owlsight.base;
 
+import androidx.annotation.StringRes;
+
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.SkipStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
@@ -33,4 +35,6 @@ public interface BaseView extends MvpView {
     void showFailed();
 
     void showError(Throwable error);
+
+    void showMessage(@StringRes int stringRes);
 }

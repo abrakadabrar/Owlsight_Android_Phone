@@ -18,6 +18,7 @@ import com.cryptocenter.andrey.owlsight.ui.screens.groups.GroupsActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.player.SinglePlayerActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.profile.ProfileActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.register.RegisterActivity;
+import com.cryptocenter.andrey.owlsight.ui.screens.signin.activity.SignInActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.stream.StreamActivity;
 import com.cryptocenter.andrey.owlsight.ui.screens.video.FromDateActivity;
 import com.cryptocenter.andrey.owlsight.utils.Alerts;
@@ -26,6 +27,7 @@ import com.kaopiz.kprogresshud.KProgressHUD;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.app.AlertDialog;
 import es.dmoral.toasty.Toasty;
 
@@ -80,6 +82,9 @@ public abstract class BaseFragment extends MvpAndroidXFragment implements BaseVi
 
     public void addScreen(Screen screen, Object data) {
         switch (screen) {
+            case SIGN_IN:
+                SignInActivity.start(getContext());
+                break;
             case REGISTER:
                 startActivity(RegisterActivity.intent(getContext()));
                 break;
@@ -142,5 +147,9 @@ public abstract class BaseFragment extends MvpAndroidXFragment implements BaseVi
     @Override
     public void onBackClicked() {
 
+    }
+
+    public void showMessage(@StringRes int stringRes) {
+        Toast.makeText(getActivity(), stringRes, Toast.LENGTH_SHORT).show();
     }
 }

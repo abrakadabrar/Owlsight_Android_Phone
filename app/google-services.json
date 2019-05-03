@@ -1,42 +1,35 @@
 {
   "project_info": {
-    "project_number": "2830218689",
-    "firebase_url": "https://owlsight-183d7.firebaseio.com",
-    "project_id": "owlsight-183d7",
-    "storage_bucket": "owlsight-183d7.appspot.com"
+    "project_number": "490144203439",
+    "firebase_url": "https://prosto-insure-97723.firebaseio.com",
+    "project_id": "prosto-insure-97723",
+    "storage_bucket": "prosto-insure-97723.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:2830218689:android:67711a195ed6aa65",
+        "mobilesdk_app_id": "1:490144203439:android:67711a195ed6aa65",
         "android_client_info": {
           "package_name": "com.cryptocenter.andrey.owlsight"
         }
       },
       "oauth_client": [
         {
-          "client_id": "2830218689-81db96vs3jf9hsqqmvu21uvqno1dis4g.apps.googleusercontent.com",
+          "client_id": "490144203439-8koha5hdl5f98a1p86ii7h20q6hkc4im.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAVVHPdp1ry6D9MPkN0adX-g2dmSrWwTvk"
+          "current_key": "AIzaSyDyOdLRVKqS52wD2_faSxTIbX-lwYJifDs"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "2830218689-81db96vs3jf9hsqqmvu21uvqno1dis4g.apps.googleusercontent.com",
+              "client_id": "490144203439-8koha5hdl5f98a1p86ii7h20q6hkc4im.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "2830218689-0crih7jc4dd3u9altl1uaq84d6sqlqrk.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "ru.cryptocenter.owlsight"
-              }
             }
           ]
         }

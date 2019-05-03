@@ -49,11 +49,15 @@ public class Preferences {
         preferences.edit().putString(PREFERENCES_NOTIFICATION_TOKEN, token).apply();
     }
 
-    public String getFirebaseNotificationToken(){
+    public String getFirebaseNotificationToken() {
         return preferences.getString(PREFERENCES_NOTIFICATION_TOKEN, "");
     }
 
     public boolean isFingerAuth() {
         return preferences.getBoolean(PREFERENCE_FINGER, true);
+    }
+
+    public void cleanPreferences() {
+        preferences.edit().clear().apply();
     }
 }

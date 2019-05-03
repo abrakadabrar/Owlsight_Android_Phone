@@ -3,7 +3,6 @@ package com.cryptocenter.andrey.owlsight.ui.screens.signin.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -19,7 +18,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.view.Window.FEATURE_NO_TITLE;
@@ -29,6 +27,12 @@ public class SignInActivity extends BaseActivity implements SignInActivityView {
 
     private static final String SIGN_IN_FRAGMENT_TAG = "SIGN_IN_FRAGMENT_TAG";
     private static final String FORGOT_PASSWORD_FRAGMENT_TAG = "FORGOT_PASSWORD_FRAGMENT_TAG";
+
+    public static void start(Context context) {
+        Intent starter = new Intent(context, SignInActivity.class);
+        starter.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        context.startActivity(starter);
+    }
 
     public static Intent intent(Context context) {
         return new Intent(context, SignInActivity.class);
@@ -77,12 +81,16 @@ public class SignInActivity extends BaseActivity implements SignInActivityView {
     @Override
     protected void onResume() {
         super.onResume();
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     @Override
     protected void onStop() {
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         super.onStop();
     }
 

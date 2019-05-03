@@ -112,4 +112,12 @@
     <string name="new_password">New password</string>
     <string name="new_password_again">New password again</string>
     <string name="log_out_question">Do you really want to log out?</string>
+    <string name="valid_phone_error">Enter the correct phone number</string>
+    <string name="default_notification_channel_id" translatable="false">Owlsight Notification Channel</string>
+    <string name="camera">Camera</string>
+    <string name="available">available</string>
+    <string name="notifications_admin_channel_name">Owlsight channel</string>
+    <string name="notifications_admin_channel_description">Owlsight notifications</string>
+    <string name="unavailable">unavailable</string>
+    <string name="motion_detected">motion detected!</string>
 </resources>

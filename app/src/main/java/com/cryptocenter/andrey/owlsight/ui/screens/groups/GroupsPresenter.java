@@ -2,6 +2,8 @@ package com.cryptocenter.andrey.owlsight.ui.screens.groups;
 
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 import com.annimon.stream.Stream;
 import com.arellomobile.mvp.InjectViewState;
 import com.cryptocenter.andrey.owlsight.App;
@@ -16,19 +18,20 @@ import com.cryptocenter.andrey.owlsight.utils.Screen;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
-import androidx.annotation.Nullable;
-
 @InjectViewState
 public class GroupsPresenter extends BasePresenter<GroupsView> {
 
-    @Inject
     OwlsightRepository repository;
+    private final String selectedCameraId;
 
     private List<Group> groups;
     private boolean isMonitorMode = false;
     private String refreshingName = "";
+
+    public GroupsPresenter(OwlsightRepository repository, String selectedCameraId) {
+        this.repository = repository;
+        this.selectedCameraId = selectedCameraId;
+    }
 
     @Override
     protected void onFirstViewAttach() {
@@ -73,7 +76,7 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
         getViewState().addScreen(Screen.PROFILE, null);
     }
 
-    void handleStreamRestart(){
+    void handleStreamRestart() {
         getViewState().proceedBtnCameraModeClicked();
     }
 
@@ -166,7 +169,26 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
         groupsSorted.add(0, Group.instanceNewCamera());
         groupsSorted.add(0, Group.instanceAddGroup());
         this.groups = groupsSorted;
-        getViewState().setGroups(this.groups);
+        getViewState().setGroups(this.groups, selectedPage(groupsSorted));
+    }
+
+    private int selectedPage(List<Group> groups) {
+        if (selectedCameraId.equals("0")) {
+            return 1;
+        } else {
+            for (int i = 0; i < groups.size(); i++) {
+                List<Camera> cameras = groups.get(i).getCams();
+                if (cameras != null) {
+                    for (Camera camera :
+                            cameras) {
+                        if (camera.getCameraId().equals(selectedCameraId)) {
+                            return i;
+                        }
+                    }
+                }
+            }
+        }
+        return 1;
     }
 
     private void proceedGroupsRefreshSuccess(List<Group> groups) {
@@ -207,7 +229,7 @@ public class GroupsPresenter extends BasePresenter<GroupsView> {
         fetchMonitors();
     }
 
-    void onCameraDeleted(){
+    void onCameraDeleted() {
         fetchGroups();
         fetchMonitors();
     }

@@ -111,4 +111,12 @@
     <string name="new_password">Новый пароль</string>
     <string name="new_password_again">Новый пароль ещё раз</string>
     <string name="log_out_question">"Вы точно хотите выйти из аккаунта? "</string>
+    <string name="valid_phone_error">Введите правильный номер телефона</string>
+    <string name="camera">Камера</string>
+    <string name="available">доступна</string>
+
+    <string name="notifications_admin_channel_name">Owlsight channel</string>
+    <string name="notifications_admin_channel_description">Owlsight notifications</string>
+    <string name="unavailable">недоступна</string>
+    <string name="motion_detected">обнаружено движение!</string>
 </resources>
