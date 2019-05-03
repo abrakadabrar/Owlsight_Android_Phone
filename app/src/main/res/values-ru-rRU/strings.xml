@@ -119,4 +119,10 @@
     <string name="notifications_admin_channel_description">Owlsight notifications</string>
     <string name="unavailable">недоступна</string>
     <string name="motion_detected">обнаружено движение!</string>
+    <string name="sms_code_time_out">Время ожидания СМС кода истекло</string>
+    <string name="the_code_can_be_requested_again_after">Код можно запросить повторно через</string>
+    <string name="seconds">секунд</string>
+    <string name="enter_the_code_sent_to_the_number">Введите код, отправленный на номер</string>
+    <string name="or_in_the_form_of_push">или в виде push</string>
+    <string name="successfullt_registered">Вы успешно зарегистрировались</string>
 </resources>

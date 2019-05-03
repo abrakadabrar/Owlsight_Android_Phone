@@ -67,7 +67,7 @@ public class RegisterPresenter extends BasePresenter<RegisterView> {
 
     void handleResult(int requestCode, int resultCode) {
         if (requestCode == 100 && resultCode == Activity.RESULT_OK)
-            getViewState().closeScreen("Вы успешно зарегистрировались");
+            getViewState().closeScreen(App.getInstance().getString(R.string.successfullt_registered));
     }
 
 

@@ -54,7 +54,7 @@
     <string name="additional_options">Additional options</string>
     <string name="user">User</string>
     <string name="test">Test</string>
-    <string name="enter_the_code">Enter the hode</string>
+    <string name="enter_the_code">Enter the code</string>
     <string name="enter_code_number_or_push">Enter the code sent to the number or as push:</string>
     <string name="code_request_again">The code can be requested again after 40 seconds.</string>
     <string name="something_went_wrong">Something went wrong…</string>
@@ -120,4 +120,10 @@
     <string name="notifications_admin_channel_description">Owlsight notifications</string>
     <string name="unavailable">unavailable</string>
     <string name="motion_detected">motion detected!</string>
+    <string name="sms_code_time_out">SMS code timed out</string>
+    <string name="the_code_can_be_requested_again_after">The code can be requested again after</string>
+    <string name="seconds">seconds</string>
+    <string name="enter_the_code_sent_to_the_number">Enter the code sent to the number</string>
+    <string name="or_in_the_form_of_push">or in the form of push</string>
+    <string name="successfullt_registered">You have successfully registered</string>
 </resources>

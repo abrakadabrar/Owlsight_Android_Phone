@@ -10,6 +10,8 @@ import com.cryptocenter.andrey.owlsight.data.model.data.RegisterData;
 import com.cryptocenter.andrey.owlsight.data.preferences.Preferences;
 import com.cryptocenter.andrey.owlsight.data.repository.owlsight.OwlsightRepository;
 
+import java.util.Locale;
+
 import javax.inject.Inject;
 
 import static com.cryptocenter.andrey.owlsight.utils.Screen.GROUPS;
@@ -45,7 +47,7 @@ public class RegisterSmsPresenter extends BasePresenter<RegisterSmsView> {
 
     void setRegisterData(RegisterData registerData) {
         this.registerData = registerData;
-        getViewState().showPhoneLabel(String.format("Введите код, отправленный на номер +%s или в виде push:", registerData.getPhone()));
+        getViewState().showPhoneLabel(String.format("%s %s %s:", App.getInstance().getString(R.string.enter_the_code_sent_to_the_number), registerData.getPhone(), App.getInstance().getString(R.string.or_in_the_form_of_push)));
     }
 
     void handleCodeInput(String code) {
@@ -79,11 +81,13 @@ public class RegisterSmsPresenter extends BasePresenter<RegisterSmsView> {
     private void startSmsTimer() {
         timer = new CountDownTimer(60000, 1000) {
             public void onTick(long mills) {
-                getViewState().showTimer(String.format("Код можно запросить повторно через %d секунд", mills / 1000));
+                getViewState().showTimer(String.format(Locale.getDefault(),
+                        "%s %d %s",
+                        App.getInstance().getString(R.string.the_code_can_be_requested_again_after), mills / 1000, App.getInstance().getString(R.string.seconds)));
             }
 
             public void onFinish() {
-                getViewState().closeScreen("Время ожидания СМС кода истекло");
+                getViewState().closeScreen(App.getInstance().getString(R.string.sms_code_time_out));
             }
 
         }.start();
