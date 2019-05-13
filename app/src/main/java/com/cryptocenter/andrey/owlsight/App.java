@@ -1,6 +1,7 @@
 package com.cryptocenter.andrey.owlsight;
 
 import android.app.Application;
+import android.opengl.EGL14;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;

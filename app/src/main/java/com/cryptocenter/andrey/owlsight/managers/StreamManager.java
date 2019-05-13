@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import com.cryptocenter.andrey.owlsight.App;
 import com.cryptocenter.andrey.owlsight.utils.CameraHelper;
@@ -11,7 +12,6 @@ import com.pedro.rtplibrary.network.AdapterBitrateParser;
 import com.pedro.rtplibrary.network.ConnectionClassManager;
 import com.pedro.rtplibrary.network.UploadBandwidthSampler;
 import com.pedro.rtplibrary.rtmp.RtmpCamera2;
-import com.pedro.rtplibrary.view.OpenGlView;
 
 import net.ossrs.rtmp.ConnectCheckerRtmp;
 
@@ -24,12 +24,10 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
     private UploadBandwidthSampler uploadBandwidthSampler;
     private String url;
 
-    public StreamManager(OpenGlView openGlView, StreamManagerListener streamManagerListener) {
+    public StreamManager(SurfaceView surfaceView, StreamManagerListener streamManagerListener) {
+        surfaceView.getHolder().addCallback(this);
         this.streamManagerListener = streamManagerListener;
-        streamCamera = new RtmpCamera2(openGlView, this);
-        openGlView.getHolder().addCallback(this);
-        openGlView.enableAA(true);
-
+        streamCamera = new RtmpCamera2(surfaceView, this);
         connectionClassManager = ConnectionClassManager.getInstance();
         uploadBandwidthSampler = UploadBandwidthSampler.getInstance();
         connectionClassManager.register(this);
@@ -49,6 +47,10 @@ public class StreamManager implements ConnectCheckerRtmp, SurfaceHolder.Callback
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        if (streamCamera == null) {
+            return;
+        }
+
         if (streamCamera.isRecording()) {
             streamCamera.stopRecord();
 

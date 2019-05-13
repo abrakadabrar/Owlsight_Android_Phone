@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.pedro.rtplibrary.view.OpenGlView
-        android:id="@+id/openGlView"
+    <com.pedro.rtplibrary.view.LightOpenGlView
+        android:id="@+id/surfaceView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

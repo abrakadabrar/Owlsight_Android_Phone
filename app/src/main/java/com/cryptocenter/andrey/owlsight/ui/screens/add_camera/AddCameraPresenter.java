@@ -14,7 +14,7 @@ import javax.inject.Inject;
 @InjectViewState
 public class AddCameraPresenter extends BasePresenter<AddCameraView> {
 
-    private boolean test = true;
+    private boolean test = false;
 
     public static final String TEST_USERNAME = "owlsight";
     public static final String TEST_PASSWORD = "20170731a";

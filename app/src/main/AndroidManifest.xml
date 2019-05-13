@@ -32,6 +32,9 @@
         android:name="android.hardware.fingerprint"
         android:required="false" />
 
+    <uses-feature android:name="android.hardware.opengles.aep"
+        android:required="true" />
+
     <application
         android:name="com.cryptocenter.andrey.owlsight.App"
         android:allowBackup="true"

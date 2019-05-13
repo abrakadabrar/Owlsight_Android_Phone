@@ -2,7 +2,9 @@ package com.cryptocenter.andrey.owlsight.ui.screens.signin.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -48,6 +50,9 @@ public class SignInActivity extends BaseActivity implements SignInActivityView {
         getWindow().setFlags(FLAG_FULLSCREEN, FLAG_FULLSCREEN);
         setContentView(R.layout.activity_sign_in_up);
         ButterKnife.bind(this);
+        boolean deviceSupportsAEP = getPackageManager().hasSystemFeature
+                (PackageManager.FEATURE_OPENGLES_EXTENSION_PACK);
+        Log.d("AEP", "deviceSupportsAEP = " + deviceSupportsAEP);
     }
 
     @Override

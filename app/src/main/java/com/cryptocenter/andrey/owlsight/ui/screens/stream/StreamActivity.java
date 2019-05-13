@@ -3,7 +3,9 @@ package com.cryptocenter.andrey.owlsight.ui.screens.stream;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.opengl.EGLContext;
 import android.os.Bundle;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -20,6 +22,8 @@ import com.novoda.merlin.Connectable;
 import com.novoda.merlin.Disconnectable;
 import com.novoda.merlin.Merlin;
 import com.pedro.encoder.input.video.CameraOpenException;
+import com.pedro.rtplibrary.view.AutoFitTextureView;
+import com.pedro.rtplibrary.view.LightOpenGlView;
 import com.pedro.rtplibrary.view.OpenGlView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -41,8 +45,8 @@ public class StreamActivity extends BaseActivity implements StreamView, Connecta
     StreamPresenter presenter;
     @BindView(R.id.llTryConnect)
     LinearLayout llTryConnect;
-    @BindView(R.id.openGlView)
-    OpenGlView openGlView;
+    @BindView(R.id.surfaceView)
+    SurfaceView surfaceView;
 
     private StreamManager streamManager;
 
@@ -137,10 +141,7 @@ public class StreamActivity extends BaseActivity implements StreamView, Connecta
 
     @Override
     public void setupStream(String url) {
-        streamManager = new StreamManager(openGlView, this);
-
-        WeakReference<StreamManager> streamManagerWeakReference = new WeakReference<>(streamManager);
-
+        streamManager = new StreamManager(surfaceView, this);
         streamManager.initStream(url);
         presenter.startingHello();
     }
