@@ -3,7 +3,6 @@ package com.cryptocenter.andrey.owlsight.ui.screens.stream;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.opengl.EGLContext;
 import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
@@ -22,12 +21,7 @@ import com.novoda.merlin.Connectable;
 import com.novoda.merlin.Disconnectable;
 import com.novoda.merlin.Merlin;
 import com.pedro.encoder.input.video.CameraOpenException;
-import com.pedro.rtplibrary.view.AutoFitTextureView;
-import com.pedro.rtplibrary.view.LightOpenGlView;
-import com.pedro.rtplibrary.view.OpenGlView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-
-import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -133,6 +127,7 @@ public class StreamActivity extends BaseActivity implements StreamView, Connecta
     protected void onPause() {
         super.onPause();
         merlin.unbind();
+
     }
 
     // =============================================================================================
@@ -157,19 +152,6 @@ public class StreamActivity extends BaseActivity implements StreamView, Connecta
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        destroy();
-        super.onDestroy();
-    }
-
-    private void destroy() {
-        streamManager = null;
-        unbinder.unbind();
-        merlin = null;
-        rxPermissions = null;
-
-    }
 
     @Override
     public void restartActivity() {

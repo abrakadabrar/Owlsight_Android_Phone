@@ -28,6 +28,11 @@ public class StreamPresenter extends BasePresenter<StreamView> {
     }
 
     @Override
+    protected void onFirstViewAttach() {
+        super.onFirstViewAttach();
+    }
+
+    @Override
     public void showFailed() {
         getViewState().closeScreen("Ошибка соединения с сервером");
     }
@@ -101,7 +106,6 @@ public class StreamPresenter extends BasePresenter<StreamView> {
 
     public void handleDisconnect() {
         netDisconnected = true;
-        getViewState().disposeStreamManager();
         getViewState().setVisibilityOfConnectingLayout(true);
         getViewState().setWasDisconnected(true);
         stoppingHello();
